@@ -95,68 +95,54 @@
     });
   }
 
-  /* ---------- 5. Portfolio previews ---------- */
+  /* ---------- 5. Portfolio rows: muted looping background video ---------- */
   const grid=$('#worksGrid'); if(!grid) return;
   const saveData=navigator.connection && navigator.connection.saveData;
-  let active=null, hoverT=0;
-
-  function stop(m){
-    if(!m) return;
-    m.classList.remove('is-previewing');
-    const holder=$('.work__preview',m);
-    setTimeout(()=>{ if(!m.classList.contains('is-previewing') && active!==m) holder.innerHTML=''; },450);
-    if(active===m) active=null;
+  const modalOpen=()=>document.getElementById('modal')?.classList.contains('is-open');
+  const near=new Set();
+  function stop(row){
+    row.classList.remove('is-playing');
+    const h=$('.ep__video',row);
+    clearTimeout(row._rm); row._rm=setTimeout(()=>{ if(!row.classList.contains('is-playing')) h.innerHTML=''; },700);
   }
-  function start(m){
-    if(reduce || saveData || !m || active===m) return;
-    if(document.getElementById('modal')?.classList.contains('is-open')) return;
-    stop(active); active=m;
-    const holder=$('.work__preview',m), id=m.dataset.id, s=m.dataset.start||3;
-    holder.classList.toggle('is-vertical',m.dataset.vertical==='true');
+  function start(row){
+    if(reduce || saveData || modalOpen() || row.hidden) return;
+    const h=$('.ep__video',row); clearTimeout(row._rm);
+    if($('iframe',h)) return;
+    const id=row.dataset.id, s=row.dataset.start||3;
+    h.classList.toggle('is-vertical',row.dataset.vertical==='true');
     const f=document.createElement('iframe');
     f.src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&controls=0&start=${s}&loop=1&playlist=${id}&playsinline=1&rel=0&modestbranding=1&disablekb=1&iv_load_policy=3&fs=0&enablejsapi=1&origin=${encodeURIComponent(location.origin)}`;
-    f.allow='autoplay; encrypted-media; picture-in-picture'; f.tabIndex=-1; f.title='預覽'; f.setAttribute('aria-hidden','true');
-    f.addEventListener('load',()=>{
-      // ask the player to report its state; fade in only once it is actually playing
-      try{ f.contentWindow.postMessage(JSON.stringify({event:'listening',id:id,channel:'widget'}),'*'); }catch(_){}
-    });
-    holder.innerHTML=''; holder.appendChild(f);
+    f.allow='autoplay; encrypted-media; picture-in-picture'; f.tabIndex=-1; f.title='背景預覽'; f.setAttribute('aria-hidden','true'); f.loading='lazy';
+    f.addEventListener('load',()=>{ try{ f.contentWindow.postMessage(JSON.stringify({event:'listening',id:id,channel:'widget'}),'*'); }catch(_){} });
+    h.appendChild(f);
   }
+  const rowOf=src=>$$('.ep__video iframe',grid).find(f=>f.contentWindow===src)?.closest('.ep');
   addEventListener('message',e=>{
-    if(!/youtube(-nocookie)?\.com$/.test(new URL(e.origin||'https://x').hostname)) return;
+    let host=''; try{ host=new URL(e.origin).hostname; }catch(_){ return; }
+    if(!/(^|\.)youtube(-nocookie)?\.com$/.test(host)) return;
     let d; try{ d=typeof e.data==='string'?JSON.parse(e.data):e.data; }catch(_){ return; }
-    if(d && d.event==='onReady' && active){ // nudge play in browsers that ignore the autoplay param
-      const f0=$('.work__preview iframe',active);
-      if(f0 && f0.contentWindow===e.source) f0.contentWindow.postMessage(JSON.stringify({event:'command',func:'playVideo',args:[]}),'*');
-    }
-    const state = d && (d.event==='onStateChange' ? d.info : (d.info && d.info.playerState));
-    if(state!==1 || !active) return;
-    const f=$('.work__preview iframe',active);
-    if(f && f.contentWindow===e.source) setTimeout(()=>active && active.classList.add('is-previewing'),180);
+    const row=d && rowOf(e.source); if(!row) return;
+    if(d.event==='onReady') $('iframe',row).contentWindow.postMessage(JSON.stringify({event:'command',func:'playVideo',args:[]}),'*');
+    const state = d.event==='onStateChange' ? d.info : (d.info && d.info.playerState);
+    if(state===1 && near.has(row)) setTimeout(()=>near.has(row)&&row.classList.add('is-playing'),200);
   });
-
-  const medias=$$('.work__media',grid);
-  if(fine){
-    medias.forEach(m=>{
-      m.addEventListener('mouseenter',()=>{ clearTimeout(hoverT); hoverT=setTimeout(()=>start(m),400); });
-      m.addEventListener('mouseleave',()=>{ clearTimeout(hoverT); stop(m); m.style.removeProperty('--rx'); m.style.removeProperty('--ry'); });
-      if(!reduce) m.addEventListener('mousemove',e=>{ const r=m.getBoundingClientRect();
-        m.style.setProperty('--ry',(((e.clientX-r.left)/r.width-.5)*7).toFixed(2)+'deg');
-        m.style.setProperty('--rx',(-((e.clientY-r.top)/r.height-.5)*6).toFixed(2)+'deg'); });
-    });
-  }else if('IntersectionObserver' in window && !reduce){
-    // touch: the card crossing the middle of the viewport previews (one at a time) + Ken Burns
-    let centerT=0;
+  const rows=$$('.ep',grid);
+  if('IntersectionObserver' in window){
+    // Ken Burns fallback runs only while a row is on screen
+    const vis=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('is-near',e.isIntersecting)),{rootMargin:'120px 0px'});
+    // the video itself loads only when the row is actually in view (one at a time on touch)
     const io=new IntersectionObserver(es=>es.forEach(e=>{
-      const card=e.target.closest('.work'), m=e.target;
-      if(e.isIntersecting){
-        $$('.work.is-center',grid).forEach(c=>c!==card&&c.classList.remove('is-center'));
-        card.classList.add('is-center');
-        clearTimeout(centerT); centerT=setTimeout(()=>card.classList.contains('is-center')&&start(m),650);
-      }else{ card.classList.remove('is-center'); if(active===m) stop(m); }
-    }),{rootMargin:'-42% 0px -42% 0px',threshold:0});
-    medias.forEach(m=>io.observe(m));
+      const r=e.target;
+      if(e.isIntersecting){ near.add(r); clearTimeout(r._st); r._st=setTimeout(()=>near.has(r)&&start(r), fine?250:600); }
+      else{ near.delete(r); clearTimeout(r._st); stop(r); }
+    }),fine?{rootMargin:'-12% 0px -12% 0px',threshold:0.2}:{rootMargin:'-38% 0px -38% 0px',threshold:0});
+    rows.forEach(r=>{ vis.observe(r); io.observe(r); });
   }
-  document.addEventListener('click',e=>{ if(e.target.closest('.js-play')) stop(active); });
-  document.addEventListener('works:filter',()=>stop(active));
+  const modal=document.getElementById('modal');
+  if(modal) new MutationObserver(()=>{
+    if(modalOpen()) rows.forEach(r=>{ r.classList.remove('is-playing'); $('.ep__video',r).innerHTML=''; });
+    else near.forEach(r=>start(r));
+  }).observe(modal,{attributes:true,attributeFilter:['class']});
+  document.addEventListener('works:filter',()=>rows.forEach(r=>{ if(r.hidden){ near.delete(r); stop(r); } }));
 })();

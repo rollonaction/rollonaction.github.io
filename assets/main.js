@@ -2,43 +2,43 @@
   const grid=document.getElementById('worksGrid');
   const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const startAt=w=>{const p=(w.dur||'0:30').split(':');const t=(+p[0])*60+(+p[1]);return t>=60?8:t>=30?4:2;};
-  const url=w=>w.vertical?`https://www.youtube.com/shorts/${w.id}`:`https://www.youtube.com/watch?v=${w.id}`;
-  let html='';
-  html+=WORKS.map((w,i)=>`
-    <article class="work${i===0?' work--wide':''}${w.biz?' work--biz':''}${w.pano?' work--pano':''}" data-cat="${w.cat}" data-reveal style="--d:${(i%3)*0.09}s">
-      <button class="work__media js-play" data-id="${w.id}" data-start="${startAt(w)}" data-title="${esc(w.title)}" data-vertical="${w.vertical}" aria-label="播放 ${esc(w.title)}">
-        <img src="assets/thumbs/${w.id}.webp" alt="${esc(w.title)}" loading="lazy">
-        <span class="work__play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
-        <span class="work__preview" aria-hidden="true"></span>
-        <span class="work__tag">${w.label}</span>${w.biz?'<span class="work__biz">商業案</span>':''}
-        <span class="work__strip" aria-hidden="true"><span><i class="rec"></i>PREVIEW</span><span>${w.dur||''}</span></span>
-      </button>
-      <div class="work__info">
-        <h3>${esc(w.title)}</h3>
-        <p>${esc(w.meta)}</p>
-        <a href="${url(w)}" target="_blank" rel="noopener">YouTube ↗</a>
+  const pad=n=>String(n).padStart(2,'0');
+  const icon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+  grid.innerHTML=WORKS.map((w,i)=>{
+    const t=esc(w.title), side=i%2?'r':'l';
+    const meta=esc(w.meta)+(w.dur && !w.meta.includes(w.dur)?`<span class="ep__dur">${w.dur}</span>`:'');
+    const stills=[1,2,3].map(n=>`<button class="ep__still ep__still--${n} js-play" data-id="${w.id}" data-title="${t}" data-vertical="${w.vertical}" aria-label="播放 ${t}（第 ${n} 張精華截圖）" tabindex="-1"><img src="assets/thumbs/${w.id}-${n}.webp" alt="" loading="lazy" decoding="async"></button>`).join('');
+    return `
+    <article class="ep ep--${side}${w.vertical?' ep--vert':''}${w.biz?' ep--biz':''}" data-cat="${w.cat}" data-id="${w.id}" data-start="${startAt(w)}" data-vertical="${w.vertical}" data-reveal>
+      <div class="ep__bg" aria-hidden="true">
+        <img class="ep__poster" src="assets/thumbs/${w.id}.webp" alt="" loading="lazy" decoding="async">
+        <span class="ep__video"></span>
+        <span class="ep__shade"></span>
       </div>
-    </article>`).join('');
-  html+=PLACEHOLDERS.map(p=>`
-    <article class="work work--ph" data-cat="${p.cat}" data-reveal>
-      <div class="work__media work__media--ph"><span class="work__tag">${p.label}</span><span class="ph">${p.text}</span></div>
-    </article>`).join('');
-  grid.innerHTML=html;
+      <div class="ep__inner">
+        <div class="ep__info">
+          <p class="ep__no"><span>EP.</span>${pad(i+1)}<i aria-hidden="true"></i><em>/ ${pad(WORKS.length)}</em></p>
+          <div class="ep__tags"><span class="ep__cat">${w.label}</span>${w.biz?'<span class="ep__biz">商業案</span>':''}</div>
+          <h3 class="ep__title">${t}</h3>
+          <p class="ep__meta">${meta}</p>
+          <div class="ep__actions">
+            <button class="ep__play js-play" data-id="${w.id}" data-title="${t}" data-vertical="${w.vertical}" aria-label="播放 ${t}"><span class="ep__playicon">${icon}</span><span>播放影片</span></button>
+          </div>
+        </div>
+        <div class="ep__stills">${stills}</div>
+      </div>
+    </article>`;}).join('');
 
   // filters
   const btns=document.querySelectorAll('.filter');
   btns.forEach(b=>b.addEventListener('click',()=>{
     btns.forEach(x=>x.classList.toggle('is-active',x===b));
     const f=b.dataset.filter;
-    grid.querySelectorAll('.work').forEach(el=>{
-      const show = f==='all' ? !el.classList.contains('work--ph') : el.dataset.cat===f;
-      el.hidden=!show;
-    });
+    grid.querySelectorAll('.ep').forEach(el=>{ el.hidden=!(f==='all'||el.dataset.cat===f); });
     grid.classList.toggle('is-filtered',f!=='all');
     grid.classList.remove('is-swap'); void grid.offsetWidth; grid.classList.add('is-swap');
     document.dispatchEvent(new CustomEvent('works:filter'));
   }));
-  grid.querySelectorAll('.work--ph').forEach(el=>el.hidden=true);
 
   // modal
   const modal=document.getElementById('modal'),frame=document.getElementById('modalFrame'),mt=document.getElementById('modalTitle');

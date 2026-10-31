@@ -1,4 +1,4 @@
-// 精選作品資料：皆來自 YouTube 頻道 @lyc_elvis 與「專案作品」播放清單
+// 精選作品資料：皆來自 YouTube 頻道 @lyc_elvis 的「專案作品」與「比賽作品」播放清單
 // biz:true = 標題標示【專案】的商業委託案；客戶／品牌名稱僅沿用影片標題原文
 // pano:true = 桌機版橫跨兩欄的寬幅卡片（讓 16 支作品排滿格線）
 window.WORKS = [
@@ -15,8 +15,14 @@ window.WORKS = [
   { id:"i11BLA_UImc", dur:"1:00", cat:"short", label:"短影音", biz:true, title:"跑三圈 好生活不用繞一大圈才遇得到", meta:"2026.08.01・直式短影音", vertical:true },
   { id:"dTcgVGl8x5k", dur:"2:22", cat:"event", label:"活動紀錄", title:"獅子會受證大會", meta:"2025.08.03・活動紀錄", vertical:false },
   { id:"3dWDIabzeQo", dur:"0:54", cat:"brand", label:"形象片", pano:true, title:"2025年基隆國際移民生活節宣傳影片", meta:"活動宣傳片", vertical:false },
-  { id:"luou9CTb0FQ", dur:"20:27", cat:"drama", label:"音樂微電影", title:"Who Cares 胡凱兒《菸癮》音樂微電影", meta:"20:27・4K", vertical:false },
-  { id:"QZFhcxPlUKk", cat:"short", label:"短影音", title:"肉老大頂級肉品涮涮鍋｜巨塔壓境 不服來敬", meta:"金肉獎", vertical:true },
-  { id:"TOS-h8wEBWU", dur:"4:13", cat:"drama", label:"MV", pano:true, title:"賴晏駒 -小賴Lai【有沒有一種可能 Is it Possible】Official Music Video", meta:"Official Music Video", vertical:false }
+  { id:"QZFhcxPlUKk", dur:"0:37", cat:"short", label:"短影音", title:"肉老大頂級肉品涮涮鍋｜巨塔壓境 不服來敬", meta:"金肉獎", vertical:true },
+  { id:"Lrv7l38w0wk", dur:"3:01", cat:"brand", label:"形象片", title:"防範詐騙 你我做起", meta:"《企業永續 ESG 校園徵影》第二屆我年輕、我環保【金獎】", vertical:false },
+  { id:"YIgQGj_KSzo", dur:"3:18", cat:"brand", label:"形象片", title:"尋找綠色的詩篇", meta:"綠色旅遊 2025【優選獎】", vertical:false },
+  { id:"y9O7VPkMm4U", dur:"2:01", cat:"short", label:"短影音", title:"在你身邊的我，靜靜延續的愛", meta:"第二屆《大王盃》全國創意短影音競賽", vertical:false },
+  { id:"tiJC0wpuWow", dur:"0:55", cat:"short", label:"短影音", title:"你還在馬路邊揮手攔車嗎？", meta:"台灣大車隊 55688・短影音徵稿", vertical:false },
+  { id:"cEPos1sBe1U", dur:"9:16", cat:"drama", label:"戲劇類", title:"撿矸仔 Bottle of memories", meta:"2025・第十四屆為孝及時影音競賽【最佳編輯獎】", vertical:false },
+  { id:"gny8uMxchiM", dur:"4:27", cat:"drama", label:"戲劇類", title:"最後的禮物 Grandma's Love（MV BONUS）", meta:"遠雄人壽第七屆金險獎【出類拔萃獎】", vertical:false },
+  { id:"sV0y9MLykBA", dur:"9:59", cat:"drama", label:"戲劇類", title:"我的爸爸不太一樣", meta:"第五屆大和獎微電影徵選【佳作】", vertical:false },
+  { id:"wiJ5J1IpIVY", dur:"10:01", cat:"drama", label:"戲劇類", title:"有心之過 Remember Me For My Mindful Name", meta:"戲劇作品", vertical:false }
 ];
 window.PLACEHOLDERS = [];
