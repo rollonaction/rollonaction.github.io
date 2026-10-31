@@ -4,12 +4,17 @@
   const startAt=w=>{const p=(w.dur||'0:30').split(':');const t=(+p[0])*60+(+p[1]);return t>=60?8:t>=30?4:2;};
   const pad=n=>String(n).padStart(2,'0');
   const icon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
-  grid.innerHTML=WORKS.map((w,i)=>{
-    const t=esc(w.title), side=i%2?'r':'l';
+  // number + alternate sides within each category (only one category is shown at a time)
+  const catIdx={}, catTotal={};
+  WORKS.forEach(w=>{catTotal[w.cat]=(catTotal[w.cat]||0)+1;});
+  const DEFAULT_CAT='event';
+  grid.innerHTML=WORKS.map(w=>{
+    const i=catIdx[w.cat]=(catIdx[w.cat]||0)+1;
+    const t=esc(w.title), side=i%2?'l':'r';
     const meta=esc(w.meta)+(w.dur && !w.meta.includes(w.dur)?`<span class="ep__dur">${w.dur}</span>`:'');
     const stills=[1,2,3].map(n=>`<button class="ep__still ep__still--${n} js-play" data-id="${w.id}" data-title="${t}" data-vertical="${w.vertical}" aria-label="播放 ${t}（第 ${n} 張精華截圖）" tabindex="-1"><img src="assets/thumbs/${w.id}-${n}.webp" alt="" loading="lazy" decoding="async"></button>`).join('');
     return `
-    <article class="ep ep--${side}${w.vertical?' ep--vert':''}${w.biz?' ep--biz':''}" data-cat="${w.cat}" data-id="${w.id}" data-start="${startAt(w)}" data-vertical="${w.vertical}" data-reveal>
+    <article class="ep ep--${side}${w.vertical?' ep--vert':''}${w.biz?' ep--biz':''}" data-cat="${w.cat}" data-id="${w.id}" data-start="${startAt(w)}" data-vertical="${w.vertical}"${w.cat===DEFAULT_CAT?'':' hidden'} data-reveal>
       <div class="ep__bg" aria-hidden="true">
         <img class="ep__poster" src="assets/thumbs/${w.id}.webp" alt="" loading="lazy" decoding="async">
         <span class="ep__video"></span>
@@ -17,8 +22,8 @@
       </div>
       <div class="ep__inner">
         <div class="ep__info">
-          <p class="ep__no"><span>EP.</span>${pad(i+1)}<i aria-hidden="true"></i><em>/ ${pad(WORKS.length)}</em></p>
-          <div class="ep__tags"><span class="ep__cat">${w.label}</span>${w.biz?'<span class="ep__biz">商業案</span>':''}</div>
+          <p class="ep__no"><span>EP.</span>${pad(i)}<i aria-hidden="true"></i><em>/ ${pad(catTotal[w.cat])}</em></p>
+          <div class="ep__tags"><span class="ep__cat">${w.label}</span></div>
           <h3 class="ep__title">${t}</h3>
           <p class="ep__meta">${meta}</p>
           <div class="ep__actions">
@@ -29,13 +34,14 @@
       </div>
     </article>`;}).join('');
 
-  // filters
+  // filters: category tabs only (no 「全部」)
   const btns=document.querySelectorAll('.filter');
+  btns.forEach(b=>{ const c=b.querySelector('.filter__count'); if(c) c.textContent=catTotal[b.dataset.filter]||0; });
   btns.forEach(b=>b.addEventListener('click',()=>{
     btns.forEach(x=>x.classList.toggle('is-active',x===b));
     const f=b.dataset.filter;
-    grid.querySelectorAll('.ep').forEach(el=>{ el.hidden=!(f==='all'||el.dataset.cat===f); });
-    grid.classList.toggle('is-filtered',f!=='all');
+    btns.forEach(x=>x.setAttribute('aria-selected',x===b?'true':'false'));
+    grid.querySelectorAll('.ep').forEach(el=>{ el.hidden=el.dataset.cat!==f; });
     grid.classList.remove('is-swap'); void grid.offsetWidth; grid.classList.add('is-swap');
     document.dispatchEvent(new CustomEvent('works:filter'));
   }));

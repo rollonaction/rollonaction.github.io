@@ -10,7 +10,6 @@ window.WORKS = [
   { id:"Smrr_II2Q_Q", dur:"0:34", cat:"brand", label:"形象片", biz:true, title:"2026群岳盃 精華廣告", meta:"2026・形象片", vertical:false },
   { id:"ygWgvjQujNM", dur:"0:54", cat:"brand", label:"形象片", biz:true, title:"全民會長盃形象片《學會，全力以赴》", meta:"2025.06.13・形象片", vertical:false },
   { id:"-jbiFVcQYCw", dur:"0:50", cat:"brand", label:"形象片", biz:true, title:"群岳盃全國羽球錦標賽 形象片《凝聚的力量》", meta:"2025.06.11・形象片", vertical:false },
-  { id:"f8SFLuNMQcI", dur:"0:42", cat:"brand", label:"形象片", biz:true, title:"喬信燒烤 宣傳片", meta:"2023.11.03・宣傳片", vertical:false },
   { id:"-rivq96wYrs", dur:"1:01", cat:"short", label:"短影音", biz:true, title:"三顆糖 爸爸要買這間房子給我", meta:"2026.08.01・直式短影音", vertical:true },
   { id:"i11BLA_UImc", dur:"1:00", cat:"short", label:"短影音", biz:true, title:"跑三圈 好生活不用繞一大圈才遇得到", meta:"2026.08.01・直式短影音", vertical:true },
   { id:"dTcgVGl8x5k", dur:"2:22", cat:"event", label:"活動紀錄", title:"獅子會受證大會", meta:"2025.08.03・活動紀錄", vertical:false },

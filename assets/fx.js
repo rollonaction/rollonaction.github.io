@@ -62,7 +62,7 @@
     const io=new IntersectionObserver(es=>es.forEach(e=>{
       if(e.isIntersecting) links.forEach(a=>a.classList.toggle('is-active',a.getAttribute('href')==='#'+e.target.id));
     }),{rootMargin:'-45% 0px -50% 0px'});
-    ['services','works','about','contact'].forEach(id=>{const el=document.getElementById(id); el&&io.observe(el);});
+    ['services','about','works','contact'].forEach(id=>{const el=document.getElementById(id); el&&io.observe(el);});
   }
 
   /* ---------- 4. Cursor-reactive (desktop only) ---------- */
