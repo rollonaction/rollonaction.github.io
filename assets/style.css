@@ -752,3 +752,28 @@ p{text-wrap:pretty}
   .wsub{padding:6px 12px;font-size:13px}
   .wbar__subs{display:none!important}
 }
+
+/* ================= manifesto: centred brand line between 精選作品 and 服務項目 ================= */
+.manifesto{position:relative;overflow:hidden;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(122,31,43,.22),transparent 70%),var(--black);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:clamp(120px,17vw,240px) var(--pad);text-align:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:min(92vh,860px)}
+.manifesto__ghost{position:absolute;left:0;right:0;top:50%;pointer-events:none;white-space:nowrap;line-height:.8;font-family:var(--disp);font-weight:700;
+  font-size:min(30vw,44vh);letter-spacing:.08em;color:transparent;-webkit-text-stroke:1px rgba(158,42,58,.28);
+  transform:translate3d(calc(18vw - var(--p,.5) * 36vw),-50%,0);will-change:transform}
+.manifesto__eyebrow{position:relative;display:inline-flex;align-items:center;gap:10px;margin:0 0 clamp(28px,3.4vw,48px);font-family:var(--disp);font-size:12px;letter-spacing:.36em;color:var(--wine-2)}
+.manifesto__eyebrow .rec{width:8px;height:8px}
+.manifesto__quote{position:relative;margin:0;font-family:var(--serif);font-weight:900;font-size:clamp(30px,6.4vw,104px);line-height:1.22;letter-spacing:.06em}
+.mf-line{position:relative;display:block;white-space:nowrap}
+.mf-base{color:rgba(245,238,232,.16)}
+.mf-base em,.mf-fill em{font-style:normal}
+.mf-fill{position:absolute;inset:0;color:var(--cream);clip-path:inset(0 calc((1 - var(--q,1)) * 100%) 0 0)}
+.mf-fill em{color:var(--wine-2);text-shadow:0 0 36px rgba(158,42,58,.45)}
+.manifesto__rule{position:relative;display:block;width:clamp(80px,12vw,180px);height:3px;margin:clamp(32px,3.6vw,52px) auto clamp(18px,2vw,26px);background:var(--wine-2);
+  transform:scaleX(var(--o,1));transform-origin:center}
+.manifesto__sign{position:relative;margin:0;font-family:var(--disp);font-size:13px;letter-spacing:.42em;color:rgba(245,238,232,.62)}
+@media (max-width:760px){
+  .manifesto{min-height:auto;padding:clamp(96px,26vw,140px) 18px}
+  .manifesto__quote{font-size:clamp(28px,8.6vw,44px);letter-spacing:.04em;line-height:1.32}
+  .manifesto__eyebrow{font-size:11px;letter-spacing:.28em}
+}
+@media (prefers-reduced-motion:reduce){.manifesto__ghost{transform:translate3d(0,-50%,0)}.mf-fill{clip-path:none}.manifesto__rule{transform:none}}

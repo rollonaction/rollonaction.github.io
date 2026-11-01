@@ -189,7 +189,8 @@ dialog{overflow-x:hidden}
 (function(){
 'use strict';
 const OWNER='rollonaction', REPO='rollonaction.github.io', PATH='assets/works.json', API='https://api.github.com';
-const CATS=['短影音','活動紀錄','形象片','戲劇類'];
+const CATS=['短影音','活動紀錄','形象片','劇情類'];
+const CAT_ALIAS={['\u6232\u5287\u985e']:'劇情類'}; // legacy name of 劇情類
 const TK='rollon_admin_gh_token';
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -226,7 +227,7 @@ const fmtViews=n=>{n=+n;if(!isFinite(n))return '';const t=(v,u)=>(Math.floor(v*1
 const today=()=>{const d=new Date(),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;};
 
 function normalize(d){
-  const works=(Array.isArray(d)?d:d.works||[]).map(w=>{const category=CATS.includes(w.category)?w.category:CATS[0]; return {
+  const works=(Array.isArray(d)?d:d.works||[]).map(w=>{const c0=CAT_ALIAS[w.category]||w.category, category=CATS.includes(c0)?c0:CATS[0]; return {
     id:w.id||w.youtubeId, title:w.title||'', client:w.client||'', category,
     youtubeId:w.youtubeId||w.id||'', thumb:w.thumb||'', stills:Array.isArray(w.stills)?w.stills.slice(0,3):[],
     published:w.published!==false, order:+w.order||0, sourceUrl:w.sourceUrl||'', sourcePlatform:w.sourcePlatform||'',

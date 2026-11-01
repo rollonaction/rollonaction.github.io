@@ -38,7 +38,7 @@
   document.fonts && document.fonts.ready.then(syncReplicas);
 
   /* ---------- 3. Scroll loop: progress bar, statement scrub, active nav ---------- */
-  const bar=$('#navProgress'), fills=$$('.statement__fill');
+  const bar=$('#navProgress'), fills=$$('.statement__fill'), mfills=$$('.mf-fill');
   const bigs=$$('.section__big');
   function onScroll(){
     const max=document.documentElement.scrollHeight-innerHeight;
@@ -49,8 +49,10 @@
       let p=.62;
       if(!reduce){ const r=st.getBoundingClientRect(); p=clamp((innerHeight-r.top)/(innerHeight+r.height)); }
       st.style.setProperty('--p',p.toFixed(4));
-      st.style.setProperty('--o',reduce?1:clamp((p-.08)/.32).toFixed(4));
+      st.style.setProperty('--o',reduce?1:(mfills.length?clamp((p-.35)/.2):clamp((p-.08)/.32)).toFixed(4));
       fills.forEach((f,i)=>f.style.setProperty('--q',reduce?1:clamp((p-.3-i*.14)/.18).toFixed(4)));
+      // manifesto: each line fills left→right as it scrolls toward the centre of the screen
+      mfills.forEach((f,i)=>f.style.setProperty('--q',reduce?1:clamp((p-.2-i*.1)/.2).toFixed(4)));
     }
   }
   let tick=false;
@@ -62,7 +64,7 @@
     const io=new IntersectionObserver(es=>es.forEach(e=>{
       if(e.isIntersecting) links.forEach(a=>a.classList.toggle('is-active',a.getAttribute('href')==='#'+e.target.id));
     }),{rootMargin:'-45% 0px -50% 0px'});
-    ['services','works','about','contact'].forEach(id=>{const el=document.getElementById(id); el&&io.observe(el);});
+    ['works','statement','services','about','contact'].forEach(id=>{const el=document.getElementById(id); el&&io.observe(el);});
   }
 
   /* ---------- 4. Cursor-reactive (desktop only) ---------- */

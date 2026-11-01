@@ -7,8 +7,8 @@
   const pad=n=>String(n).padStart(2,'0');
   const icon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
   // works.json (via works-loader.js) uses category names in Chinese; legacy works.js uses cat keys
-  const CAT_KEY={'短影音':'short','活動紀錄':'event','形象片':'brand','戲劇類':'drama'};
-  const CAT_NAME={short:'短影音',event:'活動紀錄',brand:'形象片',drama:'戲劇類'};
+  const CAT_KEY={'短影音':'short','活動紀錄':'event','形象片':'brand','劇情類':'drama','\u6232\u5287\u985e':'drama'}; // \u6232\u5287\u985e = legacy name
+  const CAT_NAME={short:'短影音',event:'活動紀錄',brand:'形象片',drama:'劇情類'};
   // 短影音 subcategories (optional `subcategory` field in works.json)
   const SUB_KEY={'劇情類':'story','口播宣傳類':'promo'}, SUB_NAME={story:'劇情類',promo:'口播宣傳類'};
   const A=new URL('../',T).href; // assets/ base, for json paths like "thumbs/x.webp"
@@ -72,7 +72,7 @@
     {k:'short',name:'短影音',en:'SHORT-FORM'},
     {k:'event',name:'活動紀錄',en:'EVENTS'},
     {k:'brand',name:'形象片',en:'BRAND FILM'},
-    {k:'drama',name:'戲劇類',en:'DRAMA'}
+    {k:'drama',name:'劇情類',en:'DRAMA'}
   ].filter(c=>catTotal[c.k]);
   const firstOf=k=>WORKS.find(w=>w.cat===k);
   const posterOf=k=>firstOf(k).poster;
