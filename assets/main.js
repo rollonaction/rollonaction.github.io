@@ -1,5 +1,7 @@
 (function(){
   const grid=document.getElementById('worksGrid');
+  // thumbs resolve relative to this script, so pages in sub-folders (e.g. /theme-green/) work too
+  const T=(document.currentScript&&document.currentScript.src)?new URL('thumbs/',document.currentScript.src).href:'assets/thumbs/';
   const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const startAt=w=>{const p=(w.dur||'0:30').split(':');const t=(+p[0])*60+(+p[1]);return t>=60?8:t>=30?4:2;};
   const pad=n=>String(n).padStart(2,'0');
@@ -12,11 +14,11 @@
     const i=catIdx[w.cat]=(catIdx[w.cat]||0)+1;
     const t=esc(w.title), side=i%2?'l':'r';
     const meta=esc(w.meta)+(w.dur && !w.meta.includes(w.dur)?`<span class="ep__dur">${w.dur}</span>`:'');
-    const stills=[1,2,3].map(n=>`<button class="ep__still ep__still--${n} js-play" data-id="${w.id}" data-title="${t}" data-vertical="${w.vertical}" aria-label="播放 ${t}（第 ${n} 張精華截圖）" tabindex="-1"><img src="assets/thumbs/${w.id}-${n}.webp" alt="" loading="lazy" decoding="async"></button>`).join('');
+    const stills=[1,2,3].map(n=>`<button class="ep__still ep__still--${n} js-play" data-id="${w.id}" data-title="${t}" data-vertical="${w.vertical}" aria-label="播放 ${t}（第 ${n} 張精華截圖）" tabindex="-1"><img src="${T}${w.id}-${n}.webp" alt="" loading="lazy" decoding="async"></button>`).join('');
     return `
     <article class="ep ep--${side}${w.vertical?' ep--vert':''}${w.biz?' ep--biz':''}" data-cat="${w.cat}" data-id="${w.id}" data-start="${startAt(w)}" data-vertical="${w.vertical}"${w.cat===DEFAULT_CAT?'':' hidden'} data-reveal>
       <div class="ep__bg" aria-hidden="true">
-        <img class="ep__poster" src="assets/thumbs/${w.id}.webp" alt="" loading="lazy" decoding="async">
+        <img class="ep__poster" src="${T}${w.id}.webp" alt="" loading="lazy" decoding="async">
         <span class="ep__video"></span>
         <span class="ep__shade"></span>
       </div>
