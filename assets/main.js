@@ -2,23 +2,51 @@
   const grid=document.getElementById('worksGrid');
   // thumbs resolve relative to this script, so pages in sub-folders (e.g. /theme-green/) work too
   const T=(document.currentScript&&document.currentScript.src)?new URL('thumbs/',document.currentScript.src).href:'assets/thumbs/';
-  const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const startAt=w=>{const p=(w.dur||'0:30').split(':');const t=(+p[0])*60+(+p[1]);return t>=60?8:t>=30?4:2;};
   const pad=n=>String(n).padStart(2,'0');
   const icon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+  // works.json (via works-loader.js) uses category names in Chinese; legacy works.js uses cat keys
+  const CAT_KEY={'短影音':'short','活動紀錄':'event','形象片':'brand','戲劇類':'drama'};
+  const CAT_NAME={short:'短影音',event:'活動紀錄',brand:'形象片',drama:'戲劇類'};
+  const A=new URL('../',T).href; // assets/ base, for json paths like "thumbs/x.webp"
+  const src=(p,fb)=>{ if(!p) return fb; try{ return new URL(p,A).href; }catch(e){ return fb; } };
+  const safeUrl=u=>{ try{ const x=new URL(u); return /^https?:$/.test(x.protocol)?x.href:''; }catch(e){ return ''; } };
+  const WORKS=(window.WORKS||[]).filter(w=>w && w.published!==false).map((w,ix)=>{
+    const id=w.youtubeId||w.id, cat=w.cat||CAT_KEY[w.category]||'short';
+    return {...w,id,cat,label:CAT_NAME[cat],_ix:ix,meta:w.meta||'',
+      // json items without own images (added in /admin/) fall back to YouTube's thumbnails; legacy items use local thumbs
+      poster:src(w.thumb,('thumb' in w)?`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`:`${T}${id}.webp`),
+      stills:[0,1,2].map(n=>src(w.stills&&w.stills[n],('stills' in w)?`https://i.ytimg.com/vi/${id}/hq${n+1}.jpg`:`${T}${id}-${n+1}.webp`))};
+  }).sort((x,y)=>{ const ox=x.order==null?x._ix:x.order, oy=y.order==null?y._ix:y.order; return x.cat===y.cat?(ox-oy||x._ix-y._ix):x._ix-y._ix; });
+  // Taiwanese view counts: 8,532 / 12.3萬 / 1.2億
+  const fmtViews=n=>{ n=+n; if(!isFinite(n)||n<0) return ''; const t=(v,u)=>(Math.floor(v*10)/10).toFixed(1).replace(/\.0$/,'')+u;
+    return n>=1e8?t(n/1e8,'億'):n>=1e4?t(n/1e4,'萬'):Math.round(n).toLocaleString('zh-TW'); };
+  const PLAT={
+    IG:['Instagram','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg>'],
+    FB:['Facebook','<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21z"/></svg>'],
+    YT:['YouTube','<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z"/></svg>'],
+    other:['原平台','<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>']
+  };
   // number + alternate sides within each category (only one category is shown at a time)
   const catIdx={}, catTotal={};
   WORKS.forEach(w=>{catTotal[w.cat]=(catTotal[w.cat]||0)+1;});
-  const DEFAULT_CAT='short';
+  const DEFAULT_CAT=catTotal.short?'short':(['event','brand','drama'].find(k=>catTotal[k])||'short');
   grid.innerHTML=WORKS.map(w=>{
     const i=catIdx[w.cat]=(catIdx[w.cat]||0)+1;
-    const t=esc(w.title), side=i%2?'l':'r';
-    const meta=esc(w.meta)+(w.dur && !w.meta.includes(w.dur)?`<span class="ep__dur">${w.dur}</span>`:'');
-    const stills=[1,2,3].map(n=>`<button class="ep__still ep__still--${n} js-play" data-id="${w.id}" data-title="${t}" data-vertical="${w.vertical}" aria-label="播放 ${t}（第 ${n} 張精華截圖）" tabindex="-1"><img src="${T}${w.id}-${n}.webp" alt="" loading="lazy" decoding="async"></button>`).join('');
+    const t=esc(w.title), side=i%2?'l':'r', vid=esc(w.id);
+    const meta=esc(w.meta)+(w.dur && !String(w.meta).includes(w.dur)?`<span class="ep__dur">${esc(w.dur)}</span>`:'');
+    const stills=w.stills.map((s,k)=>`<button class="ep__still ep__still--${k+1} js-play" data-id="${vid}" data-title="${t}" data-vertical="${!!w.vertical}" aria-label="播放 ${t}（第 ${k+1} 張精華截圖）" tabindex="-1"><img src="${esc(s)}" alt="" loading="lazy" decoding="async"></button>`).join('');
+    const pl=PLAT[w.sourcePlatform]||(w.sourcePlatform?PLAT.other:null);
+    const v=(w.views!==null && w.views!=='' && w.views!==undefined)?fmtViews(w.views):'';
+    const vm=v.match(/^([\d.,]+)(萬|億)?$/)||[v,v,''];
+    const views=v?`<div class="ep__views" title="${pl?pl[0]+' ':''}觀看次數${w.viewsUpdatedAt?'（'+esc(w.viewsUpdatedAt)+' 更新）':''}"><span class="ep__vnum">${vm[1]}${vm[2]?`<small>${vm[2]}</small>`:''}</span><span class="ep__vlab">${pl?`<i class="ep__plat">${pl[1]}</i>`:''}次觀看${pl?`<em>${pl[0]}</em>`:''}</span></div>`:'';
+    const su=w.sourceUrl?safeUrl(w.sourceUrl):'';
+    const srcLink=su?`<a class="ep__src" href="${esc(su)}" target="_blank" rel="noopener">觀看原影片 ↗</a>`:'';
     return `
-    <article class="ep ep--${side}${w.vertical?' ep--vert':''}${w.biz?' ep--biz':''}" data-cat="${w.cat}" data-id="${w.id}" data-start="${startAt(w)}" data-vertical="${w.vertical}"${w.cat===DEFAULT_CAT?'':' hidden'} data-reveal>
+    <article class="ep ep--${side}${w.vertical?' ep--vert':''}${w.biz?' ep--biz':''}" data-cat="${w.cat}" data-id="${vid}" data-start="${startAt(w)}" data-vertical="${!!w.vertical}"${w.cat===DEFAULT_CAT?'':' hidden'} data-reveal>
       <div class="ep__bg" aria-hidden="true">
-        <img class="ep__poster" src="${T}${w.id}.webp" alt="" loading="lazy" decoding="async">
+        <img class="ep__poster" src="${esc(w.poster)}" alt="" loading="lazy" decoding="async"${/maxresdefault/.test(w.poster)?` onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${vid}/hqdefault.jpg'"`:''}>
         <span class="ep__video"></span>
         <span class="ep__shade"></span>
       </div>
@@ -27,9 +55,9 @@
           <p class="ep__no"><span>EP.</span>${pad(i)}<i aria-hidden="true"></i><em>/ ${pad(catTotal[w.cat])}</em></p>
           <div class="ep__tags"><span class="ep__cat">${w.label}</span></div>
           <h3 class="ep__title">${t}</h3>
-          <p class="ep__meta">${meta}</p>
+          <p class="ep__meta">${meta}</p>${views}
           <div class="ep__actions">
-            <button class="ep__play js-play" data-id="${w.id}" data-title="${t}" data-vertical="${w.vertical}" aria-label="播放 ${t}"><span class="ep__playicon">${icon}</span><span>播放影片</span></button>
+            <button class="ep__play js-play" data-id="${vid}" data-title="${t}" data-vertical="${!!w.vertical}" aria-label="播放 ${t}"><span class="ep__playicon">${icon}</span><span>播放影片</span></button>${srcLink}
           </div>
         </div>
         <div class="ep__stills">${stills}</div>
@@ -44,12 +72,13 @@
     {k:'drama',name:'戲劇類',en:'DRAMA'}
   ].filter(c=>catTotal[c.k]);
   const firstOf=k=>WORKS.find(w=>w.cat===k);
+  const posterOf=k=>firstOf(k).poster;
   const cardsEl=document.getElementById('worksCats'), barPills=document.getElementById('worksBarPills');
   const bar=document.getElementById('worksBar'), body=document.getElementById('worksBody'), nextEl=document.getElementById('worksNext');
   let cur=DEFAULT_CAT;
   if(cardsEl){
     cardsEl.innerHTML=CATS.map((c,i)=>`<button class="wcat${c.k===cur?' is-active':''}" role="tab" aria-selected="${c.k===cur}" data-filter="${c.k}" style="--d:${i*.08}s">
-      <span class="wcat__media"><img src="${T}${firstOf(c.k).id}.webp" alt="" loading="lazy" decoding="async"></span>
+      <span class="wcat__media"><img src="${esc(posterOf(c.k))}" alt="" loading="lazy" decoding="async"></span>
       <span class="wcat__no">${pad(i+1)}</span>
       <span class="wcat__state" aria-hidden="true">${c.k===cur?'● 觀看中':'<i class="wcat__long">點選</i>切換 →'}</span>
       <span class="wcat__txt"><span class="wcat__en">${c.en}</span><span class="wcat__name">${c.name}</span><span class="wcat__count">${catTotal[c.k]} 支作品</span></span>
@@ -71,7 +100,7 @@
     if(!nextEl||!CATS.length) return;
     const i=CATS.findIndex(c=>c.k===cur), n=CATS[(i+1)%CATS.length];
     nextEl.innerHTML=`<button class="wnext" data-filter="${n.k}" data-scroll="1">
-      <span class="wnext__media"><img src="${T}${firstOf(n.k).id}.webp" alt="" loading="lazy" decoding="async"></span>
+      <span class="wnext__media"><img src="${esc(posterOf(n.k))}" alt="" loading="lazy" decoding="async"></span>
       <span class="wnext__txt"><span class="wnext__kicker">看完了 ${CATS[i].name}・繼續看</span><span class="wnext__name">下一類：${n.name} <i aria-hidden="true">→</i></span><span class="wnext__meta">${n.en}・${catTotal[n.k]} 支作品</span></span>
     </button>`;
   }

@@ -717,3 +717,17 @@ p{text-wrap:pretty}
 @media (prefers-reduced-motion:reduce){.wcat,.wnext,.wbar{transition:none}.wcat:hover,.wnext:hover{transform:none}}
 .wcat__long{font-style:normal}
 @media (max-width:760px){.wcat__long{display:none}}
+
+/* view-count tag + original link (data from works.json / admin) */
+.ep__tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.ep__views{display:flex;align-items:flex-end;gap:14px;margin-top:22px;line-height:1}
+.ep__vnum{font-family:var(--disp);font-weight:700;font-size:clamp(52px,6vw,88px);letter-spacing:.01em;color:#fff;text-shadow:0 4px 24px rgba(0,0,0,.55),4px 4px 0 var(--wine)}
+.ep__vnum small{font-family:var(--serif);font-weight:900;font-size:.5em;margin-left:4px;color:#fff}
+.ep__vlab{display:flex;flex-direction:column;gap:6px;padding-bottom:8px;font-size:15px;font-weight:700;letter-spacing:.14em;color:#fff}
+.ep__vlab em{font-style:normal;font-family:var(--disp);font-weight:500;font-size:11px;letter-spacing:.22em;color:#e6dcd6}
+.ep__plat{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--wine-2);color:#fff}
+.ep__plat svg{width:17px;height:17px}
+.ep__views::after{content:"";align-self:stretch;width:0}
+@media (max-width:760px){.ep__views{margin-top:16px;gap:10px}.ep__vnum{font-size:52px}.ep__vlab{font-size:13px;padding-bottom:5px}.ep__plat{width:26px;height:26px}}
+.ep__src{font-size:14px;letter-spacing:.1em;color:#fff;border-bottom:1px solid var(--wine-2);padding-bottom:2px;transition:color .2s,border-color .2s}
+.ep__src:hover{color:var(--wine-2);border-color:#fff}

@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<title>過檔 Roll ON｜作品後台</title>
+<style>
+:root{--wine:#7a1f2b;--wine2:#9e2a3a;--bg:#0f0e10;--card:#19171a;--line:rgba(255,255,255,.12);--tx:#f5eee8;--mu:#b3aaa6;--ok:#3fa36b;--warn:#d9a53f}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:15px/1.6 "Noto Sans TC",system-ui,sans-serif;letter-spacing:.02em}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:#232024;border-radius:8px;padding:7px 14px}
+button:hover{border-color:rgba(255,255,255,.4)}
+button.pri{background:var(--wine2);border-color:var(--wine2);color:#fff;font-weight:700}
+button.pri:hover{background:#b6334a}
+button.danger{color:#ffb3bd;border-color:rgba(255,120,140,.35)}
+button:disabled{opacity:.45;cursor:not-allowed}
+input,select,textarea{width:100%;background:#0c0b0d;border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--wine2);outline-offset:0}
+label{display:block;font-size:13px;color:var(--mu);margin-bottom:4px}
+a{color:#ffb9c3}
+header{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:14px 24px;background:rgba(15,14,16,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header h1{font-size:18px;letter-spacing:.12em;margin-right:auto}
+header h1 small{font-weight:400;color:var(--mu);font-size:13px;margin-left:8px}
+.status{font-size:13px;color:var(--mu)}
+.status.dirty{color:var(--warn)}
+main{max-width:1100px;margin:0 auto;padding:24px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:20px}
+.panel h2{font-size:16px;margin-bottom:10px;letter-spacing:.08em}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+.row>*{flex:1 1 200px}
+.row>.auto{flex:0 0 auto}
+.note{font-size:13px;color:var(--mu)}
+.msg{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:14px;display:none}
+.msg.show{display:block}
+.msg.ok{background:rgba(63,163,107,.14);border:1px solid rgba(63,163,107,.5)}
+.msg.err{background:rgba(220,70,90,.14);border:1px solid rgba(220,70,90,.5)}
+.cat{margin-bottom:28px}
+.cat h3{display:flex;align-items:center;gap:10px;font-size:17px;letter-spacing:.1em;margin-bottom:10px}
+.cat h3 span{font-size:13px;color:var(--mu);font-weight:400;letter-spacing:.04em}
+.cat h3::before{content:"";width:4px;height:18px;background:var(--wine2);border-radius:2px}
+.item{display:grid;grid-template-columns:28px 112px minmax(0,1fr) auto;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px}
+.item.off{opacity:.55}
+.item.drag-over{border-color:var(--wine2);box-shadow:0 0 0 1px var(--wine2)}
+.handle{cursor:grab;color:var(--mu);text-align:center;font-size:18px;user-select:none}
+.item img{width:112px;height:63px;object-fit:cover;border-radius:6px;background:#000}
+.it-title{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.it-sub{font-size:12px;color:var(--mu);display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:2px}
+.badge{display:inline-block;font-size:12px;padding:1px 8px;border-radius:999px;border:1px solid var(--line)}
+.badge.on{background:rgba(63,163,107,.18);border-color:rgba(63,163,107,.6)}
+.badge.off{background:rgba(255,255,255,.06)}
+.badge.v{background:rgba(158,42,58,.25);border-color:var(--wine2)}
+.acts{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+.acts button{padding:5px 10px;font-size:13px}
+.switch{position:relative;display:inline-flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;border:1px solid var(--line);border-radius:999px;padding:4px 10px 4px 6px;background:#232024}
+.switch i{width:30px;height:18px;border-radius:999px;background:#444;position:relative;transition:.2s}
+.switch i::after{content:"";position:absolute;left:2px;top:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:.2s}
+.switch.on i{background:var(--ok)}
+.switch.on i::after{left:14px}
+dialog{margin:auto;width:min(760px,94vw);max-height:92vh;background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:14px;padding:0}
+dialog::backdrop{background:rgba(0,0,0,.7)}
+.dlg-h{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--line)}
+.dlg-b{padding:18px 20px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px 16px}
+.dlg-b .full{grid-column:1/-1}
+.dlg-f{display:flex;justify-content:flex-end;gap:8px;padding:14px 20px;border-top:1px solid var(--line)}
+.prev{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.dlg-b>*{min-width:0}
+.dlg-b input,.dlg-b select,.dlg-b textarea{max-width:100%}
+dialog{overflow-x:hidden}
+.prev img{width:120px;height:68px;object-fit:cover;border-radius:6px;background:#000}
+.prev img.s{width:72px;height:40px}
+.chk{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--tx)}
+.chk input{width:auto}
+.empty{color:var(--mu);font-size:13px;padding:8px 0 4px}
+@media (max-width:700px){
+  header{padding:12px 14px}
+  main{padding:14px}
+  .item{grid-template-columns:22px 80px minmax(0,1fr)}
+  .item img{width:80px;height:45px}
+  .acts{grid-column:1/-1;justify-content:flex-start}
+  .dlg-b{grid-template-columns:minmax(0,1fr);padding:14px}
+  .prev img{width:96px;height:54px}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>過檔 Roll ON 作品後台<small>精選作品管理</small></h1>
+  <span class="status" id="status">尚未載入</span>
+  <button id="btnReload" type="button">重新載入</button>
+  <button class="pri" id="btnSave" type="button" disabled>儲存並發布</button>
+</header>
+<main>
+  <section class="panel" id="tokenPanel">
+    <h2>GitHub 連線</h2>
+    <div class="row">
+      <div><label for="token">GitHub 權杖（fine-grained personal access token）</label><input id="token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…"></div>
+      <button class="auto" id="btnToken" type="button">儲存權杖</button>
+      <button class="auto danger" id="btnForget" type="button">清除權杖</button>
+    </div>
+    <p class="note" id="tokenNote" style="margin-top:8px">權杖只會存在「這台電腦的這個瀏覽器」（localStorage），不會上傳到網站。沒有權杖也能瀏覽清單，但無法儲存。建立方式請見 ADMIN-GUIDE。</p>
+    <div class="msg" id="msg"></div>
+  </section>
+
+  <section class="panel">
+    <h2>新增影片</h2>
+    <div class="row">
+      <div><label for="addUrl">貼上 YouTube 連結（作品集頻道的影片，用於預覽與背景）</label><input id="addUrl" placeholder="https://www.youtube.com/watch?v=… 或 https://youtu.be/… 或 /shorts/…"></div>
+      <div style="flex:0 1 180px"><label for="addCat">分類</label><select id="addCat"></select></div>
+      <button class="auto pri" id="btnAdd" type="button">新增</button>
+    </div>
+    <p class="note" style="margin-top:8px">會自動帶入影片 ID、縮圖與標題，新增後可再編輯。網站約在儲存後 1 分鐘更新。</p>
+  </section>
+
+  <div id="list"></div>
+</main>
+
+<dialog id="dlg">
+  <form method="dialog" id="form">
+    <div class="dlg-h"><strong id="dlgTitle">編輯影片</strong><button type="button" data-x>✕</button></div>
+    <div class="dlg-b">
+      <div class="full"><label for="f_title">標題</label><input id="f_title" required></div>
+      <div><label for="f_client">客戶／品牌</label><input id="f_client" placeholder="例：旭唐建設"></div>
+      <div><label for="f_category">分類</label><select id="f_category"></select></div>
+      <div><label for="f_youtubeId">YouTube 影片 ID 或連結（預覽／背景用）</label><input id="f_youtubeId" required></div>
+      <div><label for="f_dur">片長（例 1:22）</label><input id="f_dur"></div>
+      <div class="full"><label for="f_meta">說明文字（日期・類型・得獎等）</label><input id="f_meta"></div>
+      <div class="full prev" id="f_prev"></div>
+      <div class="full"><label for="f_thumb">主縮圖（留空＝使用 YouTube 縮圖；thumbs/… 為網站內建圖）</label><input id="f_thumb"></div>
+      <div class="full"><label>3 張精華截圖（每行一個網址或 thumbs/… 路徑；留空＝YouTube 自動截圖）</label><textarea id="f_stills" rows="3"></textarea></div>
+      <div class="full"><label for="f_sourceUrl">客戶原始貼文連結（IG／FB／YouTube）</label><input id="f_sourceUrl" placeholder="https://www.instagram.com/reel/…"></div>
+      <div><label for="f_sourcePlatform">原始平台</label><select id="f_sourcePlatform"><option value="">（未填）</option><option value="IG">Instagram</option><option value="FB">Facebook</option><option value="YT">YouTube</option><option value="other">其他</option></select></div>
+      <div><label for="f_views">觀看次數（手動輸入數字）</label><input id="f_views" inputmode="numeric" placeholder="例 123000"></div>
+      <div><label for="f_viewsUpdatedAt">觀看數更新日期</label><input id="f_viewsUpdatedAt" type="date"></div>
+      <div style="display:flex;align-items:end"><button type="button" id="btnYtViews" title="使用非官方的 Return YouTube Dislike 公開資料，數字可能略有延遲">從 YouTube 帶入觀看數（非官方）</button></div>
+      <div class="full" style="display:flex;flex-wrap:wrap;gap:18px">
+        <label class="chk"><input type="checkbox" id="f_published"> 上架（顯示在網站）</label>
+        <label class="chk"><input type="checkbox" id="f_vertical"> 直式影片（9:16）</label>
+        <label class="chk"><input type="checkbox" id="f_biz"> 商業委託案</label>
+      </div>
+      <p class="full note" id="f_err" style="color:#ffb3bd"></p>
+    </div>
+    <div class="dlg-f"><button type="button" data-x>取消</button><button type="submit" class="pri" id="btnApply">套用變更</button></div>
+  </form>
+</dialog>
+
+<script>
+(function(){
+'use strict';
+const OWNER='rollonaction', REPO='rollonaction.github.io', PATH='assets/works.json', API='https://api.github.com';
+const CATS=['短影音','活動紀錄','形象片','戲劇類'];
+const TK='rollon_admin_gh_token';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let data=null, sha=null, branch='main', dirty=false, editing=null;
+
+const token=()=>localStorage.getItem(TK)||'';
+function msg(html,kind){const m=$('#msg');m.className='msg show '+(kind||'ok');m.innerHTML=html;}
+function setDirty(d){dirty=d;$('#status').textContent=d?'有未儲存的變更':(data?'已載入 '+data.works.length+' 支影片':'尚未載入');$('#status').classList.toggle('dirty',d);$('#btnSave').disabled=!d||!token();}
+addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
+
+// UTF-8 safe base64
+const b64e=str=>{const b=new TextEncoder().encode(str);let s='';for(let i=0;i<b.length;i+=0x8000)s+=String.fromCharCode.apply(null,b.subarray(i,i+0x8000));return btoa(s);};
+const b64d=b=>new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\s/g,'')),c=>c.charCodeAt(0)));
+
+async function gh(path,opt={}){
+  const r=await fetch(API+path,{...opt,headers:{'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28',...(token()?{'Authorization':'Bearer '+token()}:{}),...(opt.headers||{})}});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok){const e=new Error(j.message||('HTTP '+r.status));e.status=r.status;throw e;}
+  return j;
+}
+function ytId(s){
+  s=String(s||'').trim(); if(/^[\w-]{11}$/.test(s)) return s;
+  try{const u=new URL(s);const h=u.hostname.replace(/^www\.|^m\./,'');
+    if(h==='youtu.be') return u.pathname.slice(1,12);
+    if(/youtube(-nocookie)?\.com$/.test(h)){ if(u.searchParams.get('v')) return u.searchParams.get('v').slice(0,11);
+      const m=u.pathname.match(/\/(shorts|embed|live|v)\/([\w-]{11})/); if(m) return m[2]; }
+  }catch(e){}
+  return '';
+}
+const platOf=u=>{try{const h=new URL(u).hostname;return /instagram\.com$/.test(h)?'IG':/(facebook\.com|fb\.watch|fb\.com)$/.test(h)?'FB':/(youtube\.com|youtu\.be)$/.test(h)?'YT':'other';}catch(e){return '';}};
+const ytThumb=id=>`https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+const thumbSrc=w=>{const p=w.thumb||ytThumb(w.youtubeId);return /^https?:/.test(p)?p:'../assets/'+p;};
+const fmtViews=n=>{n=+n;if(!isFinite(n))return '';const t=(v,u)=>(Math.floor(v*10)/10).toFixed(1).replace(/\.0$/,'')+u;return n>=1e8?t(n/1e8,'億'):n>=1e4?t(n/1e4,'萬'):Math.round(n).toLocaleString('zh-TW');};
+const today=()=>{const d=new Date(),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;};
+
+function normalize(d){
+  const works=(Array.isArray(d)?d:d.works||[]).map(w=>({
+    id:w.id||w.youtubeId, title:w.title||'', client:w.client||'', category:CATS.includes(w.category)?w.category:CATS[0],
+    youtubeId:w.youtubeId||w.id||'', thumb:w.thumb||'', stills:Array.isArray(w.stills)?w.stills.slice(0,3):[],
+    published:w.published!==false, order:+w.order||0, sourceUrl:w.sourceUrl||'', sourcePlatform:w.sourcePlatform||'',
+    views:(w.views===null||w.views===''||w.views===undefined)?null:+w.views, viewsUpdatedAt:w.viewsUpdatedAt||'',
+    meta:w.meta||'', dur:w.dur||'', vertical:!!w.vertical, biz:!!w.biz, ...(w.pano?{pano:true}:{})}));
+  return {version:1,updatedAt:d.updatedAt||'',categories:CATS.slice(),works};
+}
+const byCat=c=>data.works.filter(w=>w.category===c).sort((a,b)=>a.order-b.order);
+function renumber(){ // keep array grouped by category, order 1..n inside each
+  const out=[]; CATS.forEach(c=>byCat(c).forEach((w,i)=>{w.order=i+1;out.push(w);})); data.works=out;
+}
+
+function render(){
+  const L=$('#list'); if(!data){L.innerHTML='';return;}
+  L.innerHTML=CATS.map(c=>{const ws=byCat(c), on=ws.filter(w=>w.published).length;
+    return `<section class="cat" data-cat="${c}"><h3>${c}<span>上架 ${on}／共 ${ws.length} 支</span></h3>`+
+    (ws.length?ws.map((w,i)=>`<div class="item${w.published?'':' off'}" draggable="true" data-id="${esc(w.id)}">
+      <span class="handle" title="拖曳排序" aria-hidden="true">⋮⋮</span>
+      <img src="${esc(thumbSrc(w))}" alt="" loading="lazy">
+      <div><div class="it-title">${esc(w.title)||'（未命名）'}</div>
+        <div class="it-sub"><span class="badge ${w.published?'on':'off'}">${w.published?'上架中':'已下架'}</span>${w.client?`<span>${esc(w.client)}</span>`:''}<span>YT：${esc(w.youtubeId)}</span>${w.views!=null?`<span class="badge v">▶ ${fmtViews(w.views)} 次觀看</span>`:''}${w.sourceUrl?`<a href="${esc(w.sourceUrl)}" target="_blank" rel="noopener">原影片 ${esc(w.sourcePlatform||'')} ↗</a>`:'<span>未填原始連結</span>'}</div></div>
+      <div class="acts">
+        <span class="switch${w.published?' on':''}" role="switch" tabindex="0" aria-checked="${w.published}" data-act="toggle"><i></i>${w.published?'上架':'下架'}</span>
+        <button type="button" data-act="up" ${i===0?'disabled':''} aria-label="上移">↑</button>
+        <button type="button" data-act="down" ${i===ws.length-1?'disabled':''} aria-label="下移">↓</button>
+        <button type="button" data-act="edit">編輯</button>
+        <button type="button" class="danger" data-act="del">刪除</button>
+      </div></div>`).join(''):'<p class="empty">此分類目前沒有影片</p>')+'</section>';}).join('');
+}
+const find=id=>data.works.find(w=>w.id===id);
+$('#list').addEventListener('click',e=>{
+  const a=e.target.closest('[data-act]'); if(!a) return; const it=a.closest('.item'); const w=find(it.dataset.id); if(!w) return;
+  const act=a.dataset.act;
+  if(act==='toggle'){w.published=!w.published;}
+  else if(act==='up'||act==='down'){const ws=byCat(w.category),i=ws.indexOf(w),j=act==='up'?i-1:i+1;if(j<0||j>=ws.length)return;const t=ws[i].order;ws[i].order=ws[j].order;ws[j].order=t;renumber();}
+  else if(act==='edit'){openEdit(w);return;}
+  else if(act==='del'){if(!confirm(`確定要刪除「${w.title}」嗎？\n（按「儲存並發布」後才會真正從網站移除）`))return;data.works=data.works.filter(x=>x!==w);renumber();}
+  render();setDirty(true);
+});
+$('#list').addEventListener('keydown',e=>{const s=e.target.closest('.switch');if(s&&(e.key===' '||e.key==='Enter')){e.preventDefault();s.click();}});
+// drag & drop within a category
+let dragId=null;
+$('#list').addEventListener('dragstart',e=>{const it=e.target.closest('.item');if(!it)return;dragId=it.dataset.id;e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',dragId);});
+$('#list').addEventListener('dragover',e=>{const it=e.target.closest('.item');if(!it||!dragId)return;const a=find(dragId),b=find(it.dataset.id);if(!a||!b||a.category!==b.category)return;e.preventDefault();document.querySelectorAll('.drag-over').forEach(x=>x.classList.remove('drag-over'));it.classList.add('drag-over');});
+$('#list').addEventListener('drop',e=>{const it=e.target.closest('.item');if(!it||!dragId)return;e.preventDefault();const a=find(dragId),b=find(it.dataset.id);dragId=null;if(!a||!b||a===b||a.category!==b.category)return;
+  const ws=byCat(a.category).filter(x=>x!==a);ws.splice(ws.indexOf(b)+(a.order<b.order?1:0),0,a);ws.forEach((x,i)=>x.order=i+1);renumber();render();setDirty(true);});
+$('#list').addEventListener('dragend',()=>{dragId=null;document.querySelectorAll('.drag-over').forEach(x=>x.classList.remove('drag-over'));});
+
+// edit dialog
+const F=k=>$('#f_'+k);
+CATS.forEach(c=>{F('category').add(new Option(c,c));$('#addCat').add(new Option(c,c));});
+function preview(){
+  const id=ytId(F('youtubeId').value)||F('youtubeId').value.trim();
+  const t=F('thumb').value.trim(), st=F('stills').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  const src=p=>/^https?:/.test(p)?p:'../assets/'+p;
+  F('prev').innerHTML=`<img src="${esc(t?src(t):ytThumb(id))}" alt="主縮圖">`+[0,1,2].map(n=>`<img class="s" src="${esc(st[n]?src(st[n]):`https://i.ytimg.com/vi/${id}/hq${n+1}.jpg`)}" alt="截圖 ${n+1}">`).join('');
+}
+function openEdit(w,isNew){
+  editing={w,isNew};$('#dlgTitle').textContent=isNew?'新增影片':'編輯影片';
+  ['title','client','category','youtubeId','dur','meta','thumb','sourceUrl','sourcePlatform','viewsUpdatedAt'].forEach(k=>F(k).value=w[k]||'');
+  F('stills').value=(w.stills||[]).join('\n'); F('views').value=w.views==null?'':w.views;
+  F('published').checked=w.published; F('vertical').checked=w.vertical; F('biz').checked=w.biz; F('err').textContent='';
+  preview(); $('#dlg').showModal();
+}
+F('youtubeId').addEventListener('change',preview);F('thumb').addEventListener('change',preview);F('stills').addEventListener('change',preview);
+F('sourceUrl').addEventListener('change',()=>{const p=platOf(F('sourceUrl').value);if(p&&!F('sourcePlatform').value)F('sourcePlatform').value=p;});
+F('views').addEventListener('input',()=>{if(!F('viewsUpdatedAt').value||F('views').dataset.touched!=='1'){F('viewsUpdatedAt').value=today();F('views').dataset.touched='1';}});
+document.querySelectorAll('[data-x]').forEach(b=>b.addEventListener('click',()=>$('#dlg').close()));
+$('#btnYtViews').addEventListener('click',async()=>{
+  const id=ytId(F('sourceUrl').value)||ytId(F('youtubeId').value); if(!id){F('err').textContent='找不到 YouTube 影片 ID';return;}
+  const b=$('#btnYtViews');b.disabled=true;b.textContent='讀取中…';
+  try{const r=await fetch('https://returnyoutubedislikeapi.com/votes?videoId='+encodeURIComponent(id));const j=await r.json();
+    if(typeof j.viewCount==='number'){F('views').value=j.viewCount;F('viewsUpdatedAt').value=today();F('err').textContent='';}else throw 0;}
+  catch(e){F('err').textContent='無法自動取得，請手動輸入觀看數。';}
+  b.disabled=false;b.textContent='從 YouTube 帶入觀看數（非官方）';
+});
+$('#form').addEventListener('submit',e=>{
+  e.preventDefault(); const w=editing.w;
+  const id=ytId(F('youtubeId').value); if(!id){F('err').textContent='YouTube 影片 ID 格式不正確（11 碼）';return;}
+  const vRaw=F('views').value.replace(/[,\s]/g,''); let views=null;
+  if(vRaw!==''){const m=vRaw.match(/^(\d+(?:\.\d+)?)(萬|億)?$/);if(!m){F('err').textContent='觀看次數請輸入數字（可用「12.3萬」）';return;}views=Math.round(+m[1]*(m[2]==='億'?1e8:m[2]==='萬'?1e4:1));}
+  const su=F('sourceUrl').value.trim(); if(su&&!/^https?:\/\//.test(su)){F('err').textContent='原始連結需以 https:// 開頭';return;}
+  if(!F('title').value.trim()){F('err').textContent='請填寫標題';return;}
+  const dup=data.works.find(x=>x!==w&&x.id===(editing.isNew?id:w.id)); if(editing.isNew&&dup){F('err').textContent='這支影片已在清單中';return;}
+  const oldCat=w.category;
+  Object.assign(w,{title:F('title').value.trim(),client:F('client').value.trim(),category:F('category').value,youtubeId:id,dur:F('dur').value.trim(),meta:F('meta').value.trim(),
+    thumb:F('thumb').value.trim(),stills:F('stills').value.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,3),sourceUrl:su,sourcePlatform:F('sourcePlatform').value||(su?platOf(su):''),
+    views,viewsUpdatedAt:views==null?'':(F('viewsUpdatedAt').value||today()),published:F('published').checked,vertical:F('vertical').checked,biz:F('biz').checked});
+  if(editing.isNew){w.id=id;data.works.push(w);}
+  if(editing.isNew||oldCat!==w.category) w.order=byCat(w.category).length+1;
+  renumber(); $('#dlg').close(); F('views').dataset.touched=''; render(); setDirty(true);
+});
+
+// add by YouTube link
+$('#btnAdd').addEventListener('click',async()=>{
+  if(!data) return; const url=$('#addUrl').value.trim(), id=ytId(url);
+  if(!id){msg('無法辨識這個 YouTube 連結，請確認格式。','err');return;}
+  if(find(id)){msg('這支影片已在清單中。','err');return;}
+  const w={id,title:'',client:'',category:$('#addCat').value,youtubeId:id,thumb:'',stills:[],published:true,order:0,sourceUrl:'',sourcePlatform:'',views:null,viewsUpdatedAt:'',meta:'',dur:'',vertical:/\/shorts\//.test(url),biz:false};
+  try{const r=await fetch('https://www.youtube.com/oembed?format=json&url='+encodeURIComponent('https://www.youtube.com/watch?v='+id));if(r.ok){const j=await r.json();w.title=j.title||'';if(j.width&&j.height&&j.height>j.width)w.vertical=true;}}catch(e){}
+  $('#addUrl').value=''; openEdit(w,true);
+});
+
+// load / save
+async function load(){
+  $('#status').textContent='載入中…';
+  try{
+    if(token()){
+      try{const repo=await gh(`/repos/${OWNER}/${REPO}`);branch=repo.default_branch||'main';}catch(e){if(e.status===401)throw new Error('權杖無效或已過期（401）');}
+      const f=await gh(`/repos/${OWNER}/${REPO}/contents/${PATH}?ref=${encodeURIComponent(branch)}`);
+      sha=f.sha; data=normalize(JSON.parse(b64d(f.content)));
+    }else{
+      const r=await fetch('../assets/works.json?v='+Date.now(),{cache:'no-store'}); if(!r.ok) throw new Error('無法讀取 works.json（'+r.status+'）');
+      data=normalize(await r.json()); sha=null;
+      msg('目前為「唯讀」模式：請先在上方貼上 GitHub 權杖，才能儲存變更。','err');
+    }
+    renumber(); render(); setDirty(false);
+  }catch(e){ $('#status').textContent='載入失敗'; msg('載入失敗：'+esc(e.message),'err'); }
+}
+function validate(d){
+  const ids=new Set();
+  for(const w of d.works){
+    if(!w.id||ids.has(w.id)) throw new Error('影片 ID 重複或空白：'+w.id); ids.add(w.id);
+    if(!CATS.includes(w.category)) throw new Error('分類錯誤：'+w.title);
+    if(!/^[\w-]{11}$/.test(w.youtubeId)) throw new Error('YouTube ID 格式錯誤：'+w.title);
+    if(w.views!==null&&!(Number.isFinite(w.views)&&w.views>=0)) throw new Error('觀看次數錯誤：'+w.title);
+  }
+  const s=JSON.stringify(d,null,2)+'\n'; JSON.parse(s); return s;
+}
+$('#btnSave').addEventListener('click',async()=>{
+  if(!token()){msg('請先輸入 GitHub 權杖。','err');return;}
+  const b=$('#btnSave'); b.disabled=true; b.textContent='儲存中…';
+  try{
+    renumber(); data.updatedAt=new Date().toISOString(); const body=validate(data);
+    if(!sha){const f=await gh(`/repos/${OWNER}/${REPO}/contents/${PATH}?ref=${encodeURIComponent(branch)}`);sha=f.sha;}
+    const r=await gh(`/repos/${OWNER}/${REPO}/contents/${PATH}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'後台更新精選作品 works.json',content:b64e(body),sha,branch})});
+    sha=r.content&&r.content.sha; setDirty(false);
+    const url=r.commit&&r.commit.html_url;
+    msg(`✅ 已儲存並送出更新（commit <a href="${esc(url)}" target="_blank" rel="noopener">${esc((r.commit&&r.commit.sha||'').slice(0,7))}</a>）。網站約 1 分鐘後更新，可重新整理首頁確認。`,'ok');
+  }catch(e){
+    msg('儲存失敗：'+esc(e.message)+(e.status===409?'（檔案已被其他人更新，請按「重新載入」後再修改一次）':e.status===401||e.status===403?'（請確認權杖是否有效，並有 Contents 讀寫權限）':''),'err');
+    setDirty(true);
+  }
+  b.textContent='儲存並發布'; b.disabled=!dirty;
+});
+$('#btnReload').addEventListener('click',()=>{if(dirty&&!confirm('有未儲存的變更，確定要重新載入嗎？'))return;$('#msg').className='msg';load();});
+$('#btnToken').addEventListener('click',()=>{const v=$('#token').value.trim();if(!v){msg('請貼上權杖。','err');return;}localStorage.setItem(TK,v);$('#token').value='';$('#token').placeholder='已儲存權杖（••••••）';$('#msg').className='msg';load();});
+$('#btnForget').addEventListener('click',()=>{localStorage.removeItem(TK);$('#token').placeholder='github_pat_…';sha=null;setDirty(dirty);msg('已從這個瀏覽器清除權杖。','ok');});
+if(token()) $('#token').placeholder='已儲存權杖（••••••）';
+load();
+})();
+</script>
+</body>
+</html>
