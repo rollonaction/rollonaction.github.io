@@ -168,7 +168,7 @@ dialog{overflow-x:hidden}
       <div class="full"><label for="f_meta">說明文字（日期・類型・得獎等）</label><input id="f_meta"></div>
       <div class="full prev" id="f_prev"></div>
       <div class="full"><label for="f_thumb">主縮圖（留空＝使用 YouTube 縮圖；thumbs/… 為網站內建圖）</label><input id="f_thumb"></div>
-      <div class="full"><label>3 張精華截圖（每行一個網址或 thumbs/… 路徑；留空＝YouTube 自動截圖）</label><textarea id="f_stills" rows="3"></textarea></div>
+      <div class="full"><label for="f_stills">3 張封面截圖（首頁影片旁的 3 張畫面；每行一個：圖片網址或 thumbs/… 網站內建圖；留空＝YouTube 自動截圖。下方預覽會即時更新）</label><textarea id="f_stills" rows="3"></textarea></div>
       <div class="full"><label for="f_sourceUrl">客戶原始貼文連結（IG／FB／YouTube）</label><input id="f_sourceUrl" placeholder="https://www.instagram.com/reel/…"></div>
       <div><label for="f_sourcePlatform">原始平台</label><select id="f_sourcePlatform"><option value="">（未填）</option><option value="IG">Instagram</option><option value="FB">Facebook</option><option value="YT">YouTube</option><option value="other">其他</option></select></div>
       <div><label for="f_views">觀看次數（手動輸入數字）</label><input id="f_views" inputmode="numeric" placeholder="例 123000"></div>
@@ -379,7 +379,7 @@ function openEdit(w,isNew){
   preview(); $('#dlg').showModal();
 }
 F('category').addEventListener('change',()=>{ const w=editing.w; F('subcategory').value=F('category').value===w.category&&SUBS.includes(w.subcategory)?w.subcategory:''; subVis(); });
-F('youtubeId').addEventListener('change',preview);F('thumb').addEventListener('change',preview);F('stills').addEventListener('change',preview);
+F('youtubeId').addEventListener('change',preview);F('thumb').addEventListener('change',preview);F('stills').addEventListener('input',preview);F('thumb').addEventListener('input',preview);
 F('sourceUrl').addEventListener('change',()=>{const p=platOf(F('sourceUrl').value);if(p&&!F('sourcePlatform').value)F('sourcePlatform').value=p;});
 F('views').addEventListener('input',()=>{if(!F('viewsUpdatedAt').value||F('views').dataset.touched!=='1'){F('viewsUpdatedAt').value=today();F('views').dataset.touched='1';}});
 document.querySelectorAll('[data-x]').forEach(b=>b.addEventListener('click',()=>$('#dlg').close()));
