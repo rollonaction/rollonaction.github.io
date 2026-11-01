@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-01T10:37:18.540Z",
+  "updatedAt": "2026-11-01T10:39:10.919Z",
   "categories": [
     "短影音",
     "活動紀錄",
@@ -653,30 +653,6 @@
       "biz": true
     },
     {
-      "id": "3dWDIabzeQo",
-      "title": "2025年基隆國際移民生活節宣傳影片",
-      "client": "",
-      "category": "形象片",
-      "youtubeId": "3dWDIabzeQo",
-      "thumb": "thumbs/3dWDIabzeQo.webp",
-      "stills": [
-        "thumbs/3dWDIabzeQo-1.webp",
-        "thumbs/3dWDIabzeQo-2.webp",
-        "thumbs/3dWDIabzeQo-3.webp"
-      ],
-      "published": true,
-      "order": 4,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "活動宣傳片",
-      "dur": "0:54",
-      "vertical": false,
-      "biz": false,
-      "pano": true
-    },
-    {
       "id": "Lrv7l38w0wk",
       "title": "防範詐騙 你我做起",
       "client": "",
@@ -689,7 +665,7 @@
         "thumbs/Lrv7l38w0wk-3.webp"
       ],
       "published": true,
-      "order": 5,
+      "order": 4,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -712,7 +688,7 @@
         "thumbs/YIgQGj_KSzo-3.webp"
       ],
       "published": true,
-      "order": 6,
+      "order": 5,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -735,7 +711,7 @@
         "https://i.ytimg.com/vi/ityIOqni86g/hq3.jpg"
       ],
       "published": true,
-      "order": 7,
+      "order": 6,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -760,7 +736,7 @@
         "https://i.ytimg.com/vi/zjXRUc4RF3E/hq3.jpg"
       ],
       "published": true,
-      "order": 8,
+      "order": 7,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -785,7 +761,7 @@
         "https://i.ytimg.com/vi/3cBkkiNJsGw/hq3.jpg"
       ],
       "published": true,
-      "order": 9,
+      "order": 8,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -810,7 +786,7 @@
         "https://i.ytimg.com/vi/YKfRs3_XBYU/hq3.jpg"
       ],
       "published": true,
-      "order": 10,
+      "order": 9,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -835,7 +811,7 @@
         "https://i.ytimg.com/vi/oDnDQwXC_z8/hq3.jpg"
       ],
       "published": true,
-      "order": 11,
+      "order": 10,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -860,7 +836,7 @@
         "https://i.ytimg.com/vi/dsEa7SLoTXc/hq3.jpg"
       ],
       "published": true,
-      "order": 12,
+      "order": 11,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -885,7 +861,7 @@
         "https://i.ytimg.com/vi/hyZ4BPztbNA/hq3.jpg"
       ],
       "published": true,
-      "order": 13,
+      "order": 12,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -910,7 +886,7 @@
         "https://i.ytimg.com/vi/KQpzOyRLy4M/hq3.jpg"
       ],
       "published": true,
-      "order": 14,
+      "order": 13,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -921,6 +897,30 @@
       "biz": false,
       "playlist": "比賽作品",
       "sourceTitle": "『乳來乳澎湃』_翻玩臺味好乳力-全國短影音創意大募集"
+    },
+    {
+      "id": "3dWDIabzeQo",
+      "title": "2025年基隆國際移民生活節宣傳影片",
+      "client": "",
+      "category": "形象片",
+      "youtubeId": "3dWDIabzeQo",
+      "thumb": "thumbs/3dWDIabzeQo.webp",
+      "stills": [
+        "thumbs/3dWDIabzeQo-1.webp",
+        "thumbs/3dWDIabzeQo-2.webp",
+        "thumbs/3dWDIabzeQo-3.webp"
+      ],
+      "published": false,
+      "order": 14,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "活動宣傳片",
+      "dur": "0:54",
+      "vertical": false,
+      "biz": false,
+      "pano": true
     },
     {
       "id": "g3vIuZt7i4c",
