@@ -43,14 +43,30 @@ main{max-width:1100px;margin:0 auto;padding:24px}
 .cat h3::before{content:"";width:4px;height:18px;background:var(--wine2);border-radius:2px}
 .item{display:grid;grid-template-columns:28px 112px minmax(0,1fr) auto;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px}
 .item.off{opacity:.55}
-.item.drag-over{border-color:var(--wine2);box-shadow:0 0 0 1px var(--wine2)}
+.item.dragging{opacity:.35}
+.item.drop-before{box-shadow:0 -3px 0 0 var(--wine2)}
+.item.drop-after{box-shadow:0 3px 0 0 var(--wine2)}
+.cat.drop-into{outline:2px dashed var(--wine2);outline-offset:6px;border-radius:10px}
+.cat h3 .colbtn{margin-left:auto;padding:3px 10px;font-size:12px}
+.cat .dropzone{border:1px dashed var(--line);border-radius:10px;padding:16px;text-align:center}
+.acts select[data-act=move]{width:auto;padding:5px 8px;font-size:13px}
 .handle{cursor:grab;color:var(--mu);text-align:center;font-size:18px;user-select:none}
 .item img{width:112px;height:63px;object-fit:cover;border-radius:6px;background:#000}
 .it-title{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .it-sub{font-size:12px;color:var(--mu);display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:2px}
 .badge{display:inline-block;font-size:12px;padding:1px 8px;border-radius:999px;border:1px solid var(--line)}
 .badge.on{background:rgba(63,163,107,.18);border-color:rgba(63,163,107,.6)}
-.badge.off{background:rgba(255,255,255,.06)}
+.badge.off{background:rgba(255,179,189,.08);border-color:rgba(255,179,189,.55);color:#ffb3bd;font-weight:700}
+.badge.pl{color:var(--mu)}
+.item.hide{display:none}
+.fbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.chips{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.chips button{border:0;border-radius:0;padding:6px 14px;font-size:13px;background:transparent}
+.chips button+button{border-left:1px solid var(--line)}
+.chips button.on{background:var(--wine2);color:#fff}
+.fbar select,.fbar input{width:auto;min-width:0}
+.fbar input{flex:1 1 180px}
+.fcount{font-size:13px;color:var(--mu)}
 .badge.v{background:rgba(158,42,58,.25);border-color:var(--wine2)}
 .acts{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
 .acts button{padding:5px 10px;font-size:13px}
@@ -112,6 +128,19 @@ dialog{overflow-x:hidden}
       <button class="auto pri" id="btnAdd" type="button">新增</button>
     </div>
     <p class="note" style="margin-top:8px">會自動帶入影片 ID、縮圖與標題，新增後可再編輯。網站約在儲存後 1 分鐘更新。</p>
+  </section>
+
+  <section class="panel" id="filterPanel">
+    <h2>篩選</h2>
+    <div class="fbar">
+      <div class="chips" id="fState" role="group" aria-label="上架狀態">
+        <button type="button" data-f="all" class="on">全部</button><button type="button" data-f="on">上架中</button><button type="button" data-f="off">已下架</button>
+      </div>
+      <select id="fPl" aria-label="來源播放清單"><option value="">所有來源</option><option>商案作品</option><option>比賽作品</option><option value="-">原有作品</option></select>
+      <input id="fQ" type="search" placeholder="搜尋標題／客戶／ID" aria-label="搜尋">
+      <span class="fcount" id="fCount"></span>
+    </div>
+    <p class="note" style="margin-top:8px">從播放清單匯入的影片預設為「已下架」，切換開關即可上架，確認後按「儲存並發布」。<br>影片可拖曳到其他分類的任一位置（可先「收合」分類或用篩選縮短清單）；手機請用每支影片的「移到…」選單。</p>
   </section>
 
   <div id="list"></div>
@@ -192,7 +221,8 @@ function normalize(d){
     youtubeId:w.youtubeId||w.id||'', thumb:w.thumb||'', stills:Array.isArray(w.stills)?w.stills.slice(0,3):[],
     published:w.published!==false, order:+w.order||0, sourceUrl:w.sourceUrl||'', sourcePlatform:w.sourcePlatform||'',
     views:(w.views===null||w.views===''||w.views===undefined)?null:+w.views, viewsUpdatedAt:w.viewsUpdatedAt||'',
-    meta:w.meta||'', dur:w.dur||'', vertical:!!w.vertical, biz:!!w.biz, ...(w.pano?{pano:true}:{})}));
+    meta:w.meta||'', dur:w.dur||'', vertical:!!w.vertical, biz:!!w.biz, ...(w.pano?{pano:true}:{}),
+    ...(w.playlist?{playlist:String(w.playlist)}:{}), ...(w.sourceTitle?{sourceTitle:String(w.sourceTitle)}:{})}));
   return {version:1,updatedAt:d.updatedAt||'',categories:CATS.slice(),works};
 }
 const byCat=c=>data.works.filter(w=>w.category===c).sort((a,b)=>a.order-b.order);
@@ -200,27 +230,45 @@ function renumber(){ // keep array grouped by category, order 1..n inside each
   const out=[]; CATS.forEach(c=>byCat(c).forEach((w,i)=>{w.order=i+1;out.push(w);})); data.works=out;
 }
 
+const FIL={state:'all',pl:'',q:''};
+const matchF=w=>(FIL.state==='all'||(FIL.state==='on')===!!w.published)&&(!FIL.pl||(FIL.pl==='-'?!w.playlist:w.playlist===FIL.pl))&&
+  (!FIL.q||[w.title,w.client,w.youtubeId,w.sourceTitle||'',w.meta].join(' ').toLowerCase().includes(FIL.q.toLowerCase()));
+function applyFilter(){
+  if(!data)return; let n=0;
+  document.querySelectorAll('#list .item').forEach(it=>{const w=find(it.dataset.id),ok=!!w&&matchF(w);it.classList.toggle('hide',!ok);if(ok)n++;});
+  document.querySelectorAll('#list .cat').forEach(sec=>{const vis=sec.querySelectorAll('.item:not(.hide)').length,tot=sec.querySelectorAll('.item').length;
+    let e=sec.querySelector('.fempty');if(tot&&!vis){if(!e){e=document.createElement('p');e.className='empty fempty';e.textContent='此分類沒有符合篩選的影片';sec.appendChild(e);}}else if(e)e.remove();});
+  const on=data.works.filter(w=>w.published).length;
+  $('#fCount').textContent=`顯示 ${n}／共 ${data.works.length} 支（上架 ${on}、下架 ${data.works.length-on}）`;
+  $('#fState').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.f===FIL.state));
+}
+$('#fState').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;FIL.state=b.dataset.f;applyFilter();});
+$('#fPl').addEventListener('change',e=>{FIL.pl=e.target.value;applyFilter();});
+$('#fQ').addEventListener('input',e=>{FIL.q=e.target.value.trim();applyFilter();});
 function render(){
   const L=$('#list'); if(!data){L.innerHTML='';return;}
   L.innerHTML=CATS.map(c=>{const ws=byCat(c), on=ws.filter(w=>w.published).length;
-    return `<section class="cat" data-cat="${c}"><h3>${c}<span>上架 ${on}／共 ${ws.length} 支</span></h3>`+
-    (ws.length?ws.map((w,i)=>`<div class="item${w.published?'':' off'}" draggable="true" data-id="${esc(w.id)}">
+    const col=COLLAPSED.has(c);
+    return `<section class="cat${col?' collapsed':''}" data-cat="${c}"><h3>${c}<span>上架 ${on}／共 ${ws.length} 支</span><button type="button" class="colbtn" data-collapse aria-expanded="${!col}">${col?'展開 ▾':'收合 ▴'}</button></h3>`+
+    (col?'<p class="empty dropzone">（已收合，可把影片拖到這裡）</p>':ws.length?ws.map((w,i)=>`<div class="item${w.published?'':' off'}" draggable="true" data-id="${esc(w.id)}">
       <span class="handle" title="拖曳排序" aria-hidden="true">⋮⋮</span>
       <img src="${esc(thumbSrc(w))}" alt="" loading="lazy">
       <div><div class="it-title">${esc(w.title)||'（未命名）'}</div>
-        <div class="it-sub"><span class="badge ${w.published?'on':'off'}">${w.published?'上架中':'已下架'}</span>${w.client?`<span>${esc(w.client)}</span>`:''}<span>YT：${esc(w.youtubeId)}</span>${w.views!=null?`<span class="badge v">▶ ${fmtViews(w.views)} 次觀看</span>`:''}${w.sourceUrl?`<a href="${esc(w.sourceUrl)}" target="_blank" rel="noopener">原影片 ${esc(w.sourcePlatform||'')} ↗</a>`:'<span>未填原始連結</span>'}</div></div>
+        <div class="it-sub"><span class="badge ${w.published?'on':'off'}">${w.published?'上架中':'已下架'}</span>${w.client?`<span>${esc(w.client)}</span>`:''}${w.playlist?`<span class="badge pl">${esc(w.playlist)}</span>`:''}${w.dur?`<span>${esc(w.dur)}</span>`:''}<a href="https://www.youtube.com/watch?v=${encodeURIComponent(w.youtubeId)}" target="_blank" rel="noopener">YT：${esc(w.youtubeId)} ↗</a>${w.views!=null?`<span class="badge v">▶ ${fmtViews(w.views)} 次觀看</span>`:''}${w.sourceUrl?`<a href="${esc(w.sourceUrl)}" target="_blank" rel="noopener">原影片 ${esc(w.sourcePlatform||'')} ↗</a>`:'<span>未填原始連結</span>'}</div></div>
       <div class="acts">
         <span class="switch${w.published?' on':''}" role="switch" tabindex="0" aria-checked="${w.published}" data-act="toggle"><i></i>${w.published?'上架':'下架'}</span>
         <button type="button" data-act="up" ${i===0?'disabled':''} aria-label="上移">↑</button>
         <button type="button" data-act="down" ${i===ws.length-1?'disabled':''} aria-label="下移">↓</button>
+        <select data-act="move" aria-label="移到其他分類" title="移到其他分類"><option value="">移到…</option>${CATS.filter(x=>x!==c).map(x=>`<option value="${x}">${x}</option>`).join('')}</select>
         <button type="button" data-act="edit">編輯</button>
         <button type="button" class="danger" data-act="del">刪除</button>
-      </div></div>`).join(''):'<p class="empty">此分類目前沒有影片</p>')+'</section>';}).join('');
+      </div></div>`).join(''):'<p class="empty dropzone">此分類目前沒有影片（可把影片拖到這裡）</p>')+'</section>';}).join('');
+  applyFilter();
 }
 const find=id=>data.works.find(w=>w.id===id);
 $('#list').addEventListener('click',e=>{
   const a=e.target.closest('[data-act]'); if(!a) return; const it=a.closest('.item'); const w=find(it.dataset.id); if(!w) return;
-  const act=a.dataset.act;
+  const act=a.dataset.act; if(act==='move')return;
   if(act==='toggle'){w.published=!w.published;}
   else if(act==='up'||act==='down'){const ws=byCat(w.category),i=ws.indexOf(w),j=act==='up'?i-1:i+1;if(j<0||j>=ws.length)return;const t=ws[i].order;ws[i].order=ws[j].order;ws[j].order=t;renumber();}
   else if(act==='edit'){openEdit(w);return;}
@@ -230,11 +278,31 @@ $('#list').addEventListener('click',e=>{
 $('#list').addEventListener('keydown',e=>{const s=e.target.closest('.switch');if(s&&(e.key===' '||e.key==='Enter')){e.preventDefault();s.click();}});
 // drag & drop within a category
 let dragId=null;
-$('#list').addEventListener('dragstart',e=>{const it=e.target.closest('.item');if(!it)return;dragId=it.dataset.id;e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',dragId);});
-$('#list').addEventListener('dragover',e=>{const it=e.target.closest('.item');if(!it||!dragId)return;const a=find(dragId),b=find(it.dataset.id);if(!a||!b||a.category!==b.category)return;e.preventDefault();document.querySelectorAll('.drag-over').forEach(x=>x.classList.remove('drag-over'));it.classList.add('drag-over');});
-$('#list').addEventListener('drop',e=>{const it=e.target.closest('.item');if(!it||!dragId)return;e.preventDefault();const a=find(dragId),b=find(it.dataset.id);dragId=null;if(!a||!b||a===b||a.category!==b.category)return;
-  const ws=byCat(a.category).filter(x=>x!==a);ws.splice(ws.indexOf(b)+(a.order<b.order?1:0),0,a);ws.forEach((x,i)=>x.order=i+1);renumber();render();setDirty(true);});
-$('#list').addEventListener('dragend',()=>{dragId=null;document.querySelectorAll('.drag-over').forEach(x=>x.classList.remove('drag-over'));});
+function moveTo(a,cat,before){ // move work a into category cat, before work `before` (null = end)
+  if(!CATS.includes(cat))return false;
+  const ws=byCat(cat).filter(x=>x!==a); let i=before?ws.indexOf(before):-1; if(i<0)i=ws.length;
+  ws.splice(i,0,a); a.category=cat; ws.forEach((x,k)=>x.order=k+1); renumber(); return true;
+}
+const clearDrop=()=>document.querySelectorAll('.drop-before,.drop-after,.drop-into').forEach(x=>x.classList.remove('drop-before','drop-after','drop-into'));
+function dropTarget(e){ // -> {cat, before, el, cls}
+  const it=e.target.closest('.item:not(.hide)'), sec=e.target.closest('.cat'); if(!sec)return null;
+  if(it&&it.dataset.id!==dragId){const r=it.getBoundingClientRect(),after=e.clientY>r.top+r.height/2,b=find(it.dataset.id);
+    const ws=byCat(sec.dataset.cat).filter(x=>x.id!==dragId);
+    return {cat:sec.dataset.cat,before:after?(ws[ws.indexOf(b)+1]||null):b,el:it,cls:after?'drop-after':'drop-before'};}
+  if(it)return {cat:sec.dataset.cat,self:true};
+  return {cat:sec.dataset.cat,before:null,el:sec,cls:'drop-into'};
+}
+$('#list').addEventListener('dragstart',e=>{const it=e.target.closest('.item');if(!it)return;dragId=it.dataset.id;it.classList.add('dragging');e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',dragId);});
+$('#list').addEventListener('dragover',e=>{if(!dragId)return;const t=dropTarget(e);if(!t)return;e.preventDefault();e.dataTransfer.dropEffect='move';clearDrop();if(t.el)t.el.classList.add(t.cls);});
+$('#list').addEventListener('drop',e=>{if(!dragId)return;const t=dropTarget(e),a=find(dragId);dragId=null;clearDrop();if(!t||!a||t.self)return;e.preventDefault();
+  if(moveTo(a,t.cat,t.before)){render();setDirty(true);}});
+$('#list').addEventListener('dragend',()=>{dragId=null;clearDrop();document.querySelectorAll('.dragging').forEach(x=>x.classList.remove('dragging'));});
+// touch-friendly fallback: 「移到」 menu on each item
+$('#list').addEventListener('change',e=>{const sel=e.target.closest('select[data-act="move"]');if(!sel)return;const w=find(sel.closest('.item').dataset.id),c=sel.value;sel.value='';
+  if(!w||!c||c===w.category)return; if(moveTo(w,c,null)){render();setDirty(true);msg(esc(`已將「${w.title}」移到「${c}」（排在最後），記得按「儲存並發布」。`),'ok');}});
+// collapse / expand a category group
+const COLLAPSED=new Set();
+$('#list').addEventListener('click',e=>{const h=e.target.closest('[data-collapse]');if(!h)return;const c=h.closest('.cat').dataset.cat;COLLAPSED.has(c)?COLLAPSED.delete(c):COLLAPSED.add(c);render();});
 
 // edit dialog
 const F=k=>$('#f_'+k);
