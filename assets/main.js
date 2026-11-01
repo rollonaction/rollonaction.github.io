@@ -36,17 +36,84 @@
       </div>
     </article>`;}).join('');
 
-  // filters: category tabs only (no 「全部」)
-  const btns=document.querySelectorAll('.filter');
-  btns.forEach(b=>{ const c=b.querySelector('.filter__count'); if(c) c.textContent=catTotal[b.dataset.filter]||0; });
-  btns.forEach(b=>b.addEventListener('click',()=>{
-    btns.forEach(x=>x.classList.toggle('is-active',x===b));
-    const f=b.dataset.filter;
-    btns.forEach(x=>x.setAttribute('aria-selected',x===b?'true':'false'));
+  // categories: one category at a time (no 「全部」). Big cards + sticky bar + 「下一類」 panel.
+  const CATS=[
+    {k:'short',name:'短影音',en:'SHORT-FORM'},
+    {k:'event',name:'活動紀錄',en:'EVENTS'},
+    {k:'brand',name:'形象片',en:'BRAND FILM'},
+    {k:'drama',name:'戲劇類',en:'DRAMA'}
+  ].filter(c=>catTotal[c.k]);
+  const firstOf=k=>WORKS.find(w=>w.cat===k);
+  const cardsEl=document.getElementById('worksCats'), barPills=document.getElementById('worksBarPills');
+  const bar=document.getElementById('worksBar'), body=document.getElementById('worksBody'), nextEl=document.getElementById('worksNext');
+  let cur=DEFAULT_CAT;
+  if(cardsEl){
+    cardsEl.innerHTML=CATS.map((c,i)=>`<button class="wcat${c.k===cur?' is-active':''}" role="tab" aria-selected="${c.k===cur}" data-filter="${c.k}" style="--d:${i*.08}s">
+      <span class="wcat__media"><img src="${T}${firstOf(c.k).id}.webp" alt="" loading="lazy" decoding="async"></span>
+      <span class="wcat__no">${pad(i+1)}</span>
+      <span class="wcat__state" aria-hidden="true">${c.k===cur?'● 觀看中':'<i class="wcat__long">點選</i>切換 →'}</span>
+      <span class="wcat__txt"><span class="wcat__en">${c.en}</span><span class="wcat__name">${c.name}</span><span class="wcat__count">${catTotal[c.k]} 支作品</span></span>
+    </button>`).join('');
+  }
+  if(barPills){
+    barPills.innerHTML=CATS.map(c=>`<button class="wpill${c.k===cur?' is-active':''}" data-filter="${c.k}" aria-pressed="${c.k===cur}">${c.name}<b>${catTotal[c.k]}</b></button>`).join('');
+  }
+  // legacy small tabs (older preview pages still use .filter buttons)
+  document.querySelectorAll('.filter').forEach(b=>{ const c=b.querySelector('.filter__count'); if(c) c.textContent=catTotal[b.dataset.filter]||0; });
+
+  const navEl=document.getElementById('nav');
+  const navH=()=>navEl?navEl.getBoundingClientRect().height:64;
+  function scrollToRows(){
+    const top=grid.getBoundingClientRect().top+scrollY-navH()-(bar?bar.offsetHeight:0)-16;
+    scrollTo({top:Math.max(0,top),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  }
+  function renderNext(){
+    if(!nextEl||!CATS.length) return;
+    const i=CATS.findIndex(c=>c.k===cur), n=CATS[(i+1)%CATS.length];
+    nextEl.innerHTML=`<button class="wnext" data-filter="${n.k}" data-scroll="1">
+      <span class="wnext__media"><img src="${T}${firstOf(n.k).id}.webp" alt="" loading="lazy" decoding="async"></span>
+      <span class="wnext__txt"><span class="wnext__kicker">看完了 ${CATS[i].name}・繼續看</span><span class="wnext__name">下一類：${n.name} <i aria-hidden="true">→</i></span><span class="wnext__meta">${n.en}・${catTotal[n.k]} 支作品</span></span>
+    </button>`;
+  }
+  function setCat(f,scroll){
+    if(!catTotal[f]) return;
+    cur=f;
+    document.querySelectorAll('[data-filter]').forEach(x=>{
+      if(x.closest('#worksNext')) return;
+      const on=x.dataset.filter===f;
+      x.classList.toggle('is-active',on);
+      if(x.hasAttribute('aria-selected')) x.setAttribute('aria-selected',on?'true':'false');
+      if(x.hasAttribute('aria-pressed')) x.setAttribute('aria-pressed',on?'true':'false');
+      const st=x.querySelector('.wcat__state'); if(st) st.innerHTML=on?'● 觀看中':'<i class="wcat__long">點選</i>切換 →';
+      if(on && x.classList.contains('wpill') && x.parentElement.scrollWidth>x.parentElement.clientWidth){
+        x.parentElement.scrollTo({left:x.offsetLeft-x.parentElement.clientWidth/2+x.offsetWidth/2,behavior:'smooth'});
+      }
+    });
     grid.querySelectorAll('.ep').forEach(el=>{ el.hidden=el.dataset.cat!==f; });
     grid.classList.remove('is-swap'); void grid.offsetWidth; grid.classList.add('is-swap');
+    renderNext();
     document.dispatchEvent(new CustomEvent('works:filter'));
-  }));
+    if(scroll) scrollToRows();
+    requestAnimationFrame(barUpdate);
+  }
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('.wcat,.wpill,.wnext,.filter'); if(!b) return;
+    setCat(b.dataset.filter, b.classList.contains('wpill')||b.classList.contains('wnext'));
+  });
+  renderNext();
+
+  // sticky bar: shown only while the rows of the works section are on screen (fixed under the nav)
+  function barUpdate(){
+    if(!bar||!body) return;
+    const h=navH(), cardsBottom=cardsEl?cardsEl.getBoundingClientRect().bottom:0;
+    const r=grid.getBoundingClientRect();
+    const bh=bar.offsetHeight, on=(cardsBottom<h || r.top<h+bh+60) && r.bottom>h+bh+40;
+    bar.style.setProperty('--navh',h+'px');
+    bar.classList.toggle('is-on',on);
+  }
+  let bt=false;
+  addEventListener('scroll',()=>{ if(!bt){bt=true;requestAnimationFrame(()=>{bt=false;barUpdate();});} },{passive:true});
+  addEventListener('resize',barUpdate); barUpdate();
 
   // modal
   const modal=document.getElementById('modal'),frame=document.getElementById('modalFrame'),mt=document.getElementById('modalTitle');

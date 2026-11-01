@@ -136,14 +136,16 @@
         <p class="section__num" data-reveal>02 / SELECTED WORKS</p>
         <h2 class="section__title" data-split>精選作品</h2>
       </div>
-      <div class="filters" role="tablist" id="filters" data-reveal>
-        <button class="filter is-active" role="tab" aria-selected="true" data-filter="short">短影音<span class="filter__count"></span></button>
-        <button class="filter" role="tab" aria-selected="false" data-filter="event">活動紀錄<span class="filter__count"></span></button>
-        <button class="filter" role="tab" aria-selected="false" data-filter="brand">形象片<span class="filter__count"></span></button>
-        <button class="filter" role="tab" aria-selected="false" data-filter="drama">戲劇類<span class="filter__count"></span></button>
-      </div>
     </div>
-    <div class="works__list" id="worksGrid"></div>
+    <div class="wcats-wrap" data-reveal>
+      <p class="wcats__hint"><i aria-hidden="true"></i>點選分類切換作品<span>・共 4 類</span></p>
+      <div class="wcats" role="tablist" id="worksCats" aria-label="作品分類"></div>
+    </div>
+    <div class="works__body" id="worksBody">
+      <div class="wbar" id="worksBar" aria-label="切換作品分類"><span class="wbar__label">分類</span><div class="wbar__pills" id="worksBarPills"></div></div>
+      <div class="works__list" id="worksGrid"></div>
+      <div id="worksNext"></div>
+    </div>
     <div class="works__more">
       <a class="btn btn--primary" href="#contact">洽詢合作 →</a>
     </div>
