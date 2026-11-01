@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-01T06:27:08.948Z",
+  "updatedAt": "2026-11-01T10:37:18.540Z",
   "categories": [
     "短影音",
     "活動紀錄",
@@ -9,31 +9,13 @@
     "節目類",
     "MV"
   ],
+  "subcategories": {
+    "短影音": [
+      "劇情類",
+      "口播宣傳類"
+    ]
+  },
   "works": [
-    {
-      "id": "-rivq96wYrs",
-      "title": "三顆糖 爸爸要買這間房子給我",
-      "client": "",
-      "category": "短影音",
-      "youtubeId": "-rivq96wYrs",
-      "thumb": "thumbs/-rivq96wYrs.webp",
-      "stills": [
-        "thumbs/-rivq96wYrs-1.webp",
-        "thumbs/-rivq96wYrs-2.webp",
-        "thumbs/-rivq96wYrs-3.webp"
-      ],
-      "published": true,
-      "order": 1,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "2026.08.01・直式短影音",
-      "dur": "1:01",
-      "vertical": true,
-      "biz": true,
-      "subcategory": "口播宣傳類"
-    },
     {
       "id": "i11BLA_UImc",
       "title": "跑三圈 好生活不用繞一大圈才遇得到",
@@ -47,7 +29,7 @@
         "thumbs/i11BLA_UImc-3.webp"
       ],
       "published": true,
-      "order": 2,
+      "order": 1,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -59,101 +41,27 @@
       "subcategory": "劇情類"
     },
     {
-      "id": "QZFhcxPlUKk",
-      "title": "肉老大頂級肉品涮涮鍋｜巨塔壓境 不服來敬",
+      "id": "-rivq96wYrs",
+      "title": "三顆糖 爸爸要買這間房子給我",
       "client": "",
       "category": "短影音",
-      "youtubeId": "QZFhcxPlUKk",
-      "thumb": "thumbs/QZFhcxPlUKk.webp",
+      "youtubeId": "-rivq96wYrs",
+      "thumb": "thumbs/-rivq96wYrs.webp",
       "stills": [
-        "thumbs/QZFhcxPlUKk-1.webp",
-        "thumbs/QZFhcxPlUKk-2.webp",
-        "thumbs/QZFhcxPlUKk-3.webp"
+        "thumbs/-rivq96wYrs-1.webp",
+        "thumbs/-rivq96wYrs-2.webp",
+        "thumbs/-rivq96wYrs-3.webp"
       ],
       "published": true,
-      "order": 3,
+      "order": 2,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
       "viewsUpdatedAt": "",
-      "meta": "金肉獎",
-      "dur": "0:37",
-      "vertical": true,
-      "biz": false,
-      "subcategory": "口播宣傳類"
-    },
-    {
-      "id": "y9O7VPkMm4U",
-      "title": "在你身邊的我，靜靜延續的愛",
-      "client": "",
-      "category": "短影音",
-      "youtubeId": "y9O7VPkMm4U",
-      "thumb": "thumbs/y9O7VPkMm4U.webp",
-      "stills": [
-        "thumbs/y9O7VPkMm4U-1.webp",
-        "thumbs/y9O7VPkMm4U-2.webp",
-        "thumbs/y9O7VPkMm4U-3.webp"
-      ],
-      "published": true,
-      "order": 4,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "第二屆《大王盃》全國創意短影音競賽",
-      "dur": "2:01",
-      "vertical": false,
-      "biz": false,
-      "subcategory": "劇情類"
-    },
-    {
-      "id": "tiJC0wpuWow",
-      "title": "你還在馬路邊揮手攔車嗎？",
-      "client": "",
-      "category": "短影音",
-      "youtubeId": "tiJC0wpuWow",
-      "thumb": "thumbs/tiJC0wpuWow.webp",
-      "stills": [
-        "thumbs/tiJC0wpuWow-1.webp",
-        "thumbs/tiJC0wpuWow-2.webp",
-        "thumbs/tiJC0wpuWow-3.webp"
-      ],
-      "published": true,
-      "order": 5,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "台灣大車隊 55688・短影音徵稿",
-      "dur": "0:55",
-      "vertical": false,
-      "biz": false,
-      "subcategory": "口播宣傳類"
-    },
-    {
-      "id": "hlJu2Q1PRa0",
-      "title": "香水酒店宣傳",
-      "client": "",
-      "category": "短影音",
-      "youtubeId": "hlJu2Q1PRa0",
-      "thumb": "https://i.ytimg.com/vi/hlJu2Q1PRa0/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/hlJu2Q1PRa0/hq1.jpg",
-        "https://i.ytimg.com/vi/hlJu2Q1PRa0/hq2.jpg",
-        "https://i.ytimg.com/vi/hlJu2Q1PRa0/hq3.jpg"
-      ],
-      "published": false,
-      "order": 6,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "2025.08.21・短影音",
-      "dur": "0:38",
+      "meta": "2026.08.01・直式短影音",
+      "dur": "1:01",
       "vertical": true,
       "biz": true,
-      "playlist": "商案作品",
-      "sourceTitle": "【專案】20250821 香水酒店宣傳",
       "subcategory": "口播宣傳類"
     },
     {
@@ -168,8 +76,8 @@
         "https://i.ytimg.com/vi/p8HRWn89qdY/hq2.jpg",
         "https://i.ytimg.com/vi/p8HRWn89qdY/hq3.jpg"
       ],
-      "published": false,
-      "order": 7,
+      "published": true,
+      "order": 3,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -194,8 +102,8 @@
         "https://i.ytimg.com/vi/n6bzF_xxAJE/hq2.jpg",
         "https://i.ytimg.com/vi/n6bzF_xxAJE/hq3.jpg"
       ],
-      "published": false,
-      "order": 8,
+      "published": true,
+      "order": 4,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -206,6 +114,56 @@
       "biz": true,
       "playlist": "商案作品",
       "sourceTitle": "【專案】260801三顆糖 買房不要再花錢裝潢了",
+      "subcategory": "口播宣傳類"
+    },
+    {
+      "id": "K2gVrwZ7mns",
+      "title": "救國團113年「築夢青年•創意展影」短影音徵選大賽《堅·夢》",
+      "client": "",
+      "category": "短影音",
+      "youtubeId": "K2gVrwZ7mns",
+      "thumb": "https://i.ytimg.com/vi/K2gVrwZ7mns/hqdefault.jpg",
+      "stills": [
+        "https://i.ytimg.com/vi/K2gVrwZ7mns/hq1.jpg",
+        "https://i.ytimg.com/vi/K2gVrwZ7mns/hq2.jpg",
+        "https://i.ytimg.com/vi/K2gVrwZ7mns/hq3.jpg"
+      ],
+      "published": true,
+      "order": 5,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "短影音",
+      "dur": "0:57",
+      "vertical": true,
+      "biz": false,
+      "playlist": "比賽作品",
+      "sourceTitle": "救國團113年「築夢青年•創意展影」短影音徵選大賽《堅·夢》",
+      "subcategory": "劇情類"
+    },
+    {
+      "id": "QZFhcxPlUKk",
+      "title": "肉老大頂級肉品涮涮鍋｜巨塔壓境 不服來敬",
+      "client": "",
+      "category": "短影音",
+      "youtubeId": "QZFhcxPlUKk",
+      "thumb": "thumbs/QZFhcxPlUKk.webp",
+      "stills": [
+        "thumbs/QZFhcxPlUKk-1.webp",
+        "thumbs/QZFhcxPlUKk-2.webp",
+        "thumbs/QZFhcxPlUKk-3.webp"
+      ],
+      "published": true,
+      "order": 6,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "金肉獎",
+      "dur": "0:37",
+      "vertical": true,
+      "biz": false,
       "subcategory": "口播宣傳類"
     },
     {
@@ -220,8 +178,8 @@
         "https://i.ytimg.com/vi/g1pMKLk5xmo/hq2.jpg",
         "https://i.ytimg.com/vi/g1pMKLk5xmo/hq3.jpg"
       ],
-      "published": false,
-      "order": 9,
+      "published": true,
+      "order": 7,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -235,81 +193,53 @@
       "subcategory": "劇情類"
     },
     {
-      "id": "CM2u3T6HHa8",
-      "title": "『一杯等待的鮮乳』 翻玩臺味好乳力 全國短影音創意大募集",
+      "id": "GRnYtV3_BaE",
+      "title": "小凱跟小樂趕著上班，卻始終叫不到車",
       "client": "",
       "category": "短影音",
-      "youtubeId": "CM2u3T6HHa8",
-      "thumb": "https://i.ytimg.com/vi/CM2u3T6HHa8/hqdefault.jpg",
+      "youtubeId": "GRnYtV3_BaE",
+      "thumb": "https://i.ytimg.com/vi/GRnYtV3_BaE/hqdefault.jpg",
       "stills": [
-        "https://i.ytimg.com/vi/CM2u3T6HHa8/hq1.jpg",
-        "https://i.ytimg.com/vi/CM2u3T6HHa8/hq2.jpg",
-        "https://i.ytimg.com/vi/CM2u3T6HHa8/hq3.jpg"
+        "https://i.ytimg.com/vi/GRnYtV3_BaE/hq1.jpg",
+        "https://i.ytimg.com/vi/GRnYtV3_BaE/hq2.jpg",
+        "https://i.ytimg.com/vi/GRnYtV3_BaE/hq3.jpg"
       ],
-      "published": false,
-      "order": 10,
+      "published": true,
+      "order": 8,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
       "viewsUpdatedAt": "",
       "meta": "短影音",
-      "dur": "2:17",
-      "vertical": false,
+      "dur": "0:56",
+      "vertical": true,
       "biz": false,
       "playlist": "比賽作品",
-      "sourceTitle": "『一杯等待的鮮乳』 翻玩臺味好乳力 全國短影音創意大募集",
+      "sourceTitle": "小凱跟小樂趕著上班，卻始終叫不到車時間一分一秒過去，他們開始懷疑——是運氣太差還是人生本就如此究竟該怎麼辦呢……#55688 #台灣大車隊#55688多元#想省錢的你都會搭#多元計程車#短影音徵稿",
       "subcategory": "劇情類"
     },
     {
-      "id": "hyZ4BPztbNA",
-      "title": "『愛自己 乳此簡單』_翻玩臺味好乳力-全國短影音創意大募集",
+      "id": "tiJC0wpuWow",
+      "title": "你還在馬路邊揮手攔車嗎？",
       "client": "",
       "category": "短影音",
-      "youtubeId": "hyZ4BPztbNA",
-      "thumb": "https://i.ytimg.com/vi/hyZ4BPztbNA/hqdefault.jpg",
+      "youtubeId": "tiJC0wpuWow",
+      "thumb": "thumbs/tiJC0wpuWow.webp",
       "stills": [
-        "https://i.ytimg.com/vi/hyZ4BPztbNA/hq1.jpg",
-        "https://i.ytimg.com/vi/hyZ4BPztbNA/hq2.jpg",
-        "https://i.ytimg.com/vi/hyZ4BPztbNA/hq3.jpg"
+        "thumbs/tiJC0wpuWow-1.webp",
+        "thumbs/tiJC0wpuWow-2.webp",
+        "thumbs/tiJC0wpuWow-3.webp"
       ],
-      "published": false,
-      "order": 11,
+      "published": true,
+      "order": 9,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
       "viewsUpdatedAt": "",
-      "meta": "短影音",
-      "dur": "1:46",
+      "meta": "台灣大車隊 55688・短影音徵稿",
+      "dur": "0:55",
       "vertical": false,
       "biz": false,
-      "playlist": "比賽作品",
-      "sourceTitle": "『愛自己 乳此簡單』_翻玩臺味好乳力-全國短影音創意大募集",
-      "subcategory": "劇情類"
-    },
-    {
-      "id": "KQpzOyRLy4M",
-      "title": "『乳來乳澎湃』_翻玩臺味好乳力-全國短影音創意大募集",
-      "client": "",
-      "category": "短影音",
-      "youtubeId": "KQpzOyRLy4M",
-      "thumb": "https://i.ytimg.com/vi/KQpzOyRLy4M/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/KQpzOyRLy4M/hq1.jpg",
-        "https://i.ytimg.com/vi/KQpzOyRLy4M/hq2.jpg",
-        "https://i.ytimg.com/vi/KQpzOyRLy4M/hq3.jpg"
-      ],
-      "published": false,
-      "order": 12,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "短影音",
-      "dur": "1:42",
-      "vertical": false,
-      "biz": false,
-      "playlist": "比賽作品",
-      "sourceTitle": "『乳來乳澎湃』_翻玩臺味好乳力-全國短影音創意大募集",
       "subcategory": "劇情類"
     },
     {
@@ -325,7 +255,7 @@
         "https://i.ytimg.com/vi/zsJBSctIuc4/hq3.jpg"
       ],
       "published": false,
-      "order": 13,
+      "order": 10,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -336,84 +266,6 @@
       "biz": false,
       "playlist": "比賽作品",
       "sourceTitle": "【佳作🏆】第二屆 《大王盃》全國創意短影音競賽｜讓告別，只留下尊重",
-      "subcategory": "劇情類"
-    },
-    {
-      "id": "GRnYtV3_BaE",
-      "title": "小凱跟小樂趕著上班，卻始終叫不到車",
-      "client": "",
-      "category": "短影音",
-      "youtubeId": "GRnYtV3_BaE",
-      "thumb": "https://i.ytimg.com/vi/GRnYtV3_BaE/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/GRnYtV3_BaE/hq1.jpg",
-        "https://i.ytimg.com/vi/GRnYtV3_BaE/hq2.jpg",
-        "https://i.ytimg.com/vi/GRnYtV3_BaE/hq3.jpg"
-      ],
-      "published": false,
-      "order": 14,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "短影音",
-      "dur": "0:56",
-      "vertical": true,
-      "biz": false,
-      "playlist": "比賽作品",
-      "sourceTitle": "小凱跟小樂趕著上班，卻始終叫不到車時間一分一秒過去，他們開始懷疑——是運氣太差還是人生本就如此究竟該怎麼辦呢……#55688 #台灣大車隊#55688多元#想省錢的你都會搭#多元計程車#短影音徵稿",
-      "subcategory": "劇情類"
-    },
-    {
-      "id": "K2gVrwZ7mns",
-      "title": "救國團113年「築夢青年•創意展影」短影音徵選大賽《堅·夢》",
-      "client": "",
-      "category": "短影音",
-      "youtubeId": "K2gVrwZ7mns",
-      "thumb": "https://i.ytimg.com/vi/K2gVrwZ7mns/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/K2gVrwZ7mns/hq1.jpg",
-        "https://i.ytimg.com/vi/K2gVrwZ7mns/hq2.jpg",
-        "https://i.ytimg.com/vi/K2gVrwZ7mns/hq3.jpg"
-      ],
-      "published": false,
-      "order": 15,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "短影音",
-      "dur": "0:57",
-      "vertical": true,
-      "biz": false,
-      "playlist": "比賽作品",
-      "sourceTitle": "救國團113年「築夢青年•創意展影」短影音徵選大賽《堅·夢》",
-      "subcategory": "劇情類"
-    },
-    {
-      "id": "xXhFB0EZrX4",
-      "title": "拒絕散播性影像 一起shorts 出來【申士自衛記】｜兒少性剝削防制宣導",
-      "client": "",
-      "category": "短影音",
-      "youtubeId": "xXhFB0EZrX4",
-      "thumb": "https://i.ytimg.com/vi/xXhFB0EZrX4/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/xXhFB0EZrX4/hq1.jpg",
-        "https://i.ytimg.com/vi/xXhFB0EZrX4/hq2.jpg",
-        "https://i.ytimg.com/vi/xXhFB0EZrX4/hq3.jpg"
-      ],
-      "published": false,
-      "order": 16,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "短影音",
-      "dur": "1:28",
-      "vertical": false,
-      "biz": false,
-      "playlist": "比賽作品",
-      "sourceTitle": "拒絕散播性影像 一起shorts 出來【申士自衛記】｜兒少性剝削防制宣導Ｘ創意短影音#shorts",
       "subcategory": "劇情類"
     },
     {
@@ -532,16 +384,16 @@
       "biz": true
     },
     {
-      "id": "dTcgVGl8x5k",
-      "title": "獅子會受證大會",
+      "id": "Ym57eJQNnUY",
+      "title": "三顆糖跑三圈 ｜開工",
       "client": "",
       "category": "活動紀錄",
-      "youtubeId": "dTcgVGl8x5k",
-      "thumb": "thumbs/dTcgVGl8x5k.webp",
+      "youtubeId": "Ym57eJQNnUY",
+      "thumb": "https://i.ytimg.com/vi/Ym57eJQNnUY/hqdefault.jpg",
       "stills": [
-        "thumbs/dTcgVGl8x5k-1.webp",
-        "thumbs/dTcgVGl8x5k-2.webp",
-        "thumbs/dTcgVGl8x5k-3.webp"
+        "https://i.ytimg.com/vi/Ym57eJQNnUY/hq1.jpg",
+        "https://i.ytimg.com/vi/Ym57eJQNnUY/hq2.jpg",
+        "https://i.ytimg.com/vi/Ym57eJQNnUY/hq3.jpg"
       ],
       "published": true,
       "order": 6,
@@ -549,10 +401,87 @@
       "sourcePlatform": "",
       "views": null,
       "viewsUpdatedAt": "",
-      "meta": "2025.08.03・活動紀錄",
-      "dur": "2:22",
+      "meta": "2026.02.23・活動紀錄",
+      "dur": "0:41",
       "vertical": false,
-      "biz": false
+      "biz": true,
+      "playlist": "商案作品",
+      "sourceTitle": "【專案】260223 三顆糖跑三圈 ｜開工"
+    },
+    {
+      "id": "7vsyz5s4GMo",
+      "title": "清晨盃Highlight 1分鐘版",
+      "client": "",
+      "category": "活動紀錄",
+      "youtubeId": "7vsyz5s4GMo",
+      "thumb": "https://i.ytimg.com/vi/7vsyz5s4GMo/hqdefault.jpg",
+      "stills": [
+        "https://i.ytimg.com/vi/7vsyz5s4GMo/hq1.jpg",
+        "https://i.ytimg.com/vi/7vsyz5s4GMo/hq2.jpg",
+        "https://i.ytimg.com/vi/7vsyz5s4GMo/hq3.jpg"
+      ],
+      "published": true,
+      "order": 7,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "2025.05.11・活動紀錄",
+      "dur": "1:10",
+      "vertical": false,
+      "biz": true,
+      "playlist": "商案作品",
+      "sourceTitle": "【專案】250511清晨盃Highlight 1分鐘版"
+    },
+    {
+      "id": "fhnP1DerYaE",
+      "title": "2024獅子會活動回顧",
+      "client": "",
+      "category": "活動紀錄",
+      "youtubeId": "fhnP1DerYaE",
+      "thumb": "https://i.ytimg.com/vi/fhnP1DerYaE/hqdefault.jpg",
+      "stills": [
+        "https://i.ytimg.com/vi/fhnP1DerYaE/hq1.jpg",
+        "https://i.ytimg.com/vi/fhnP1DerYaE/hq2.jpg",
+        "https://i.ytimg.com/vi/fhnP1DerYaE/hq3.jpg"
+      ],
+      "published": true,
+      "order": 8,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "2025.08.21・活動紀錄",
+      "dur": "1:54",
+      "vertical": false,
+      "biz": true,
+      "playlist": "商案作品",
+      "sourceTitle": "【妄想機】250821 2024獅子會活動回顧"
+    },
+    {
+      "id": "z_F01iv12uI",
+      "title": "王富美浪浪家園 紀錄片｜不可不思議 寵物篇",
+      "client": "",
+      "category": "活動紀錄",
+      "youtubeId": "z_F01iv12uI",
+      "thumb": "https://i.ytimg.com/vi/z_F01iv12uI/hqdefault.jpg",
+      "stills": [
+        "https://i.ytimg.com/vi/z_F01iv12uI/hq1.jpg",
+        "https://i.ytimg.com/vi/z_F01iv12uI/hq2.jpg",
+        "https://i.ytimg.com/vi/z_F01iv12uI/hq3.jpg"
+      ],
+      "published": true,
+      "order": 9,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "節目類",
+      "dur": "6:13",
+      "vertical": false,
+      "biz": true,
+      "playlist": "商案作品",
+      "sourceTitle": "王富美浪浪家園 紀錄片｜不可不思議 寵物篇"
     },
     {
       "id": "ZpNlmouCGOg",
@@ -567,7 +496,7 @@
         "https://i.ytimg.com/vi/ZpNlmouCGOg/hq3.jpg"
       ],
       "published": false,
-      "order": 7,
+      "order": 10,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -592,7 +521,7 @@
         "https://i.ytimg.com/vi/ikwzYmdFPog/hq3.jpg"
       ],
       "published": false,
-      "order": 8,
+      "order": 11,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -603,56 +532,6 @@
       "biz": true,
       "playlist": "商案作品",
       "sourceTitle": "【專案】260203旭唐建設 宜蘭尾牙二日遊｜Day 2"
-    },
-    {
-      "id": "Ym57eJQNnUY",
-      "title": "三顆糖跑三圈 ｜開工",
-      "client": "",
-      "category": "活動紀錄",
-      "youtubeId": "Ym57eJQNnUY",
-      "thumb": "https://i.ytimg.com/vi/Ym57eJQNnUY/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/Ym57eJQNnUY/hq1.jpg",
-        "https://i.ytimg.com/vi/Ym57eJQNnUY/hq2.jpg",
-        "https://i.ytimg.com/vi/Ym57eJQNnUY/hq3.jpg"
-      ],
-      "published": false,
-      "order": 9,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "2026.02.23・活動紀錄",
-      "dur": "0:41",
-      "vertical": false,
-      "biz": true,
-      "playlist": "商案作品",
-      "sourceTitle": "【專案】260223 三顆糖跑三圈 ｜開工"
-    },
-    {
-      "id": "7vsyz5s4GMo",
-      "title": "清晨盃Highlight 1分鐘版",
-      "client": "",
-      "category": "活動紀錄",
-      "youtubeId": "7vsyz5s4GMo",
-      "thumb": "https://i.ytimg.com/vi/7vsyz5s4GMo/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/7vsyz5s4GMo/hq1.jpg",
-        "https://i.ytimg.com/vi/7vsyz5s4GMo/hq2.jpg",
-        "https://i.ytimg.com/vi/7vsyz5s4GMo/hq3.jpg"
-      ],
-      "published": false,
-      "order": 10,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "2025.05.11・活動紀錄",
-      "dur": "1:10",
-      "vertical": false,
-      "biz": true,
-      "playlist": "商案作品",
-      "sourceTitle": "【專案】250511清晨盃Highlight 1分鐘版"
     },
     {
       "id": "m9HnH6cyZ-8",
@@ -667,7 +546,7 @@
         "https://i.ytimg.com/vi/m9HnH6cyZ-8/hq3.jpg"
       ],
       "published": false,
-      "order": 11,
+      "order": 12,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -692,7 +571,7 @@
         "https://i.ytimg.com/vi/62ZXVzShXfE/hq3.jpg"
       ],
       "published": false,
-      "order": 12,
+      "order": 13,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -703,31 +582,6 @@
       "biz": true,
       "playlist": "商案作品",
       "sourceTitle": "Cliff & Micky's 求婚全紀錄proposal｜ 宜蘭 Yilan"
-    },
-    {
-      "id": "fhnP1DerYaE",
-      "title": "2024獅子會活動回顧",
-      "client": "",
-      "category": "活動紀錄",
-      "youtubeId": "fhnP1DerYaE",
-      "thumb": "https://i.ytimg.com/vi/fhnP1DerYaE/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/fhnP1DerYaE/hq1.jpg",
-        "https://i.ytimg.com/vi/fhnP1DerYaE/hq2.jpg",
-        "https://i.ytimg.com/vi/fhnP1DerYaE/hq3.jpg"
-      ],
-      "published": false,
-      "order": 13,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "2025.08.21・活動紀錄",
-      "dur": "1:54",
-      "vertical": false,
-      "biz": true,
-      "playlist": "商案作品",
-      "sourceTitle": "【妄想機】250821 2024獅子會活動回顧"
     },
     {
       "id": "Smrr_II2Q_Q",
@@ -880,7 +734,7 @@
         "https://i.ytimg.com/vi/ityIOqni86g/hq2.jpg",
         "https://i.ytimg.com/vi/ityIOqni86g/hq3.jpg"
       ],
-      "published": false,
+      "published": true,
       "order": 7,
       "sourceUrl": "",
       "sourcePlatform": "",
@@ -892,6 +746,181 @@
       "biz": true,
       "playlist": "商案作品",
       "sourceTitle": "【專案】260725 全民會長盃形象廣告《因為喜歡，所以主動前進》"
+    },
+    {
+      "id": "zjXRUc4RF3E",
+      "title": "太陽盃🏸 宣傳片",
+      "client": "",
+      "category": "形象片",
+      "youtubeId": "zjXRUc4RF3E",
+      "thumb": "https://i.ytimg.com/vi/zjXRUc4RF3E/hqdefault.jpg",
+      "stills": [
+        "https://i.ytimg.com/vi/zjXRUc4RF3E/hq1.jpg",
+        "https://i.ytimg.com/vi/zjXRUc4RF3E/hq2.jpg",
+        "https://i.ytimg.com/vi/zjXRUc4RF3E/hq3.jpg"
+      ],
+      "published": true,
+      "order": 8,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "2025.04.12・形象片",
+      "dur": "0:33",
+      "vertical": false,
+      "biz": true,
+      "playlist": "商案作品",
+      "sourceTitle": "【專案】250412太陽盃🏸 宣傳片"
+    },
+    {
+      "id": "3cBkkiNJsGw",
+      "title": "清晨盃🏸 宣傳片",
+      "client": "",
+      "category": "形象片",
+      "youtubeId": "3cBkkiNJsGw",
+      "thumb": "https://i.ytimg.com/vi/3cBkkiNJsGw/hqdefault.jpg",
+      "stills": [
+        "https://i.ytimg.com/vi/3cBkkiNJsGw/hq1.jpg",
+        "https://i.ytimg.com/vi/3cBkkiNJsGw/hq2.jpg",
+        "https://i.ytimg.com/vi/3cBkkiNJsGw/hq3.jpg"
+      ],
+      "published": true,
+      "order": 9,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "2025.03.27・形象片",
+      "dur": "0:38",
+      "vertical": false,
+      "biz": true,
+      "playlist": "商案作品",
+      "sourceTitle": "【專案】250327清晨盃🏸 宣傳片"
+    },
+    {
+      "id": "YKfRs3_XBYU",
+      "title": "旭唐建案",
+      "client": "",
+      "category": "形象片",
+      "youtubeId": "YKfRs3_XBYU",
+      "thumb": "https://i.ytimg.com/vi/YKfRs3_XBYU/hqdefault.jpg",
+      "stills": [
+        "https://i.ytimg.com/vi/YKfRs3_XBYU/hq1.jpg",
+        "https://i.ytimg.com/vi/YKfRs3_XBYU/hq2.jpg",
+        "https://i.ytimg.com/vi/YKfRs3_XBYU/hq3.jpg"
+      ],
+      "published": true,
+      "order": 10,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "形象片",
+      "dur": "1:04",
+      "vertical": false,
+      "biz": true,
+      "playlist": "商案作品",
+      "sourceTitle": "旭唐建案"
+    },
+    {
+      "id": "oDnDQwXC_z8",
+      "title": "2026清晨盃 精華廣告",
+      "client": "",
+      "category": "形象片",
+      "youtubeId": "oDnDQwXC_z8",
+      "thumb": "https://i.ytimg.com/vi/oDnDQwXC_z8/hqdefault.jpg",
+      "stills": [
+        "https://i.ytimg.com/vi/oDnDQwXC_z8/hq1.jpg",
+        "https://i.ytimg.com/vi/oDnDQwXC_z8/hq2.jpg",
+        "https://i.ytimg.com/vi/oDnDQwXC_z8/hq3.jpg"
+      ],
+      "published": true,
+      "order": 11,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "形象片",
+      "dur": "0:37",
+      "vertical": false,
+      "biz": true,
+      "playlist": "商案作品",
+      "sourceTitle": "【專案】2026清晨盃 精華廣告"
+    },
+    {
+      "id": "dsEa7SLoTXc",
+      "title": "113年度臺北市公用頻道影片徵選競賽「我的松山映像My Songshan Image」佳作 《松山映像》",
+      "client": "",
+      "category": "形象片",
+      "youtubeId": "dsEa7SLoTXc",
+      "thumb": "https://i.ytimg.com/vi/dsEa7SLoTXc/hqdefault.jpg",
+      "stills": [
+        "https://i.ytimg.com/vi/dsEa7SLoTXc/hq1.jpg",
+        "https://i.ytimg.com/vi/dsEa7SLoTXc/hq2.jpg",
+        "https://i.ytimg.com/vi/dsEa7SLoTXc/hq3.jpg"
+      ],
+      "published": true,
+      "order": 12,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "形象片",
+      "dur": "2:55",
+      "vertical": false,
+      "biz": false,
+      "playlist": "比賽作品",
+      "sourceTitle": "113年度臺北市公用頻道影片徵選競賽「我的松山映像My Songshan Image」佳作 《松山映像》"
+    },
+    {
+      "id": "hyZ4BPztbNA",
+      "title": "『愛自己 乳此簡單』_翻玩臺味好乳力-全國短影音創意大募集",
+      "client": "",
+      "category": "形象片",
+      "youtubeId": "hyZ4BPztbNA",
+      "thumb": "https://i.ytimg.com/vi/hyZ4BPztbNA/hqdefault.jpg",
+      "stills": [
+        "https://i.ytimg.com/vi/hyZ4BPztbNA/hq1.jpg",
+        "https://i.ytimg.com/vi/hyZ4BPztbNA/hq2.jpg",
+        "https://i.ytimg.com/vi/hyZ4BPztbNA/hq3.jpg"
+      ],
+      "published": true,
+      "order": 13,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "短影音",
+      "dur": "1:46",
+      "vertical": false,
+      "biz": false,
+      "playlist": "比賽作品",
+      "sourceTitle": "『愛自己 乳此簡單』_翻玩臺味好乳力-全國短影音創意大募集"
+    },
+    {
+      "id": "KQpzOyRLy4M",
+      "title": "『乳來乳澎湃』_翻玩臺味好乳力-全國短影音創意大募集",
+      "client": "",
+      "category": "形象片",
+      "youtubeId": "KQpzOyRLy4M",
+      "thumb": "https://i.ytimg.com/vi/KQpzOyRLy4M/hqdefault.jpg",
+      "stills": [
+        "https://i.ytimg.com/vi/KQpzOyRLy4M/hq1.jpg",
+        "https://i.ytimg.com/vi/KQpzOyRLy4M/hq2.jpg",
+        "https://i.ytimg.com/vi/KQpzOyRLy4M/hq3.jpg"
+      ],
+      "published": true,
+      "order": 14,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "短影音",
+      "dur": "1:42",
+      "vertical": false,
+      "biz": false,
+      "playlist": "比賽作品",
+      "sourceTitle": "『乳來乳澎湃』_翻玩臺味好乳力-全國短影音創意大募集"
     },
     {
       "id": "g3vIuZt7i4c",
@@ -906,7 +935,7 @@
         "https://i.ytimg.com/vi/g3vIuZt7i4c/hq3.jpg"
       ],
       "published": false,
-      "order": 8,
+      "order": 15,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -931,7 +960,7 @@
         "https://i.ytimg.com/vi/XqAdPm83auM/hq3.jpg"
       ],
       "published": false,
-      "order": 9,
+      "order": 16,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -956,7 +985,7 @@
         "https://i.ytimg.com/vi/f8SFLuNMQcI/hq3.jpg"
       ],
       "published": false,
-      "order": 10,
+      "order": 17,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -981,7 +1010,7 @@
         "https://i.ytimg.com/vi/gRpFI9yaJ2g/hq3.jpg"
       ],
       "published": false,
-      "order": 11,
+      "order": 18,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -992,81 +1021,6 @@
       "biz": true,
       "playlist": "商案作品",
       "sourceTitle": "【專案】250412太陽盃🏸 BWF宣傳短片"
-    },
-    {
-      "id": "zjXRUc4RF3E",
-      "title": "太陽盃🏸 宣傳片",
-      "client": "",
-      "category": "形象片",
-      "youtubeId": "zjXRUc4RF3E",
-      "thumb": "https://i.ytimg.com/vi/zjXRUc4RF3E/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/zjXRUc4RF3E/hq1.jpg",
-        "https://i.ytimg.com/vi/zjXRUc4RF3E/hq2.jpg",
-        "https://i.ytimg.com/vi/zjXRUc4RF3E/hq3.jpg"
-      ],
-      "published": false,
-      "order": 12,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "2025.04.12・形象片",
-      "dur": "0:33",
-      "vertical": false,
-      "biz": true,
-      "playlist": "商案作品",
-      "sourceTitle": "【專案】250412太陽盃🏸 宣傳片"
-    },
-    {
-      "id": "3cBkkiNJsGw",
-      "title": "清晨盃🏸 宣傳片",
-      "client": "",
-      "category": "形象片",
-      "youtubeId": "3cBkkiNJsGw",
-      "thumb": "https://i.ytimg.com/vi/3cBkkiNJsGw/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/3cBkkiNJsGw/hq1.jpg",
-        "https://i.ytimg.com/vi/3cBkkiNJsGw/hq2.jpg",
-        "https://i.ytimg.com/vi/3cBkkiNJsGw/hq3.jpg"
-      ],
-      "published": false,
-      "order": 13,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "2025.03.27・形象片",
-      "dur": "0:38",
-      "vertical": false,
-      "biz": true,
-      "playlist": "商案作品",
-      "sourceTitle": "【專案】250327清晨盃🏸 宣傳片"
-    },
-    {
-      "id": "YKfRs3_XBYU",
-      "title": "旭唐建案",
-      "client": "",
-      "category": "形象片",
-      "youtubeId": "YKfRs3_XBYU",
-      "thumb": "https://i.ytimg.com/vi/YKfRs3_XBYU/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/YKfRs3_XBYU/hq1.jpg",
-        "https://i.ytimg.com/vi/YKfRs3_XBYU/hq2.jpg",
-        "https://i.ytimg.com/vi/YKfRs3_XBYU/hq3.jpg"
-      ],
-      "published": false,
-      "order": 14,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "形象片",
-      "dur": "1:04",
-      "vertical": false,
-      "biz": true,
-      "playlist": "商案作品",
-      "sourceTitle": "旭唐建案"
     },
     {
       "id": "x0OVK0fzvU4",
@@ -1081,7 +1035,7 @@
         "https://i.ytimg.com/vi/x0OVK0fzvU4/hq3.jpg"
       ],
       "published": false,
-      "order": 15,
+      "order": 19,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1092,56 +1046,6 @@
       "biz": true,
       "playlist": "商案作品",
       "sourceTitle": "【專案】2026太陽盃 精華廣告"
-    },
-    {
-      "id": "oDnDQwXC_z8",
-      "title": "2026清晨盃 精華廣告",
-      "client": "",
-      "category": "形象片",
-      "youtubeId": "oDnDQwXC_z8",
-      "thumb": "https://i.ytimg.com/vi/oDnDQwXC_z8/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/oDnDQwXC_z8/hq1.jpg",
-        "https://i.ytimg.com/vi/oDnDQwXC_z8/hq2.jpg",
-        "https://i.ytimg.com/vi/oDnDQwXC_z8/hq3.jpg"
-      ],
-      "published": false,
-      "order": 16,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "形象片",
-      "dur": "0:37",
-      "vertical": false,
-      "biz": true,
-      "playlist": "商案作品",
-      "sourceTitle": "【專案】2026清晨盃 精華廣告"
-    },
-    {
-      "id": "dsEa7SLoTXc",
-      "title": "113年度臺北市公用頻道影片徵選競賽「我的松山映像My Songshan Image」佳作 《松山映像》",
-      "client": "",
-      "category": "形象片",
-      "youtubeId": "dsEa7SLoTXc",
-      "thumb": "https://i.ytimg.com/vi/dsEa7SLoTXc/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/dsEa7SLoTXc/hq1.jpg",
-        "https://i.ytimg.com/vi/dsEa7SLoTXc/hq2.jpg",
-        "https://i.ytimg.com/vi/dsEa7SLoTXc/hq3.jpg"
-      ],
-      "published": false,
-      "order": 17,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "形象片",
-      "dur": "2:55",
-      "vertical": false,
-      "biz": false,
-      "playlist": "比賽作品",
-      "sourceTitle": "113年度臺北市公用頻道影片徵選競賽「我的松山映像My Songshan Image」佳作 《松山映像》"
     },
     {
       "id": "cEPos1sBe1U",
@@ -1213,6 +1117,129 @@
       "biz": false
     },
     {
+      "id": "pkBkPFwtBaM",
+      "title": "犢 ｜ 35屆銘傳文藝獎",
+      "client": "",
+      "category": "劇情類",
+      "youtubeId": "pkBkPFwtBaM",
+      "thumb": "https://i.ytimg.com/vi/pkBkPFwtBaM/hqdefault.jpg",
+      "stills": [
+        "https://i.ytimg.com/vi/pkBkPFwtBaM/hq1.jpg",
+        "https://i.ytimg.com/vi/pkBkPFwtBaM/hq2.jpg",
+        "https://i.ytimg.com/vi/pkBkPFwtBaM/hq3.jpg"
+      ],
+      "published": true,
+      "order": 4,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "優選獎🏆・劇情類",
+      "dur": "6:44",
+      "vertical": false,
+      "biz": false,
+      "playlist": "比賽作品",
+      "sourceTitle": "【優選獎🏆】犢 ｜ 35屆銘傳文藝獎"
+    },
+    {
+      "id": "A1XrP5Lv9w8",
+      "title": "第五屆大和獎微電影徵選【DADA'S重生】",
+      "client": "",
+      "category": "劇情類",
+      "youtubeId": "A1XrP5Lv9w8",
+      "thumb": "https://i.ytimg.com/vi/A1XrP5Lv9w8/hqdefault.jpg",
+      "stills": [
+        "https://i.ytimg.com/vi/A1XrP5Lv9w8/hq1.jpg",
+        "https://i.ytimg.com/vi/A1XrP5Lv9w8/hq2.jpg",
+        "https://i.ytimg.com/vi/A1XrP5Lv9w8/hq3.jpg"
+      ],
+      "published": true,
+      "order": 5,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "劇情類",
+      "dur": "7:53",
+      "vertical": false,
+      "biz": false,
+      "playlist": "比賽作品",
+      "sourceTitle": "第五屆大和獎微電影徵選【DADA'S重生】"
+    },
+    {
+      "id": "1lpe5TeNtzM",
+      "title": "心温まる朝食（暖心的早餐）| 2024麥味登影像創作組",
+      "client": "",
+      "category": "劇情類",
+      "youtubeId": "1lpe5TeNtzM",
+      "thumb": "https://i.ytimg.com/vi/1lpe5TeNtzM/hqdefault.jpg",
+      "stills": [
+        "https://i.ytimg.com/vi/1lpe5TeNtzM/hq1.jpg",
+        "https://i.ytimg.com/vi/1lpe5TeNtzM/hq2.jpg",
+        "https://i.ytimg.com/vi/1lpe5TeNtzM/hq3.jpg"
+      ],
+      "published": true,
+      "order": 6,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "優選獎🏆・劇情類",
+      "dur": "6:19",
+      "vertical": false,
+      "biz": false,
+      "playlist": "比賽作品",
+      "sourceTitle": "【優選獎🏆】心温まる朝食（暖心的早餐）| 2024麥味登影像創作組"
+    },
+    {
+      "id": "CM2u3T6HHa8",
+      "title": "『一杯等待的鮮乳』 翻玩臺味好乳力 全國短影音創意大募集",
+      "client": "",
+      "category": "劇情類",
+      "youtubeId": "CM2u3T6HHa8",
+      "thumb": "https://i.ytimg.com/vi/CM2u3T6HHa8/hqdefault.jpg",
+      "stills": [
+        "https://i.ytimg.com/vi/CM2u3T6HHa8/hq1.jpg",
+        "https://i.ytimg.com/vi/CM2u3T6HHa8/hq2.jpg",
+        "https://i.ytimg.com/vi/CM2u3T6HHa8/hq3.jpg"
+      ],
+      "published": true,
+      "order": 7,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "短影音",
+      "dur": "2:17",
+      "vertical": false,
+      "biz": false,
+      "playlist": "比賽作品",
+      "sourceTitle": "『一杯等待的鮮乳』 翻玩臺味好乳力 全國短影音創意大募集"
+    },
+    {
+      "id": "y9O7VPkMm4U",
+      "title": "在你身邊的我，靜靜延續的愛",
+      "client": "",
+      "category": "劇情類",
+      "youtubeId": "y9O7VPkMm4U",
+      "thumb": "thumbs/y9O7VPkMm4U.webp",
+      "stills": [
+        "thumbs/y9O7VPkMm4U-1.webp",
+        "thumbs/y9O7VPkMm4U-2.webp",
+        "thumbs/y9O7VPkMm4U-3.webp"
+      ],
+      "published": true,
+      "order": 8,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "第二屆《大王盃》全國創意短影音競賽",
+      "dur": "2:01",
+      "vertical": false,
+      "biz": false
+    },
+    {
       "id": "Bvs7rsofcGs",
       "title": "2025 為孝及時[第十四屆]用影音刻劃出我心目中最敬重的長輩【撿矸仔】",
       "client": "",
@@ -1225,7 +1252,7 @@
         "https://i.ytimg.com/vi/Bvs7rsofcGs/hq3.jpg"
       ],
       "published": false,
-      "order": 4,
+      "order": 9,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1250,7 +1277,7 @@
         "https://i.ytimg.com/vi/4Lwd301xfhI/hq3.jpg"
       ],
       "published": false,
-      "order": 5,
+      "order": 10,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1261,31 +1288,6 @@
       "biz": false,
       "playlist": "比賽作品",
       "sourceTitle": "城市裡的部落 一分鐘試剪"
-    },
-    {
-      "id": "pkBkPFwtBaM",
-      "title": "犢 ｜ 35屆銘傳文藝獎",
-      "client": "",
-      "category": "劇情類",
-      "youtubeId": "pkBkPFwtBaM",
-      "thumb": "https://i.ytimg.com/vi/pkBkPFwtBaM/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/pkBkPFwtBaM/hq1.jpg",
-        "https://i.ytimg.com/vi/pkBkPFwtBaM/hq2.jpg",
-        "https://i.ytimg.com/vi/pkBkPFwtBaM/hq3.jpg"
-      ],
-      "published": false,
-      "order": 6,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "優選獎🏆・劇情類",
-      "dur": "6:44",
-      "vertical": false,
-      "biz": false,
-      "playlist": "比賽作品",
-      "sourceTitle": "【優選獎🏆】犢 ｜ 35屆銘傳文藝獎"
     },
     {
       "id": "V9PTy3sd3Sk",
@@ -1300,7 +1302,7 @@
         "https://i.ytimg.com/vi/V9PTy3sd3Sk/hq3.jpg"
       ],
       "published": false,
-      "order": 7,
+      "order": 11,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1325,7 +1327,7 @@
         "https://i.ytimg.com/vi/DJ4ICw-2jmY/hq3.jpg"
       ],
       "published": false,
-      "order": 8,
+      "order": 12,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1336,31 +1338,6 @@
       "biz": false,
       "playlist": "比賽作品",
       "sourceTitle": "第五屆大和獎微電影徵選【30這道坎】"
-    },
-    {
-      "id": "A1XrP5Lv9w8",
-      "title": "第五屆大和獎微電影徵選【DADA'S重生】",
-      "client": "",
-      "category": "劇情類",
-      "youtubeId": "A1XrP5Lv9w8",
-      "thumb": "https://i.ytimg.com/vi/A1XrP5Lv9w8/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/A1XrP5Lv9w8/hq1.jpg",
-        "https://i.ytimg.com/vi/A1XrP5Lv9w8/hq2.jpg",
-        "https://i.ytimg.com/vi/A1XrP5Lv9w8/hq3.jpg"
-      ],
-      "published": false,
-      "order": 9,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "劇情類",
-      "dur": "7:53",
-      "vertical": false,
-      "biz": false,
-      "playlist": "比賽作品",
-      "sourceTitle": "第五屆大和獎微電影徵選【DADA'S重生】"
     },
     {
       "id": "bWGaCkRndxY",
@@ -1375,7 +1352,7 @@
         "https://i.ytimg.com/vi/bWGaCkRndxY/hq3.jpg"
       ],
       "published": false,
-      "order": 10,
+      "order": 13,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1388,29 +1365,54 @@
       "sourceTitle": "2024麥味登影像創作組_那份溫暖"
     },
     {
-      "id": "1lpe5TeNtzM",
-      "title": "心温まる朝食（暖心的早餐）| 2024麥味登影像創作組",
+      "id": "LHkw7uj46Xk",
+      "title": "台版魷魚遊戲X黑白大廚？！傳院教授＆大學生實境節目，贏家究竟是....｜《黑白教授的魷魚廚房》下集｜【C皮拔辣X銷哈哈】",
       "client": "",
-      "category": "劇情類",
-      "youtubeId": "1lpe5TeNtzM",
-      "thumb": "https://i.ytimg.com/vi/1lpe5TeNtzM/hqdefault.jpg",
+      "category": "節目類",
+      "youtubeId": "LHkw7uj46Xk",
+      "thumb": "https://i.ytimg.com/vi/LHkw7uj46Xk/hqdefault.jpg",
       "stills": [
-        "https://i.ytimg.com/vi/1lpe5TeNtzM/hq1.jpg",
-        "https://i.ytimg.com/vi/1lpe5TeNtzM/hq2.jpg",
-        "https://i.ytimg.com/vi/1lpe5TeNtzM/hq3.jpg"
+        "https://i.ytimg.com/vi/LHkw7uj46Xk/hq1.jpg",
+        "https://i.ytimg.com/vi/LHkw7uj46Xk/hq2.jpg",
+        "https://i.ytimg.com/vi/LHkw7uj46Xk/hq3.jpg"
       ],
-      "published": false,
-      "order": 11,
+      "published": true,
+      "order": 1,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
       "viewsUpdatedAt": "",
-      "meta": "優選獎🏆・劇情類",
-      "dur": "6:19",
+      "meta": "節目類",
+      "dur": "23:17",
       "vertical": false,
       "biz": false,
       "playlist": "比賽作品",
-      "sourceTitle": "【優選獎🏆】心温まる朝食（暖心的早餐）| 2024麥味登影像創作組"
+      "sourceTitle": "台版魷魚遊戲X黑白大廚？！傳院教授＆大學生實境節目，贏家究竟是....｜《黑白教授的魷魚廚房》下集｜【C皮拔辣X銷哈哈】"
+    },
+    {
+      "id": "QQ3s15BbJio",
+      "title": "SQUIDKITCHEN台版魷魚遊戲X黑白大廚？！傳院教授＆大學生實境節目，誰能生存到最後｜《黑白教授的魷魚廚房》上集｜【C皮拔辣X銷哈哈】",
+      "client": "",
+      "category": "節目類",
+      "youtubeId": "QQ3s15BbJio",
+      "thumb": "https://i.ytimg.com/vi/QQ3s15BbJio/hqdefault.jpg",
+      "stills": [
+        "https://i.ytimg.com/vi/QQ3s15BbJio/hq1.jpg",
+        "https://i.ytimg.com/vi/QQ3s15BbJio/hq2.jpg",
+        "https://i.ytimg.com/vi/QQ3s15BbJio/hq3.jpg"
+      ],
+      "published": true,
+      "order": 2,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "節目類",
+      "dur": "12:12",
+      "vertical": false,
+      "biz": false,
+      "playlist": "比賽作品",
+      "sourceTitle": "SQUIDKITCHEN台版魷魚遊戲X黑白大廚？！傳院教授＆大學生實境節目，誰能生存到最後｜《黑白教授的魷魚廚房》上集｜【C皮拔辣X銷哈哈】"
     },
     {
       "id": "mJhxfWkv6FE",
@@ -1425,7 +1427,7 @@
         "https://i.ytimg.com/vi/mJhxfWkv6FE/hq3.jpg"
       ],
       "published": false,
-      "order": 1,
+      "order": 3,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1450,7 +1452,7 @@
         "https://i.ytimg.com/vi/qQ3ySNSEOVI/hq3.jpg"
       ],
       "published": false,
-      "order": 2,
+      "order": 4,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1461,31 +1463,6 @@
       "biz": true,
       "playlist": "商案作品",
       "sourceTitle": "FULL《创业有得聊》EP18：实战路演挑战升级 规定时间内谁能赢得投资人青睐？｜Startup Talks｜MangoTV"
-    },
-    {
-      "id": "z_F01iv12uI",
-      "title": "王富美浪浪家園 紀錄片｜不可不思議 寵物篇",
-      "client": "",
-      "category": "節目類",
-      "youtubeId": "z_F01iv12uI",
-      "thumb": "https://i.ytimg.com/vi/z_F01iv12uI/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/z_F01iv12uI/hq1.jpg",
-        "https://i.ytimg.com/vi/z_F01iv12uI/hq2.jpg",
-        "https://i.ytimg.com/vi/z_F01iv12uI/hq3.jpg"
-      ],
-      "published": false,
-      "order": 3,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "節目類",
-      "dur": "6:13",
-      "vertical": false,
-      "biz": true,
-      "playlist": "商案作品",
-      "sourceTitle": "王富美浪浪家園 紀錄片｜不可不思議 寵物篇"
     },
     {
       "id": "dA3dFAMnjDM",
@@ -1500,7 +1477,7 @@
         "https://i.ytimg.com/vi/dA3dFAMnjDM/hq3.jpg"
       ],
       "published": false,
-      "order": 4,
+      "order": 5,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1511,56 +1488,6 @@
       "biz": false,
       "playlist": "比賽作品",
       "sourceTitle": "SQUIDKITCHEN台版魷魚遊戲X黑白大廚？！實境節目的背後都在做什麼｜《黑白教授的魷魚廚房》幕後花絮｜【C皮拔辣X銷哈哈】"
-    },
-    {
-      "id": "LHkw7uj46Xk",
-      "title": "台版魷魚遊戲X黑白大廚？！傳院教授＆大學生實境節目，贏家究竟是....｜《黑白教授的魷魚廚房》下集｜【C皮拔辣X銷哈哈】",
-      "client": "",
-      "category": "節目類",
-      "youtubeId": "LHkw7uj46Xk",
-      "thumb": "https://i.ytimg.com/vi/LHkw7uj46Xk/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/LHkw7uj46Xk/hq1.jpg",
-        "https://i.ytimg.com/vi/LHkw7uj46Xk/hq2.jpg",
-        "https://i.ytimg.com/vi/LHkw7uj46Xk/hq3.jpg"
-      ],
-      "published": false,
-      "order": 5,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "節目類",
-      "dur": "23:17",
-      "vertical": false,
-      "biz": false,
-      "playlist": "比賽作品",
-      "sourceTitle": "台版魷魚遊戲X黑白大廚？！傳院教授＆大學生實境節目，贏家究竟是....｜《黑白教授的魷魚廚房》下集｜【C皮拔辣X銷哈哈】"
-    },
-    {
-      "id": "QQ3s15BbJio",
-      "title": "SQUIDKITCHEN台版魷魚遊戲X黑白大廚？！傳院教授＆大學生實境節目，誰能生存到最後｜《黑白教授的魷魚廚房》上集｜【C皮拔辣X銷哈哈】",
-      "client": "",
-      "category": "節目類",
-      "youtubeId": "QQ3s15BbJio",
-      "thumb": "https://i.ytimg.com/vi/QQ3s15BbJio/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/QQ3s15BbJio/hq1.jpg",
-        "https://i.ytimg.com/vi/QQ3s15BbJio/hq2.jpg",
-        "https://i.ytimg.com/vi/QQ3s15BbJio/hq3.jpg"
-      ],
-      "published": false,
-      "order": 6,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "節目類",
-      "dur": "12:12",
-      "vertical": false,
-      "biz": false,
-      "playlist": "比賽作品",
-      "sourceTitle": "SQUIDKITCHEN台版魷魚遊戲X黑白大廚？！傳院教授＆大學生實境節目，誰能生存到最後｜《黑白教授的魷魚廚房》上集｜【C皮拔辣X銷哈哈】"
     },
     {
       "id": "gny8uMxchiM",
@@ -1586,6 +1513,31 @@
       "biz": false
     },
     {
+      "id": "xfO00MfxJ5U",
+      "title": "Linion《藏HIDE》MV",
+      "client": "",
+      "category": "MV",
+      "youtubeId": "xfO00MfxJ5U",
+      "thumb": "https://i.ytimg.com/vi/xfO00MfxJ5U/hqdefault.jpg",
+      "stills": [
+        "https://i.ytimg.com/vi/xfO00MfxJ5U/hq1.jpg",
+        "https://i.ytimg.com/vi/xfO00MfxJ5U/hq2.jpg",
+        "https://i.ytimg.com/vi/xfO00MfxJ5U/hq3.jpg"
+      ],
+      "published": true,
+      "order": 2,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "MV",
+      "dur": "5:35",
+      "vertical": false,
+      "biz": false,
+      "playlist": "比賽作品",
+      "sourceTitle": "Linion《藏HIDE》MV"
+    },
+    {
       "id": "TOS-h8wEBWU",
       "title": "賴晏駒 -小賴Lai【 有沒有一種可能 Is it Possible 】Official Music Video",
       "client": "",
@@ -1598,7 +1550,7 @@
         "https://i.ytimg.com/vi/TOS-h8wEBWU/hq3.jpg"
       ],
       "published": false,
-      "order": 2,
+      "order": 3,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1623,7 +1575,7 @@
         "https://i.ytimg.com/vi/cMHKgNFg71k/hq3.jpg"
       ],
       "published": false,
-      "order": 3,
+      "order": 4,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1634,31 +1586,6 @@
       "biz": false,
       "playlist": "比賽作品",
       "sourceTitle": "【最佳金險單曲🥈】最後的禮物 Grandma's Love ｜遠雄⼈壽第七屆金險獎"
-    },
-    {
-      "id": "xfO00MfxJ5U",
-      "title": "Linion《藏HIDE》MV",
-      "client": "",
-      "category": "MV",
-      "youtubeId": "xfO00MfxJ5U",
-      "thumb": "https://i.ytimg.com/vi/xfO00MfxJ5U/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/xfO00MfxJ5U/hq1.jpg",
-        "https://i.ytimg.com/vi/xfO00MfxJ5U/hq2.jpg",
-        "https://i.ytimg.com/vi/xfO00MfxJ5U/hq3.jpg"
-      ],
-      "published": false,
-      "order": 4,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "MV",
-      "dur": "5:35",
-      "vertical": false,
-      "biz": false,
-      "playlist": "比賽作品",
-      "sourceTitle": "Linion《藏HIDE》MV"
     },
     {
       "id": "O4U2Aze0WAQ",
@@ -1685,11 +1612,5 @@
       "playlist": "比賽作品",
       "sourceTitle": "Linion《藏 Hide》  MV"
     }
-  ],
-  "subcategories": {
-    "短影音": [
-      "劇情類",
-      "口播宣傳類"
-    ]
-  }
+  ]
 }
