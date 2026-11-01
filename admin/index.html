@@ -58,6 +58,14 @@ main{max-width:1100px;margin:0 auto;padding:24px}
 .badge.on{background:rgba(63,163,107,.18);border-color:rgba(63,163,107,.6)}
 .badge.off{background:rgba(255,179,189,.08);border-color:rgba(255,179,189,.55);color:#ffb3bd;font-weight:700}
 .badge.pl{color:var(--mu)}
+[hidden]{display:none!important}
+.pubdiv{margin:10px 0 6px;text-align:center;font-size:12px;letter-spacing:.2em;color:var(--mu);border-top:1px dashed var(--line);padding-top:8px}
+.badge.sub{background:rgba(158,42,58,.32);border-color:var(--wine2);color:#fff;font-weight:700}
+.badge.warn{background:rgba(255,196,0,.12);border-color:rgba(255,196,0,.7);color:#ffd666;font-weight:700}
+.acts select[data-act=sub]{width:auto;padding:5px 8px;font-size:13px;border-color:var(--wine2)}
+.acts select[data-act=sub].unset{border-color:rgba(255,196,0,.8);color:#ffd666}
+.cat h3 .subsum{font-size:12px;color:var(--mu);font-weight:400;margin-left:4px}
+.cat h3 .subsum b{color:#ffd666}
 .item.hide{display:none}
 .fbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
 .chips{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
@@ -137,10 +145,11 @@ dialog{overflow-x:hidden}
         <button type="button" data-f="all" class="on">全部</button><button type="button" data-f="on">上架中</button><button type="button" data-f="off">已下架</button>
       </div>
       <select id="fPl" aria-label="來源播放清單"><option value="">所有來源</option><option>商案作品</option><option>比賽作品</option><option value="-">原有作品</option></select>
+      <select id="fSub" aria-label="短影音子分類"><option value="">所有子分類</option><option>劇情類</option><option>口播宣傳類</option><option value="-">未分類（短影音）</option></select>
       <input id="fQ" type="search" placeholder="搜尋標題／客戶／ID" aria-label="搜尋">
       <span class="fcount" id="fCount"></span>
     </div>
-    <p class="note" style="margin-top:8px">從播放清單匯入的影片預設為「已下架」，切換開關即可上架，確認後按「儲存並發布」。<br>影片可拖曳到其他分類的任一位置（可先「收合」分類或用篩選縮短清單）；手機請用每支影片的「移到…」選單。</p>
+    <p class="note" style="margin-top:8px">從播放清單匯入的影片預設為「已下架」，切換開關即可上架，確認後按「儲存並發布」。<br>影片可拖曳到其他分類的任一位置（可先「收合」分類或用篩選縮短清單）；手機請用每支影片的「移到…」選單。<br>每個分類中「上架中」的影片一律排在最上方（順序＝網站顯示順序），未上架的排在分隔線下方；把未上架影片拖進上方區塊會自動排到分隔線下第一個。<br>「短影音」可再分「劇情類／口播宣傳類」：用每支影片的子分類選單或編輯視窗設定；移出短影音會自動清除子分類，移入則為「未分類」。</p>
   </section>
 
   <div id="list"></div>
@@ -153,6 +162,7 @@ dialog{overflow-x:hidden}
       <div class="full"><label for="f_title">標題</label><input id="f_title" required></div>
       <div><label for="f_client">客戶／品牌</label><input id="f_client" placeholder="例：旭唐建設"></div>
       <div><label for="f_category">分類</label><select id="f_category"></select></div>
+      <div id="f_subWrap"><label for="f_subcategory">短影音子分類</label><select id="f_subcategory"><option value="">未分類</option><option>劇情類</option><option>口播宣傳類</option></select></div>
       <div><label for="f_youtubeId">YouTube 影片 ID 或連結（預覽／背景用）</label><input id="f_youtubeId" required></div>
       <div><label for="f_dur">片長（例 1:22）</label><input id="f_dur"></div>
       <div class="full"><label for="f_meta">說明文字（日期・類型・得獎等）</label><input id="f_meta"></div>
@@ -216,49 +226,60 @@ const fmtViews=n=>{n=+n;if(!isFinite(n))return '';const t=(v,u)=>(Math.floor(v*1
 const today=()=>{const d=new Date(),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;};
 
 function normalize(d){
-  const works=(Array.isArray(d)?d:d.works||[]).map(w=>({
-    id:w.id||w.youtubeId, title:w.title||'', client:w.client||'', category:CATS.includes(w.category)?w.category:CATS[0],
+  const works=(Array.isArray(d)?d:d.works||[]).map(w=>{const category=CATS.includes(w.category)?w.category:CATS[0]; return {
+    id:w.id||w.youtubeId, title:w.title||'', client:w.client||'', category,
     youtubeId:w.youtubeId||w.id||'', thumb:w.thumb||'', stills:Array.isArray(w.stills)?w.stills.slice(0,3):[],
     published:w.published!==false, order:+w.order||0, sourceUrl:w.sourceUrl||'', sourcePlatform:w.sourcePlatform||'',
     views:(w.views===null||w.views===''||w.views===undefined)?null:+w.views, viewsUpdatedAt:w.viewsUpdatedAt||'',
     meta:w.meta||'', dur:w.dur||'', vertical:!!w.vertical, biz:!!w.biz, ...(w.pano?{pano:true}:{}),
-    ...(w.playlist?{playlist:String(w.playlist)}:{}), ...(w.sourceTitle?{sourceTitle:String(w.sourceTitle)}:{})}));
-  return {version:1,updatedAt:d.updatedAt||'',categories:CATS.slice(),works};
+    ...(w.playlist?{playlist:String(w.playlist)}:{}), ...(w.sourceTitle?{sourceTitle:String(w.sourceTitle)}:{}),
+    ...(category===SHORT?{subcategory:SUBS.includes(w.subcategory)?w.subcategory:''}:{})};});
+  return {version:1,updatedAt:d.updatedAt||'',categories:CATS.slice(),subcategories:{[SHORT]:SUBS.slice()},works};
 }
+const SHORT='短影音', SUBS=['劇情類','口播宣傳類']; // 短影音 subcategories ('' = 未分類)
+const setCatOf=(w,cat)=>{ if(cat===SHORT){ if(w.category!==SHORT||!SUBS.includes(w.subcategory)) w.subcategory=''; } else delete w.subcategory; w.category=cat; };
 const byCat=c=>data.works.filter(w=>w.category===c).sort((a,b)=>a.order-b.order);
 function renumber(){ // keep array grouped by category, order 1..n inside each
-  const out=[]; CATS.forEach(c=>byCat(c).forEach((w,i)=>{w.order=i+1;out.push(w);})); data.works=out;
+  // published items always first (keeping their front-end order), then unpublished
+  const out=[]; CATS.forEach(c=>{const ws=byCat(c);[...ws.filter(w=>w.published),...ws.filter(w=>!w.published)].forEach((w,i)=>{w.order=i+1;out.push(w);});}); data.works=out;
 }
 
-const FIL={state:'all',pl:'',q:''};
-const matchF=w=>(FIL.state==='all'||(FIL.state==='on')===!!w.published)&&(!FIL.pl||(FIL.pl==='-'?!w.playlist:w.playlist===FIL.pl))&&
+const FIL={state:'all',pl:'',q:'',sub:''};
+const matchF=w=>(!FIL.sub||(w.category===SHORT&&(FIL.sub==='-'?!w.subcategory:w.subcategory===FIL.sub)))&&(FIL.state==='all'||(FIL.state==='on')===!!w.published)&&(!FIL.pl||(FIL.pl==='-'?!w.playlist:w.playlist===FIL.pl))&&
   (!FIL.q||[w.title,w.client,w.youtubeId,w.sourceTitle||'',w.meta].join(' ').toLowerCase().includes(FIL.q.toLowerCase()));
 function applyFilter(){
   if(!data)return; let n=0;
   document.querySelectorAll('#list .item').forEach(it=>{const w=find(it.dataset.id),ok=!!w&&matchF(w);it.classList.toggle('hide',!ok);if(ok)n++;});
   document.querySelectorAll('#list .cat').forEach(sec=>{const vis=sec.querySelectorAll('.item:not(.hide)').length,tot=sec.querySelectorAll('.item').length;
     let e=sec.querySelector('.fempty');if(tot&&!vis){if(!e){e=document.createElement('p');e.className='empty fempty';e.textContent='此分類沒有符合篩選的影片';sec.appendChild(e);}}else if(e)e.remove();});
+  document.querySelectorAll('#list .pubdiv').forEach(d=>{const sec=d.closest('.cat');d.hidden=!(sec.querySelector('.item:not(.off):not(.hide)')&&sec.querySelector('.item.off:not(.hide)'));});
   const on=data.works.filter(w=>w.published).length;
   $('#fCount').textContent=`顯示 ${n}／共 ${data.works.length} 支（上架 ${on}、下架 ${data.works.length-on}）`;
   $('#fState').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.f===FIL.state));
 }
 $('#fState').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;FIL.state=b.dataset.f;applyFilter();});
 $('#fPl').addEventListener('change',e=>{FIL.pl=e.target.value;applyFilter();});
+$('#fSub').addEventListener('change',e=>{FIL.sub=e.target.value;applyFilter();});
 $('#fQ').addEventListener('input',e=>{FIL.q=e.target.value.trim();applyFilter();});
+const subSum=ws=>{const n=k=>ws.filter(w=>(w.subcategory||'')===k).length,u=n('');
+  return `<span class="subsum">・${SUBS.map(k=>`${k} ${n(k)}`).join('・')}${u?`・<b>未分類 ${u}</b>`:''}</span>`;};
+const subBadge=w=>w.category!==SHORT?'':w.subcategory?`<span class="badge sub">${esc(w.subcategory)}</span>`:'<span class="badge warn" title="請選擇子分類">⚠ 未分類</span>';
+const subSel=w=>w.category!==SHORT?'':`<select data-act="sub" class="${w.subcategory?'':'unset'}" aria-label="短影音子分類" title="短影音子分類"><option value="">未分類</option>${SUBS.map(k=>`<option${w.subcategory===k?' selected':''}>${k}</option>`).join('')}</select>`;
 function render(){
   const L=$('#list'); if(!data){L.innerHTML='';return;}
   L.innerHTML=CATS.map(c=>{const ws=byCat(c), on=ws.filter(w=>w.published).length;
     const col=COLLAPSED.has(c);
-    return `<section class="cat${col?' collapsed':''}" data-cat="${c}"><h3>${c}<span>上架 ${on}／共 ${ws.length} 支</span><button type="button" class="colbtn" data-collapse aria-expanded="${!col}">${col?'展開 ▾':'收合 ▴'}</button></h3>`+
-    (col?'<p class="empty dropzone">（已收合，可把影片拖到這裡）</p>':ws.length?ws.map((w,i)=>`<div class="item${w.published?'':' off'}" draggable="true" data-id="${esc(w.id)}">
+    return `<section class="cat${col?' collapsed':''}" data-cat="${c}"><h3>${c}<span>上架 ${on}／共 ${ws.length} 支${c===SHORT?subSum(ws):''}</span><button type="button" class="colbtn" data-collapse aria-expanded="${!col}">${col?'展開 ▾':'收合 ▴'}</button></h3>`+
+    (col?'<p class="empty dropzone">（已收合，可把影片拖到這裡）</p>':ws.length?ws.map((w,i)=>`${!w.published&&on&&i===on?'<p class="pubdiv" aria-hidden="true">— 以下為未上架 —</p>':''}<div class="item${w.published?'':' off'}" draggable="true" data-id="${esc(w.id)}">
       <span class="handle" title="拖曳排序" aria-hidden="true">⋮⋮</span>
       <img src="${esc(thumbSrc(w))}" alt="" loading="lazy">
       <div><div class="it-title">${esc(w.title)||'（未命名）'}</div>
-        <div class="it-sub"><span class="badge ${w.published?'on':'off'}">${w.published?'上架中':'已下架'}</span>${w.client?`<span>${esc(w.client)}</span>`:''}${w.playlist?`<span class="badge pl">${esc(w.playlist)}</span>`:''}${w.dur?`<span>${esc(w.dur)}</span>`:''}<a href="https://www.youtube.com/watch?v=${encodeURIComponent(w.youtubeId)}" target="_blank" rel="noopener">YT：${esc(w.youtubeId)} ↗</a>${w.views!=null?`<span class="badge v">▶ ${fmtViews(w.views)} 次觀看</span>`:''}${w.sourceUrl?`<a href="${esc(w.sourceUrl)}" target="_blank" rel="noopener">原影片 ${esc(w.sourcePlatform||'')} ↗</a>`:'<span>未填原始連結</span>'}</div></div>
+        <div class="it-sub"><span class="badge ${w.published?'on':'off'}">${w.published?'上架中':'已下架'}</span>${subBadge(w)}${w.client?`<span>${esc(w.client)}</span>`:''}${w.playlist?`<span class="badge pl">${esc(w.playlist)}</span>`:''}${w.dur?`<span>${esc(w.dur)}</span>`:''}<a href="https://www.youtube.com/watch?v=${encodeURIComponent(w.youtubeId)}" target="_blank" rel="noopener">YT：${esc(w.youtubeId)} ↗</a>${w.views!=null?`<span class="badge v">▶ ${fmtViews(w.views)} 次觀看</span>`:''}${w.sourceUrl?`<a href="${esc(w.sourceUrl)}" target="_blank" rel="noopener">原影片 ${esc(w.sourcePlatform||'')} ↗</a>`:'<span>未填原始連結</span>'}</div></div>
       <div class="acts">
         <span class="switch${w.published?' on':''}" role="switch" tabindex="0" aria-checked="${w.published}" data-act="toggle"><i></i>${w.published?'上架':'下架'}</span>
-        <button type="button" data-act="up" ${i===0?'disabled':''} aria-label="上移">↑</button>
-        <button type="button" data-act="down" ${i===ws.length-1?'disabled':''} aria-label="下移">↓</button>
+        <button type="button" data-act="up" ${i===0||i===on?'disabled':''} aria-label="上移">↑</button>
+        <button type="button" data-act="down" ${i===ws.length-1||i===on-1?'disabled':''} aria-label="下移">↓</button>
+        ${subSel(w)}
         <select data-act="move" aria-label="移到其他分類" title="移到其他分類"><option value="">移到…</option>${CATS.filter(x=>x!==c).map(x=>`<option value="${x}">${x}</option>`).join('')}</select>
         <button type="button" data-act="edit">編輯</button>
         <button type="button" class="danger" data-act="del">刪除</button>
@@ -268,8 +289,10 @@ function render(){
 const find=id=>data.works.find(w=>w.id===id);
 $('#list').addEventListener('click',e=>{
   const a=e.target.closest('[data-act]'); if(!a) return; const it=a.closest('.item'); const w=find(it.dataset.id); if(!w) return;
-  const act=a.dataset.act; if(act==='move')return;
-  if(act==='toggle'){w.published=!w.published;}
+  const act=a.dataset.act; if(act==='move'||act==='sub')return;
+  if(act==='toggle'){ // 上架 -> end of the published block; 下架 -> top of the unpublished block
+    const ws=byCat(w.category).filter(x=>x!==w), k=ws.filter(x=>x.published).length; ws.splice(k,0,w); ws.forEach((x,i)=>x.order=i+1);
+    w.published=!w.published; renumber();}
   else if(act==='up'||act==='down'){const ws=byCat(w.category),i=ws.indexOf(w),j=act==='up'?i-1:i+1;if(j<0||j>=ws.length)return;const t=ws[i].order;ws[i].order=ws[j].order;ws[j].order=t;renumber();}
   else if(act==='edit'){openEdit(w);return;}
   else if(act==='del'){if(!confirm(`確定要刪除「${w.title}」嗎？\n（按「儲存並發布」後才會真正從網站移除）`))return;data.works=data.works.filter(x=>x!==w);renumber();}
@@ -281,7 +304,7 @@ let dragId=null;
 function moveTo(a,cat,before){ // move work a into category cat, before work `before` (null = end)
   if(!CATS.includes(cat))return false;
   const ws=byCat(cat).filter(x=>x!==a); let i=before?ws.indexOf(before):-1; if(i<0)i=ws.length;
-  ws.splice(i,0,a); a.category=cat; ws.forEach((x,k)=>x.order=k+1); renumber(); return true;
+  ws.splice(i,0,a); setCatOf(a,cat); ws.forEach((x,k)=>x.order=k+1); renumber(); return true; // renumber snaps a to its own block
 }
 const clearDrop=()=>document.querySelectorAll('.drop-before,.drop-after,.drop-into').forEach(x=>x.classList.remove('drop-before','drop-after','drop-into'));
 function dropTarget(e){ // -> {cat, before, el, cls}
@@ -300,6 +323,9 @@ $('#list').addEventListener('dragend',()=>{dragId=null;clearDrop();document.quer
 // touch-friendly fallback: 「移到」 menu on each item
 $('#list').addEventListener('change',e=>{const sel=e.target.closest('select[data-act="move"]');if(!sel)return;const w=find(sel.closest('.item').dataset.id),c=sel.value;sel.value='';
   if(!w||!c||c===w.category)return; if(moveTo(w,c,null)){render();setDirty(true);msg(esc(`已將「${w.title}」移到「${c}」（排在最後），記得按「儲存並發布」。`),'ok');}});
+// 短影音 subcategory inline select
+$('#list').addEventListener('change',e=>{const sel=e.target.closest('select[data-act="sub"]');if(!sel)return;const w=find(sel.closest('.item').dataset.id);if(!w||w.category!==SHORT)return;
+  w.subcategory=SUBS.includes(sel.value)?sel.value:'';render();setDirty(true);});
 // collapse / expand a category group
 const COLLAPSED=new Set();
 $('#list').addEventListener('click',e=>{const h=e.target.closest('[data-collapse]');if(!h)return;const c=h.closest('.cat').dataset.cat;COLLAPSED.has(c)?COLLAPSED.delete(c):COLLAPSED.add(c);render();});
@@ -313,13 +339,16 @@ function preview(){
   const src=p=>/^https?:/.test(p)?p:'../assets/'+p;
   F('prev').innerHTML=`<img src="${esc(t?src(t):ytThumb(id))}" alt="主縮圖">`+[0,1,2].map(n=>`<img class="s" src="${esc(st[n]?src(st[n]):`https://i.ytimg.com/vi/${id}/hq${n+1}.jpg`)}" alt="截圖 ${n+1}">`).join('');
 }
+function subVis(){ $('#f_subWrap').hidden=F('category').value!==SHORT; }
 function openEdit(w,isNew){
   editing={w,isNew};$('#dlgTitle').textContent=isNew?'新增影片':'編輯影片';
   ['title','client','category','youtubeId','dur','meta','thumb','sourceUrl','sourcePlatform','viewsUpdatedAt'].forEach(k=>F(k).value=w[k]||'');
   F('stills').value=(w.stills||[]).join('\n'); F('views').value=w.views==null?'':w.views;
+  F('subcategory').value=w.category===SHORT&&SUBS.includes(w.subcategory)?w.subcategory:''; subVis();
   F('published').checked=w.published; F('vertical').checked=w.vertical; F('biz').checked=w.biz; F('err').textContent='';
   preview(); $('#dlg').showModal();
 }
+F('category').addEventListener('change',()=>{ const w=editing.w; F('subcategory').value=F('category').value===w.category&&SUBS.includes(w.subcategory)?w.subcategory:''; subVis(); });
 F('youtubeId').addEventListener('change',preview);F('thumb').addEventListener('change',preview);F('stills').addEventListener('change',preview);
 F('sourceUrl').addEventListener('change',()=>{const p=platOf(F('sourceUrl').value);if(p&&!F('sourcePlatform').value)F('sourcePlatform').value=p;});
 F('views').addEventListener('input',()=>{if(!F('viewsUpdatedAt').value||F('views').dataset.touched!=='1'){F('viewsUpdatedAt').value=today();F('views').dataset.touched='1';}});
@@ -341,9 +370,10 @@ $('#form').addEventListener('submit',e=>{
   if(!F('title').value.trim()){F('err').textContent='請填寫標題';return;}
   const dup=data.works.find(x=>x!==w&&x.id===(editing.isNew?id:w.id)); if(editing.isNew&&dup){F('err').textContent='這支影片已在清單中';return;}
   const oldCat=w.category;
-  Object.assign(w,{title:F('title').value.trim(),client:F('client').value.trim(),category:F('category').value,youtubeId:id,dur:F('dur').value.trim(),meta:F('meta').value.trim(),
+  Object.assign(w,{title:F('title').value.trim(),client:F('client').value.trim(),youtubeId:id,dur:F('dur').value.trim(),meta:F('meta').value.trim(),
     thumb:F('thumb').value.trim(),stills:F('stills').value.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,3),sourceUrl:su,sourcePlatform:F('sourcePlatform').value||(su?platOf(su):''),
     views,viewsUpdatedAt:views==null?'':(F('viewsUpdatedAt').value||today()),published:F('published').checked,vertical:F('vertical').checked,biz:F('biz').checked});
+  setCatOf(w,F('category').value); if(w.category===SHORT) w.subcategory=SUBS.includes(F('subcategory').value)?F('subcategory').value:'';
   if(editing.isNew){w.id=id;data.works.push(w);}
   if(editing.isNew||oldCat!==w.category) w.order=byCat(w.category).length+1;
   renumber(); $('#dlg').close(); F('views').dataset.touched=''; render(); setDirty(true);
@@ -380,6 +410,7 @@ function validate(d){
   for(const w of d.works){
     if(!w.id||ids.has(w.id)) throw new Error('影片 ID 重複或空白：'+w.id); ids.add(w.id);
     if(!CATS.includes(w.category)) throw new Error('分類錯誤：'+w.title);
+    if('subcategory' in w && (w.category!==SHORT || (w.subcategory!=='' && !SUBS.includes(w.subcategory)))) throw new Error('子分類錯誤：'+w.title);
     if(!/^[\w-]{11}$/.test(w.youtubeId)) throw new Error('YouTube ID 格式錯誤：'+w.title);
     if(w.views!==null&&!(Number.isFinite(w.views)&&w.views>=0)) throw new Error('觀看次數錯誤：'+w.title);
   }

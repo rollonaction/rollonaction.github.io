@@ -731,3 +731,24 @@ p{text-wrap:pretty}
 @media (max-width:760px){.ep__views{margin-top:16px;gap:10px}.ep__vnum{font-size:52px}.ep__vlab{font-size:13px;padding-bottom:5px}.ep__plat{width:26px;height:26px}}
 .ep__src{font-size:14px;letter-spacing:.1em;color:#fff;border-bottom:1px solid var(--wine-2);padding-bottom:2px;transition:color .2s,border-color .2s}
 .ep__src:hover{color:var(--wine-2);border-color:#fff}
+
+/* 短影音 secondary tabs (劇情類 / 口播宣傳類) — visibly secondary to the big category cards */
+.wsubs{display:flex;align-items:center;flex-wrap:wrap;gap:10px 16px;margin:0 0 26px;padding:14px 18px;border:1px solid rgba(158,42,58,.35);border-left:3px solid var(--wine-2);border-radius:10px;background:linear-gradient(90deg,rgba(122,31,43,.22),rgba(122,31,43,.04))}
+.wsubs[hidden],.wbar__subs[hidden]{display:none}
+.wsubs__label{font-size:12px;letter-spacing:.22em;color:#e7a3ad;white-space:nowrap}
+.wsubs__tabs{display:flex;flex-wrap:wrap;gap:8px}
+.wsub{white-space:nowrap;padding:7px 16px;border:1px solid rgba(158,42,58,.7);border-radius:999px;font-size:14px;letter-spacing:.08em;color:#f0dfe2;background:rgba(11,11,12,.35);transition:.2s;cursor:pointer}
+.wsub b{font-family:var(--disp);font-weight:500;font-size:12px;margin-left:8px;opacity:.75}
+.wsub:hover{border-color:var(--wine-2);color:#fff;background:rgba(122,31,43,.35)}
+.wsub.is-active{background:var(--wine-2);border-color:var(--wine-2);color:#fff;box-shadow:0 4px 14px rgba(158,42,58,.35)}
+.wbar__subs{display:flex;gap:6px;padding-left:14px;margin-left:2px;border-left:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.wbar__subs::-webkit-scrollbar{display:none}
+.wpill--sub{padding:5px 12px;font-size:13px;border-color:rgba(158,42,58,.6)}
+.wpill--sub.is-active{background:rgba(158,42,58,.9)}
+@media (max-width:760px){
+  .wsubs{padding:12px 12px;margin-bottom:18px;gap:8px}
+  .wsubs__label{width:100%}
+  .wsubs__tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;width:100%}
+  .wsub{padding:6px 12px;font-size:13px}
+  .wbar__subs{display:none!important}
+}

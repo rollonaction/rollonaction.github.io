@@ -9,12 +9,15 @@
   // works.json (via works-loader.js) uses category names in Chinese; legacy works.js uses cat keys
   const CAT_KEY={'短影音':'short','活動紀錄':'event','形象片':'brand','戲劇類':'drama'};
   const CAT_NAME={short:'短影音',event:'活動紀錄',brand:'形象片',drama:'戲劇類'};
+  // 短影音 subcategories (optional `subcategory` field in works.json)
+  const SUB_KEY={'劇情類':'story','口播宣傳類':'promo'}, SUB_NAME={story:'劇情類',promo:'口播宣傳類'};
   const A=new URL('../',T).href; // assets/ base, for json paths like "thumbs/x.webp"
   const src=(p,fb)=>{ if(!p) return fb; try{ return new URL(p,A).href; }catch(e){ return fb; } };
   const safeUrl=u=>{ try{ const x=new URL(u); return /^https?:$/.test(x.protocol)?x.href:''; }catch(e){ return ''; } };
   const WORKS=(window.WORKS||[]).filter(w=>w && w.published!==false).map((w,ix)=>{
     const id=w.youtubeId||w.id, cat=w.cat||CAT_KEY[w.category]||'short';
-    return {...w,id,cat,label:CAT_NAME[cat],_ix:ix,meta:w.meta||'',
+    const sub=cat==='short'?(SUB_KEY[w.subcategory]||''):'';
+    return {...w,id,cat,sub,label:CAT_NAME[cat]+(sub?'・'+SUB_NAME[sub]:''),_ix:ix,meta:w.meta||'',
       // json items without own images (added in /admin/) fall back to YouTube's thumbnails; legacy items use local thumbs
       poster:src(w.thumb,('thumb' in w)?`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`:`${T}${id}.webp`),
       stills:[0,1,2].map(n=>src(w.stills&&w.stills[n],('stills' in w)?`https://i.ytimg.com/vi/${id}/hq${n+1}.jpg`:`${T}${id}-${n+1}.webp`))};
@@ -44,7 +47,7 @@
     const su=w.sourceUrl?safeUrl(w.sourceUrl):'';
     const srcLink=su?`<a class="ep__src" href="${esc(su)}" target="_blank" rel="noopener">觀看原影片 ↗</a>`:'';
     return `
-    <article class="ep ep--${side}${w.vertical?' ep--vert':''}${w.biz?' ep--biz':''}" data-cat="${w.cat}" data-id="${vid}" data-start="${startAt(w)}" data-vertical="${!!w.vertical}"${w.cat===DEFAULT_CAT?'':' hidden'} data-reveal>
+    <article class="ep ep--${side}${w.vertical?' ep--vert':''}${w.biz?' ep--biz':''}" data-cat="${w.cat}"${w.sub?` data-sub="${w.sub}"`:''} data-id="${vid}" data-start="${startAt(w)}" data-vertical="${!!w.vertical}"${w.cat===DEFAULT_CAT?'':' hidden'} data-reveal>
       <div class="ep__bg" aria-hidden="true">
         <img class="ep__poster" src="${esc(w.poster)}" alt="" loading="lazy" decoding="async"${/maxresdefault/.test(w.poster)?` onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${vid}/hqdefault.jpg'"`:''}>
         <span class="ep__video"></span>
@@ -119,6 +122,7 @@
       }
     });
     grid.querySelectorAll('.ep').forEach(el=>{ el.hidden=el.dataset.cat!==f; });
+    document.dispatchEvent(new CustomEvent('works:cat'));
     grid.classList.remove('is-swap'); void grid.offsetWidth; grid.classList.add('is-swap');
     renderNext();
     document.dispatchEvent(new CustomEvent('works:filter'));
@@ -130,6 +134,44 @@
     setCat(b.dataset.filter, b.classList.contains('wpill')||b.classList.contains('wnext'));
   });
   renderNext();
+
+  // 短影音 secondary tabs: 全部短影音 / 劇情類 / 口播宣傳類 (a tab is hidden when it has no published item)
+  const subTotal={}; WORKS.forEach(w=>{ if(w.sub) subTotal[w.sub]=(subTotal[w.sub]||0)+1; });
+  const SUBS=[{k:'all',name:'全部短影音',n:catTotal.short||0}].concat(['story','promo'].filter(k=>subTotal[k]).map(k=>({k,name:SUB_NAME[k],n:subTotal[k]})));
+  const subsEl=document.getElementById('worksSubs'), barSubs=document.getElementById('worksBarSubs');
+  let curSub='all';
+  const subHTML=cls=>SUBS.map(x=>`<button class="${cls}${x.k===curSub?' is-active':''}" data-sub="${x.k}" aria-pressed="${x.k===curSub}">${x.name}<b>${x.n}</b></button>`).join('');
+  if(subsEl && SUBS.length>1){ subsEl.innerHTML=`<span class="wsubs__label">短影音分類</span><div class="wsubs__tabs" role="group" aria-label="短影音分類">${subHTML('wsub')}</div>`; }
+  if(barSubs && SUBS.length>1){ barSubs.innerHTML=subHTML('wpill wpill--sub'); }
+  function relayout(){ // renumber EP.xx / total and alternate sides over the visible rows
+    const vis=[...grid.querySelectorAll('.ep')].filter(el=>!el.hidden);
+    vis.forEach((el,i)=>{ const no=el.querySelector('.ep__no');
+      if(no){ no.childNodes[1].textContent=pad(i+1); const em=no.querySelector('em'); if(em) em.textContent='/ '+pad(vis.length); }
+      el.classList.toggle('ep--l',i%2===0); el.classList.toggle('ep--r',i%2===1); });
+  }
+  function showSubs(){
+    const on=cur==='short' && SUBS.length>1;
+    if(subsEl) subsEl.hidden=!on;
+    if(barSubs) barSubs.hidden=!on;
+    if(bar) bar.classList.toggle('has-subs',on);
+  }
+  function setSub(k,scroll){
+    if(cur!=='short' || !SUBS.some(x=>x.k===k)) return;
+    curSub=k;
+    document.querySelectorAll('[data-sub]').forEach(x=>{ if(x.tagName!=='BUTTON') return; const on=x.dataset.sub===k; x.classList.toggle('is-active',on); x.setAttribute('aria-pressed',on?'true':'false'); });
+    grid.querySelectorAll('.ep').forEach(el=>{ el.hidden=el.dataset.cat!=='short' || (k!=='all' && el.dataset.sub!==k); });
+    relayout();
+    grid.classList.remove('is-swap'); void grid.offsetWidth; grid.classList.add('is-swap');
+    document.dispatchEvent(new CustomEvent('works:filter'));
+    if(scroll) scrollToRows();
+    requestAnimationFrame(barUpdate);
+  }
+  document.addEventListener('click',e=>{ const b=e.target.closest('button[data-sub]'); if(!b) return; setSub(b.dataset.sub, b.classList.contains('wpill')); });
+  document.addEventListener('works:cat',()=>{ // switching main category resets the sub tab to 全部
+    curSub='all';
+    document.querySelectorAll('button[data-sub]').forEach(x=>{ const on=x.dataset.sub==='all'; x.classList.toggle('is-active',on); x.setAttribute('aria-pressed',on?'true':'false'); });
+    relayout(); showSubs(); });
+  showSubs();
 
   // sticky bar: shown only while the rows of the works section are on screen (fixed under the nav)
   function barUpdate(){
