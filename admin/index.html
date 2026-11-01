@@ -189,16 +189,45 @@ dialog{overflow-x:hidden}
 (function(){
 'use strict';
 const OWNER='rollonaction', REPO='rollonaction.github.io', PATH='assets/works.json', API='https://api.github.com';
-const CATS=['短影音','活動紀錄','形象片','劇情類'];
-const CAT_ALIAS={['\u6232\u5287\u985e']:'劇情類'}; // legacy name of 劇情類
+const CATS=['短影音','活動紀錄','形象片','劇情類','節目類','MV'];
+const CAT_ALIAS={['\u6232\u5287\u985e']:'劇情類','節目':'節目類','mv':'MV','Mv':'MV','ＭＶ':'MV'}; // legacy / variant names
 const TK='rollon_admin_gh_token';
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let data=null, sha=null, branch='main', dirty=false, editing=null;
+let data=null, sha=null, branch='main', dirty=false, editing=null, base=null; // base = snapshot of the file as loaded (for 3-way merge)
+const DK='rollon_admin_draft_v1'; // unsaved edits kept in this browser
 
 const token=()=>localStorage.getItem(TK)||'';
 function msg(html,kind){const m=$('#msg');m.className='msg show '+(kind||'ok');m.innerHTML=html;}
-function setDirty(d){dirty=d;$('#status').textContent=d?'有未儲存的變更':(data?'已載入 '+data.works.length+' 支影片':'尚未載入');$('#status').classList.toggle('dirty',d);$('#btnSave').disabled=!d||!token();}
+const clone=o=>JSON.parse(JSON.stringify(o));
+let draftT=0;
+function saveDraft(){clearTimeout(draftT);draftT=setTimeout(()=>{try{if(dirty&&data&&base)localStorage.setItem(DK,JSON.stringify({savedAt:new Date().toISOString(),base,data}));}catch(e){}},250);}
+function clearDraft(){clearTimeout(draftT);try{localStorage.removeItem(DK);}catch(e){}}
+// 3-way merge keyed by YouTube id: the user's changed fields win, their adds/deletes apply, everything else comes from remote.
+// Returns {data, conflicts:[{id,title,field}]}; with force=true conflicting fields take the local value.
+const SAME=(a,b)=>JSON.stringify(a===undefined?null:a)===JSON.stringify(b===undefined?null:b);
+function merge3(B,L,R,force){
+  const m=a=>new Map(a.works.map(w=>[w.id,w])), bm=m(B), lm=m(L), rm=m(R), out=[], conflicts=[], seen=new Set();
+  const ids=[...R.works.map(w=>w.id),...L.works.map(w=>w.id)];
+  for(const id of ids){ if(seen.has(id))continue; seen.add(id);
+    const b=bm.get(id), l=lm.get(id), r=rm.get(id), t=(b||r||l).title;
+    if(!l){ // not in local
+      if(b){ if(r&&!SAME(b,r)&&!force) conflicts.push({id,title:t,field:'（你刪除了這支，但遠端有修改）'}); continue; } // deleted locally
+      out.push(clone(r)); continue; } // added remotely
+    if(!r){ // not in remote
+      if(!b){ out.push(clone(l)); continue; } // added locally
+      if(!SAME(b,l)&&!force){ conflicts.push({id,title:t,field:'（遠端已刪除，但你有修改）'}); out.push(clone(l)); } else if(force) out.push(clone(l));
+      continue; }
+    const w={}, B0=b||{}; const keys=new Set([...Object.keys(B0),...Object.keys(l),...Object.keys(r)]);
+    for(const k of keys){ const lv=l[k], bv=B0[k], rv=r[k];
+      if(SAME(lv,bv)) { if(rv!==undefined) w[k]=clone(rv); }
+      else if(SAME(rv,bv)||SAME(rv,lv)||k==='order'||force) { if(lv!==undefined) w[k]=clone(lv); }
+      else { conflicts.push({id,title:t,field:k}); if(lv!==undefined) w[k]=clone(lv); } }
+    if(w.category!==SHORT) delete w.subcategory; else if(!SUBS.includes(w.subcategory)) w.subcategory='';
+    out.push(w); }
+  const d={...R,works:out}; return {data:d,conflicts};
+}
+function setDirty(d){if(d)saveDraft();dirty=d;$('#status').textContent=d?'有未儲存的變更':(data?'已載入 '+data.works.length+' 支影片':'尚未載入');$('#status').classList.toggle('dirty',d);$('#btnSave').disabled=!d||!token();}
 addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
 
 // UTF-8 safe base64
@@ -227,7 +256,7 @@ const fmtViews=n=>{n=+n;if(!isFinite(n))return '';const t=(v,u)=>(Math.floor(v*1
 const today=()=>{const d=new Date(),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;};
 
 function normalize(d){
-  const works=(Array.isArray(d)?d:d.works||[]).map(w=>{const c0=CAT_ALIAS[w.category]||w.category, category=CATS.includes(c0)?c0:CATS[0]; return {
+  const works=(Array.isArray(d)?d:d.works||[]).map(w=>{const c0=CAT_ALIAS[String(w.category||'').trim()]||String(w.category||'').trim(), category=CATS.includes(c0)?c0:CATS[0]; return {
     id:w.id||w.youtubeId, title:w.title||'', client:w.client||'', category,
     youtubeId:w.youtubeId||w.id||'', thumb:w.thumb||'', stills:Array.isArray(w.stills)?w.stills.slice(0,3):[],
     published:w.published!==false, order:+w.order||0, sourceUrl:w.sourceUrl||'', sourcePlatform:w.sourcePlatform||'',
@@ -403,7 +432,16 @@ async function load(){
       data=normalize(await r.json()); sha=null;
       msg('目前為「唯讀」模式：請先在上方貼上 GitHub 權杖，才能儲存變更。','err');
     }
-    renumber(); render(); setDirty(false);
+    renumber(); base=clone(data); render(); setDirty(false);
+    let dr=null; try{dr=JSON.parse(localStorage.getItem(DK)||'null');}catch(e){}
+    if(dr&&dr.base&&dr.data){
+      const when=new Date(dr.savedAt||Date.now()).toLocaleString('zh-TW',{hour12:false});
+      if(confirm(`發現上次尚未儲存的變更（${when}）。\n要還原這些變更嗎？\n\n按「確定」還原；按「取消」捨棄。`)){
+        const B=normalize(dr.base), L=normalize(dr.data), mg=merge3(B,L,data,false), fz=mg.conflicts.length?merge3(B,L,data,true):mg;
+        data=fz.data; renumber(); render(); setDirty(true);
+        msg('已還原上次未儲存的變更（已套用到最新版本上），確認後請按「儲存並發布」。'+(mg.conflicts.length?'<br>注意：以下欄位在網站上也被改過，已先以你的版本為準：'+esc(mg.conflicts.map(c=>c.title+'・'+c.field).join('；')):''),'ok');
+      } else clearDraft();
+    }
   }catch(e){ $('#status').textContent='載入失敗'; msg('載入失敗：'+esc(e.message),'err'); }
 }
 function validate(d){
@@ -417,23 +455,45 @@ function validate(d){
   }
   const s=JSON.stringify(d,null,2)+'\n'; JSON.parse(s); return s;
 }
-$('#btnSave').addEventListener('click',async()=>{
+async function putFile(){
+  renumber(); data.updatedAt=new Date().toISOString(); const body=validate(data);
+  return gh(`/repos/${OWNER}/${REPO}/contents/${PATH}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'後台更新精選作品 works.json',content:b64e(body),sha,branch})});
+}
+async function fetchRemote(){ const f=await gh(`/repos/${OWNER}/${REPO}/contents/${PATH}?ref=${encodeURIComponent(branch)}&t=${Date.now()}`); return {sha:f.sha,d:normalize(JSON.parse(b64d(f.content)))}; }
+async function doSave(force){
   if(!token()){msg('請先輸入 GitHub 權杖。','err');return;}
   const b=$('#btnSave'); b.disabled=true; b.textContent='儲存中…';
+  let merged=false;
   try{
-    renumber(); data.updatedAt=new Date().toISOString(); const body=validate(data);
-    if(!sha){const f=await gh(`/repos/${OWNER}/${REPO}/contents/${PATH}?ref=${encodeURIComponent(branch)}`);sha=f.sha;}
-    const r=await gh(`/repos/${OWNER}/${REPO}/contents/${PATH}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'後台更新精選作品 works.json',content:b64e(body),sha,branch})});
-    sha=r.content&&r.content.sha; setDirty(false);
+    renumber(); validate(data);
+    if(!sha){ const f=await fetchRemote(); sha=f.sha; }
+    let r;
+    try{ r=await putFile(); }
+    catch(e){
+      if(e.status!==409&&e.status!==422) throw e;
+      // the file changed on GitHub after this page was loaded: merge our edits onto the latest version and retry once
+      const f=await fetchRemote(), mg=merge3(base||f.d,data,f.d,!!force);
+      if(mg.conflicts.length){
+        const FL={title:'標題',published:'上架',category:'分類',subcategory:'短影音子分類',meta:'說明文字',client:'客戶',biz:'產業',views:'觀看數',duration:'片長',dur:'片長',thumb:'縮圖',stills:'劇照',vertical:'直式',previewStart:'預覽起點'};
+        const list=mg.conflicts.slice(0,8).map(c=>`<li>${esc(c.title||c.id)}：${esc(FL[c.field]||c.field)}</li>`).join('')+(mg.conflicts.length>8?`<li>…等 ${mg.conflicts.length} 項</li>`:'');
+        msg(`⚠ 尚未儲存：網站上的 works.json 在你編輯期間也被修改，以下項目兩邊都改了同一個欄位：<ul>${list}</ul>你的修改都還在（也已暫存在這台電腦）。可以按下方按鈕「以我的修改為準」儲存，或按「重新載入」放棄你的修改、改用網站上的版本。<br><button type="button" id="btnForce" class="primary" style="margin-top:8px">以我的修改為準並儲存</button>`,'err');
+        $('#btnForce').addEventListener('click',()=>doSave(true));
+        setDirty(true); b.textContent='儲存並發布'; b.disabled=!dirty; return;
+      }
+      data=mg.data; sha=f.sha; merged=true; renumber(); render();
+      r=await putFile();
+    }
+    sha=r.content&&r.content.sha; base=clone(data); setDirty(false); clearDraft(); if(merged) render();
     const url=r.commit&&r.commit.html_url;
-    msg(`✅ 已儲存並送出更新（commit <a href="${esc(url)}" target="_blank" rel="noopener">${esc((r.commit&&r.commit.sha||'').slice(0,7))}</a>）。網站約 1 分鐘後更新，可重新整理首頁確認。`,'ok');
+    msg(`✅ 已儲存並送出更新（commit <a href="${esc(url)}" target="_blank" rel="noopener">${esc((r.commit&&r.commit.sha||'').slice(0,7))}</a>）。${merged?'網站上的檔案在你編輯期間有更新，已自動合併你的修改。':''}網站約 1 分鐘後更新，可重新整理首頁確認。`,'ok');
   }catch(e){
-    msg('儲存失敗：'+esc(e.message)+(e.status===409?'（檔案已被其他人更新，請按「重新載入」後再修改一次）':e.status===401||e.status===403?'（請確認權杖是否有效，並有 Contents 讀寫權限）':''),'err');
+    msg('儲存失敗：'+esc(e.message)+(e.status===409||e.status===422?'（網站上的檔案剛又被更新，請再按一次「儲存並發布」；你的修改仍保留）':e.status===401||e.status===403?'（請確認權杖是否有效，並有 Contents 讀寫權限）':'')+'（你的修改已暫存在這台電腦）','err');
     setDirty(true);
   }
   b.textContent='儲存並發布'; b.disabled=!dirty;
-});
-$('#btnReload').addEventListener('click',()=>{if(dirty&&!confirm('有未儲存的變更，確定要重新載入嗎？'))return;$('#msg').className='msg';load();});
+}
+$('#btnSave').addEventListener('click',()=>doSave(false));
+$('#btnReload').addEventListener('click',()=>{if(dirty&&!confirm('有未儲存的變更，重新載入會捨棄這些變更，確定嗎？'))return;clearDraft();dirty=false;$('#msg').className='msg';load();});
 $('#btnToken').addEventListener('click',()=>{const v=$('#token').value.trim();if(!v){msg('請貼上權杖。','err');return;}localStorage.setItem(TK,v);$('#token').value='';$('#token').placeholder='已儲存權杖（••••••）';$('#msg').className='msg';load();});
 $('#btnForget').addEventListener('click',()=>{localStorage.removeItem(TK);$('#token').placeholder='github_pat_…';sha=null;setDirty(dirty);msg('已從這個瀏覽器清除權杖。','ok');});
 if(token()) $('#token').placeholder='已儲存權杖（••••••）';

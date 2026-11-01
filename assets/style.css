@@ -777,3 +777,21 @@ p{text-wrap:pretty}
   .manifesto__eyebrow{font-size:11px;letter-spacing:.28em}
 }
 @media (prefers-reduced-motion:reduce){.manifesto__ghost{transform:translate3d(0,-50%,0)}.mf-fill{clip-path:none}.manifesto__rule{transform:none}}
+
+/* ================= 6 categories: equal cards, count-aware grid (cards with 0 published are not rendered) ================= */
+.wcats{grid-template-columns:repeat(var(--n,4),minmax(0,1fr))}
+.wcats[data-n="5"],.wcats[data-n="6"]{gap:clamp(10px,1.1vw,16px)}
+.wcats[data-n="5"] .wcat,.wcats[data-n="6"] .wcat{min-height:clamp(200px,18vw,270px)}
+.wcats[data-n="5"] .wcat__name,.wcats[data-n="6"] .wcat__name{font-size:clamp(22px,1.9vw,32px)}
+.wcats[data-n="5"] .wcat__state,.wcats[data-n="6"] .wcat__state{font-size:11px;padding:3px 10px}
+@media (max-width:1180px){
+  .wcats[data-n="5"],.wcats[data-n="6"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .wcats[data-n="5"] .wcat__name,.wcats[data-n="6"] .wcat__name{font-size:clamp(24px,2.8vw,32px)}
+}
+@media (max-width:760px){
+  .wcats,.wcats[data-n]{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .wcats[data-n] .wcat{min-height:168px}
+  .wcats[data-n] .wcat__name{font-size:22px}
+  .wcats[data-n="3"] .wcat:last-child,.wcats[data-n="5"] .wcat:last-child{grid-column:1/-1;min-height:150px}
+}
+.wcats[data-n="5"] .wcat__long,.wcats[data-n="6"] .wcat__long{display:none}

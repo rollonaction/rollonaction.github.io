@@ -7,15 +7,15 @@
   const pad=n=>String(n).padStart(2,'0');
   const icon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
   // works.json (via works-loader.js) uses category names in Chinese; legacy works.js uses cat keys
-  const CAT_KEY={'短影音':'short','活動紀錄':'event','形象片':'brand','劇情類':'drama','\u6232\u5287\u985e':'drama'}; // \u6232\u5287\u985e = legacy name
-  const CAT_NAME={short:'短影音',event:'活動紀錄',brand:'形象片',drama:'劇情類'};
+  const CAT_KEY={'短影音':'short','活動紀錄':'event','形象片':'brand','劇情類':'drama','\u6232\u5287\u985e':'drama','節目類':'show','節目':'show','MV':'mv','mv':'mv'}; // \u6232\u5287\u985e = legacy name
+  const CAT_NAME={short:'短影音',event:'活動紀錄',brand:'形象片',drama:'劇情類',show:'節目類',mv:'MV'};
   // 短影音 subcategories (optional `subcategory` field in works.json)
   const SUB_KEY={'劇情類':'story','口播宣傳類':'promo'}, SUB_NAME={story:'劇情類',promo:'口播宣傳類'};
   const A=new URL('../',T).href; // assets/ base, for json paths like "thumbs/x.webp"
   const src=(p,fb)=>{ if(!p) return fb; try{ return new URL(p,A).href; }catch(e){ return fb; } };
   const safeUrl=u=>{ try{ const x=new URL(u); return /^https?:$/.test(x.protocol)?x.href:''; }catch(e){ return ''; } };
   const WORKS=(window.WORKS||[]).filter(w=>w && w.published!==false).map((w,ix)=>{
-    const id=w.youtubeId||w.id, cat=w.cat||CAT_KEY[w.category]||'short';
+    const id=w.youtubeId||w.id, cat=w.cat||CAT_KEY[String(w.category||'').trim()]||'short';
     const sub=cat==='short'?(SUB_KEY[w.subcategory]||''):'';
     return {...w,id,cat,sub,label:CAT_NAME[cat]+(sub?'・'+SUB_NAME[sub]:''),_ix:ix,meta:w.meta||'',
       // json items without own images (added in /admin/) fall back to YouTube's thumbnails; legacy items use local thumbs
@@ -34,7 +34,7 @@
   // number + alternate sides within each category (only one category is shown at a time)
   const catIdx={}, catTotal={};
   WORKS.forEach(w=>{catTotal[w.cat]=(catTotal[w.cat]||0)+1;});
-  const DEFAULT_CAT=catTotal.short?'short':(['event','brand','drama'].find(k=>catTotal[k])||'short');
+  const DEFAULT_CAT=catTotal.short?'short':(['event','brand','drama','show','mv'].find(k=>catTotal[k])||'short');
   grid.innerHTML=WORKS.map(w=>{
     const i=catIdx[w.cat]=(catIdx[w.cat]||0)+1;
     const t=esc(w.title), side=i%2?'l':'r', vid=esc(w.id);
@@ -72,7 +72,9 @@
     {k:'short',name:'短影音',en:'SHORT-FORM'},
     {k:'event',name:'活動紀錄',en:'EVENTS'},
     {k:'brand',name:'形象片',en:'BRAND FILM'},
-    {k:'drama',name:'劇情類',en:'DRAMA'}
+    {k:'drama',name:'劇情類',en:'DRAMA'},
+    {k:'show',name:'節目類',en:'PROGRAM'},
+    {k:'mv',name:'MV',en:'MUSIC VIDEO'}
   ].filter(c=>catTotal[c.k]);
   const firstOf=k=>WORKS.find(w=>w.cat===k);
   const posterOf=k=>firstOf(k).poster;
@@ -80,6 +82,8 @@
   const bar=document.getElementById('worksBar'), body=document.getElementById('worksBody'), nextEl=document.getElementById('worksNext');
   let cur=DEFAULT_CAT;
   if(cardsEl){
+    cardsEl.style.setProperty('--n',CATS.length); cardsEl.dataset.n=CATS.length;
+    const hn=document.getElementById('worksCatsN'); if(hn) hn.textContent='・共 '+CATS.length+' 類';
     cardsEl.innerHTML=CATS.map((c,i)=>`<button class="wcat${c.k===cur?' is-active':''}" role="tab" aria-selected="${c.k===cur}" data-filter="${c.k}" style="--d:${i*.08}s">
       <span class="wcat__media"><img src="${esc(posterOf(c.k))}" alt="" loading="lazy" decoding="async"></span>
       <span class="wcat__no">${pad(i+1)}</span>
