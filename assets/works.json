@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-01T10:39:10.919Z",
+  "updatedAt": "2026-11-01T10:40:20.688Z",
   "categories": [
     "短影音",
     "活動紀錄",
@@ -292,6 +292,48 @@
       "biz": true
     },
     {
+      "id": "MlU80jzIdeo",
+      "title": "2025年基隆國際移民生活節 回顧影片",
+      "client": "",
+      "category": "活動紀錄",
+      "youtubeId": "MlU80jzIdeo",
+      "thumb": "",
+      "stills": [],
+      "published": true,
+      "order": 2,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "",
+      "dur": "",
+      "vertical": false,
+      "biz": false
+    },
+    {
+      "id": "xt3PgkoXMdc",
+      "title": "生麗羽你同行羽霸盃羽球分齡賽 1分鐘版",
+      "client": "",
+      "category": "活動紀錄",
+      "youtubeId": "xt3PgkoXMdc",
+      "thumb": "thumbs/xt3PgkoXMdc.webp",
+      "stills": [
+        "thumbs/xt3PgkoXMdc-1.webp",
+        "thumbs/xt3PgkoXMdc-2.webp",
+        "thumbs/xt3PgkoXMdc-3.webp"
+      ],
+      "published": true,
+      "order": 3,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "2025.10.11・賽事紀錄",
+      "dur": "1:01",
+      "vertical": false,
+      "biz": true
+    },
+    {
       "id": "ivnQzPGoPxo",
       "title": "旭唐建設 宜蘭尾牙二日遊｜尾牙",
       "client": "",
@@ -304,36 +346,13 @@
         "thumbs/ivnQzPGoPxo-3.webp"
       ],
       "published": true,
-      "order": 2,
+      "order": 4,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
       "viewsUpdatedAt": "",
       "meta": "2026.02.03・尾牙活動紀錄",
       "dur": "1:47",
-      "vertical": false,
-      "biz": true
-    },
-    {
-      "id": "7L09vmO98S0",
-      "title": "遠雄海洋珊寶＿種珊瑚志工體驗活動 花絮",
-      "client": "",
-      "category": "活動紀錄",
-      "youtubeId": "7L09vmO98S0",
-      "thumb": "thumbs/7L09vmO98S0.webp",
-      "stills": [
-        "thumbs/7L09vmO98S0-1.webp",
-        "thumbs/7L09vmO98S0-2.webp",
-        "thumbs/7L09vmO98S0-3.webp"
-      ],
-      "published": true,
-      "order": 3,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "2024.09.14・活動花絮",
-      "dur": "2:01",
       "vertical": false,
       "biz": true
     },
@@ -350,36 +369,13 @@
         "thumbs/P5ryLqBW9DU-3.webp"
       ],
       "published": true,
-      "order": 4,
+      "order": 5,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
       "viewsUpdatedAt": "",
       "meta": "2025.02.03・春酒活動花絮",
       "dur": "1:23",
-      "vertical": false,
-      "biz": true
-    },
-    {
-      "id": "xt3PgkoXMdc",
-      "title": "生麗羽你同行羽霸盃羽球分齡賽 1分鐘版",
-      "client": "",
-      "category": "活動紀錄",
-      "youtubeId": "xt3PgkoXMdc",
-      "thumb": "thumbs/xt3PgkoXMdc.webp",
-      "stills": [
-        "thumbs/xt3PgkoXMdc-1.webp",
-        "thumbs/xt3PgkoXMdc-2.webp",
-        "thumbs/xt3PgkoXMdc-3.webp"
-      ],
-      "published": true,
-      "order": 5,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "2025.10.11・賽事紀錄",
-      "dur": "1:01",
       "vertical": false,
       "biz": true
     },
@@ -434,31 +430,6 @@
       "sourceTitle": "【專案】250511清晨盃Highlight 1分鐘版"
     },
     {
-      "id": "fhnP1DerYaE",
-      "title": "2024獅子會活動回顧",
-      "client": "",
-      "category": "活動紀錄",
-      "youtubeId": "fhnP1DerYaE",
-      "thumb": "https://i.ytimg.com/vi/fhnP1DerYaE/hqdefault.jpg",
-      "stills": [
-        "https://i.ytimg.com/vi/fhnP1DerYaE/hq1.jpg",
-        "https://i.ytimg.com/vi/fhnP1DerYaE/hq2.jpg",
-        "https://i.ytimg.com/vi/fhnP1DerYaE/hq3.jpg"
-      ],
-      "published": true,
-      "order": 8,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "2025.08.21・活動紀錄",
-      "dur": "1:54",
-      "vertical": false,
-      "biz": true,
-      "playlist": "商案作品",
-      "sourceTitle": "【妄想機】250821 2024獅子會活動回顧"
-    },
-    {
       "id": "z_F01iv12uI",
       "title": "王富美浪浪家園 紀錄片｜不可不思議 寵物篇",
       "client": "",
@@ -471,7 +442,7 @@
         "https://i.ytimg.com/vi/z_F01iv12uI/hq3.jpg"
       ],
       "published": true,
-      "order": 9,
+      "order": 8,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -482,6 +453,54 @@
       "biz": true,
       "playlist": "商案作品",
       "sourceTitle": "王富美浪浪家園 紀錄片｜不可不思議 寵物篇"
+    },
+    {
+      "id": "fhnP1DerYaE",
+      "title": "2024獅子會活動回顧",
+      "client": "",
+      "category": "活動紀錄",
+      "youtubeId": "fhnP1DerYaE",
+      "thumb": "https://i.ytimg.com/vi/fhnP1DerYaE/hqdefault.jpg",
+      "stills": [
+        "https://i.ytimg.com/vi/fhnP1DerYaE/hq1.jpg",
+        "https://i.ytimg.com/vi/fhnP1DerYaE/hq2.jpg",
+        "https://i.ytimg.com/vi/fhnP1DerYaE/hq3.jpg"
+      ],
+      "published": true,
+      "order": 9,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "2025.08.21・活動紀錄",
+      "dur": "1:54",
+      "vertical": false,
+      "biz": true,
+      "playlist": "商案作品",
+      "sourceTitle": "【妄想機】250821 2024獅子會活動回顧"
+    },
+    {
+      "id": "7L09vmO98S0",
+      "title": "遠雄海洋珊寶＿種珊瑚志工體驗活動 花絮",
+      "client": "",
+      "category": "活動紀錄",
+      "youtubeId": "7L09vmO98S0",
+      "thumb": "thumbs/7L09vmO98S0.webp",
+      "stills": [
+        "thumbs/7L09vmO98S0-1.webp",
+        "thumbs/7L09vmO98S0-2.webp",
+        "thumbs/7L09vmO98S0-3.webp"
+      ],
+      "published": false,
+      "order": 10,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "2024.09.14・活動花絮",
+      "dur": "2:01",
+      "vertical": false,
+      "biz": true
     },
     {
       "id": "ZpNlmouCGOg",
@@ -496,7 +515,7 @@
         "https://i.ytimg.com/vi/ZpNlmouCGOg/hq3.jpg"
       ],
       "published": false,
-      "order": 10,
+      "order": 11,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -521,7 +540,7 @@
         "https://i.ytimg.com/vi/ikwzYmdFPog/hq3.jpg"
       ],
       "published": false,
-      "order": 11,
+      "order": 12,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -546,7 +565,7 @@
         "https://i.ytimg.com/vi/m9HnH6cyZ-8/hq3.jpg"
       ],
       "published": false,
-      "order": 12,
+      "order": 13,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -571,7 +590,7 @@
         "https://i.ytimg.com/vi/62ZXVzShXfE/hq3.jpg"
       ],
       "published": false,
-      "order": 13,
+      "order": 14,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
