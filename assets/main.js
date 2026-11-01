@@ -9,7 +9,7 @@
   // number + alternate sides within each category (only one category is shown at a time)
   const catIdx={}, catTotal={};
   WORKS.forEach(w=>{catTotal[w.cat]=(catTotal[w.cat]||0)+1;});
-  const DEFAULT_CAT='event';
+  const DEFAULT_CAT='short';
   grid.innerHTML=WORKS.map(w=>{
     const i=catIdx[w.cat]=(catIdx[w.cat]||0)+1;
     const t=esc(w.title), side=i%2?'l':'r';
