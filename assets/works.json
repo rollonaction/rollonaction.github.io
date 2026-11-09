@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-09T14:44:42.617Z",
+  "updatedAt": "2026-11-09T15:03:17.842Z",
   "categories": [
     "短影音",
     "活動紀錄",
@@ -17,6 +17,58 @@
   },
   "works": [
     {
+      "id": "K2gVrwZ7mns",
+      "title": "救國團113年「築夢青年•創意展影」短影音徵選大賽《堅·夢》",
+      "client": "",
+      "category": "短影音",
+      "youtubeId": "K2gVrwZ7mns",
+      "thumb": "https://i.ytimg.com/vi/K2gVrwZ7mns/hqdefault.jpg",
+      "stills": [
+        "thumbs/K2gVrwZ7mns-p1.webp",
+        "thumbs/K2gVrwZ7mns-p2.webp",
+        "thumbs/K2gVrwZ7mns-p3.webp"
+      ],
+      "published": true,
+      "order": 1,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "短影音",
+      "dur": "0:57",
+      "vertical": true,
+      "biz": false,
+      "playlist": "比賽作品",
+      "sourceTitle": "救國團113年「築夢青年•創意展影」短影音徵選大賽《堅·夢》",
+      "subcategory": "劇情類"
+    },
+    {
+      "id": "p8HRWn89qdY",
+      "title": "跑三圈 短影音廣告",
+      "client": "",
+      "category": "短影音",
+      "youtubeId": "p8HRWn89qdY",
+      "thumb": "https://i.ytimg.com/vi/p8HRWn89qdY/hqdefault.jpg",
+      "stills": [
+        "thumbs/p8HRWn89qdY-p1.webp",
+        "thumbs/p8HRWn89qdY-p2.webp",
+        "thumbs/p8HRWn89qdY-p3.webp"
+      ],
+      "published": true,
+      "order": 2,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "2026.08.01・短影音",
+      "dur": "0:24",
+      "vertical": true,
+      "biz": true,
+      "playlist": "商案作品",
+      "sourceTitle": "【專案】260801跑三圈 短影音廣告",
+      "subcategory": "口播宣傳類"
+    },
+    {
       "id": "i11BLA_UImc",
       "title": "跑三圈 好生活不用繞一大圈才遇得到",
       "client": "",
@@ -29,7 +81,7 @@
         "thumbs/i11BLA_UImc-p3.webp"
       ],
       "published": true,
-      "order": 1,
+      "order": 3,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -53,7 +105,7 @@
         "thumbs/-rivq96wYrs-p3.webp"
       ],
       "published": true,
-      "order": 2,
+      "order": 4,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -65,29 +117,27 @@
       "subcategory": "口播宣傳類"
     },
     {
-      "id": "p8HRWn89qdY",
-      "title": "跑三圈 短影音廣告",
+      "id": "QZFhcxPlUKk",
+      "title": "肉老大頂級肉品涮涮鍋｜巨塔壓境 不服來敬",
       "client": "",
       "category": "短影音",
-      "youtubeId": "p8HRWn89qdY",
-      "thumb": "https://i.ytimg.com/vi/p8HRWn89qdY/hqdefault.jpg",
+      "youtubeId": "QZFhcxPlUKk",
+      "thumb": "thumbs/QZFhcxPlUKk.webp",
       "stills": [
-        "thumbs/p8HRWn89qdY-p1.webp",
-        "thumbs/p8HRWn89qdY-p2.webp",
-        "thumbs/p8HRWn89qdY-p3.webp"
+        "thumbs/QZFhcxPlUKk-p1.webp",
+        "thumbs/QZFhcxPlUKk-p2.webp",
+        "thumbs/QZFhcxPlUKk-p3.webp"
       ],
       "published": true,
-      "order": 3,
+      "order": 5,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
       "viewsUpdatedAt": "",
-      "meta": "2026.08.01・短影音",
-      "dur": "0:24",
+      "meta": "金肉獎",
+      "dur": "0:37",
       "vertical": true,
-      "biz": true,
-      "playlist": "商案作品",
-      "sourceTitle": "【專案】260801跑三圈 短影音廣告",
+      "biz": false,
       "subcategory": "口播宣傳類"
     },
     {
@@ -103,7 +153,7 @@
         "thumbs/n6bzF_xxAJE-p3.webp"
       ],
       "published": true,
-      "order": 4,
+      "order": 6,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -115,82 +165,6 @@
       "playlist": "商案作品",
       "sourceTitle": "【專案】260801三顆糖 買房不要再花錢裝潢了",
       "subcategory": "口播宣傳類"
-    },
-    {
-      "id": "K2gVrwZ7mns",
-      "title": "救國團113年「築夢青年•創意展影」短影音徵選大賽《堅·夢》",
-      "client": "",
-      "category": "短影音",
-      "youtubeId": "K2gVrwZ7mns",
-      "thumb": "https://i.ytimg.com/vi/K2gVrwZ7mns/hqdefault.jpg",
-      "stills": [
-        "thumbs/K2gVrwZ7mns-p1.webp",
-        "thumbs/K2gVrwZ7mns-p2.webp",
-        "thumbs/K2gVrwZ7mns-p3.webp"
-      ],
-      "published": true,
-      "order": 5,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "短影音",
-      "dur": "0:57",
-      "vertical": true,
-      "biz": false,
-      "playlist": "比賽作品",
-      "sourceTitle": "救國團113年「築夢青年•創意展影」短影音徵選大賽《堅·夢》",
-      "subcategory": "劇情類"
-    },
-    {
-      "id": "QZFhcxPlUKk",
-      "title": "肉老大頂級肉品涮涮鍋｜巨塔壓境 不服來敬",
-      "client": "",
-      "category": "短影音",
-      "youtubeId": "QZFhcxPlUKk",
-      "thumb": "thumbs/QZFhcxPlUKk.webp",
-      "stills": [
-        "thumbs/QZFhcxPlUKk-p1.webp",
-        "thumbs/QZFhcxPlUKk-p2.webp",
-        "thumbs/QZFhcxPlUKk-p3.webp"
-      ],
-      "published": true,
-      "order": 6,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "金肉獎",
-      "dur": "0:37",
-      "vertical": true,
-      "biz": false,
-      "subcategory": "口播宣傳類"
-    },
-    {
-      "id": "g1pMKLk5xmo",
-      "title": "救國團114年「青世代永續創新•影像未來」短影音比賽《山在看》",
-      "client": "",
-      "category": "短影音",
-      "youtubeId": "g1pMKLk5xmo",
-      "thumb": "https://i.ytimg.com/vi/g1pMKLk5xmo/hqdefault.jpg",
-      "stills": [
-        "thumbs/g1pMKLk5xmo-p1.webp",
-        "thumbs/g1pMKLk5xmo-p2.webp",
-        "thumbs/g1pMKLk5xmo-p3.webp"
-      ],
-      "published": true,
-      "order": 7,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "短影音",
-      "dur": "1:01",
-      "vertical": true,
-      "biz": false,
-      "playlist": "比賽作品",
-      "sourceTitle": "救國團114年「青世代永續創新•影像未來」短影音比賽《山在看》",
-      "subcategory": "劇情類"
     },
     {
       "id": "GRnYtV3_BaE",
@@ -205,7 +179,7 @@
         "thumbs/GRnYtV3_BaE-p3.webp"
       ],
       "published": true,
-      "order": 8,
+      "order": 7,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -231,7 +205,7 @@
         "thumbs/tiJC0wpuWow-p3.webp"
       ],
       "published": true,
-      "order": 9,
+      "order": 8,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -240,6 +214,32 @@
       "dur": "0:55",
       "vertical": false,
       "biz": false,
+      "subcategory": "劇情類"
+    },
+    {
+      "id": "g1pMKLk5xmo",
+      "title": "救國團114年「青世代永續創新•影像未來」短影音比賽《山在看》",
+      "client": "",
+      "category": "短影音",
+      "youtubeId": "g1pMKLk5xmo",
+      "thumb": "https://i.ytimg.com/vi/g1pMKLk5xmo/hqdefault.jpg",
+      "stills": [
+        "thumbs/g1pMKLk5xmo-p1.webp",
+        "thumbs/g1pMKLk5xmo-p2.webp",
+        "thumbs/g1pMKLk5xmo-p3.webp"
+      ],
+      "published": true,
+      "order": 9,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "短影音",
+      "dur": "1:01",
+      "vertical": true,
+      "biz": false,
+      "playlist": "比賽作品",
+      "sourceTitle": "救國團114年「青世代永續創新•影像未來」短影音比賽《山在看》",
       "subcategory": "劇情類"
     },
     {
@@ -630,16 +630,16 @@
       "biz": false
     },
     {
-      "id": "dsEa7SLoTXc",
-      "title": "113年度臺北市公用頻道影片徵選競賽「我的松山映像My Songshan Image」佳作 《松山映像》",
+      "id": "3cBkkiNJsGw",
+      "title": "清晨盃🏸 宣傳片",
       "client": "",
       "category": "形象片",
-      "youtubeId": "dsEa7SLoTXc",
-      "thumb": "https://i.ytimg.com/vi/dsEa7SLoTXc/hqdefault.jpg",
+      "youtubeId": "3cBkkiNJsGw",
+      "thumb": "https://i.ytimg.com/vi/3cBkkiNJsGw/hqdefault.jpg",
       "stills": [
-        "thumbs/dsEa7SLoTXc-p1.webp",
-        "thumbs/dsEa7SLoTXc-p2.webp",
-        "thumbs/dsEa7SLoTXc-p3.webp"
+        "thumbs/3cBkkiNJsGw-p1.webp",
+        "thumbs/3cBkkiNJsGw-p2.webp",
+        "thumbs/3cBkkiNJsGw-p3.webp"
       ],
       "published": true,
       "order": 2,
@@ -647,12 +647,12 @@
       "sourcePlatform": "",
       "views": null,
       "viewsUpdatedAt": "",
-      "meta": "形象片",
-      "dur": "2:55",
+      "meta": "2025.03.27・形象片",
+      "dur": "0:38",
       "vertical": false,
-      "biz": false,
-      "playlist": "比賽作品",
-      "sourceTitle": "113年度臺北市公用頻道影片徵選競賽「我的松山映像My Songshan Image」佳作 《松山映像》"
+      "biz": true,
+      "playlist": "商案作品",
+      "sourceTitle": "【專案】250327清晨盃🏸 宣傳片"
     },
     {
       "id": "ityIOqni86g",
@@ -680,16 +680,16 @@
       "sourceTitle": "【專案】260725 全民會長盃形象廣告《因為喜歡，所以主動前進》"
     },
     {
-      "id": "3cBkkiNJsGw",
-      "title": "清晨盃🏸 宣傳片",
+      "id": "y9O7VPkMm4U",
+      "title": "在你身邊的我，靜靜延續的愛",
       "client": "",
       "category": "形象片",
-      "youtubeId": "3cBkkiNJsGw",
-      "thumb": "https://i.ytimg.com/vi/3cBkkiNJsGw/hqdefault.jpg",
+      "youtubeId": "y9O7VPkMm4U",
+      "thumb": "thumbs/y9O7VPkMm4U.webp",
       "stills": [
-        "thumbs/3cBkkiNJsGw-p1.webp",
-        "thumbs/3cBkkiNJsGw-p2.webp",
-        "thumbs/3cBkkiNJsGw-p3.webp"
+        "thumbs/y9O7VPkMm4U-p1.webp",
+        "thumbs/y9O7VPkMm4U-p2.webp",
+        "thumbs/y9O7VPkMm4U-p3.webp"
       ],
       "published": true,
       "order": 4,
@@ -697,12 +697,10 @@
       "sourcePlatform": "",
       "views": null,
       "viewsUpdatedAt": "",
-      "meta": "2025.03.27・形象片",
-      "dur": "0:38",
+      "meta": "第二屆《大王盃》全國創意短影音競賽",
+      "dur": "2:01",
       "vertical": false,
-      "biz": true,
-      "playlist": "商案作品",
-      "sourceTitle": "【專案】250327清晨盃🏸 宣傳片"
+      "biz": false
     },
     {
       "id": "KQpzOyRLy4M",
@@ -755,6 +753,31 @@
       "sourceTitle": "『愛自己 乳此簡單』_翻玩臺味好乳力-全國短影音創意大募集"
     },
     {
+      "id": "dsEa7SLoTXc",
+      "title": "113年度臺北市公用頻道影片徵選競賽「我的松山映像My Songshan Image」佳作 《松山映像》",
+      "client": "",
+      "category": "形象片",
+      "youtubeId": "dsEa7SLoTXc",
+      "thumb": "https://i.ytimg.com/vi/dsEa7SLoTXc/hqdefault.jpg",
+      "stills": [
+        "thumbs/dsEa7SLoTXc-p1.webp",
+        "thumbs/dsEa7SLoTXc-p2.webp",
+        "thumbs/dsEa7SLoTXc-p3.webp"
+      ],
+      "published": true,
+      "order": 7,
+      "sourceUrl": "",
+      "sourcePlatform": "",
+      "views": null,
+      "viewsUpdatedAt": "",
+      "meta": "形象片",
+      "dur": "2:55",
+      "vertical": false,
+      "biz": false,
+      "playlist": "比賽作品",
+      "sourceTitle": "113年度臺北市公用頻道影片徵選競賽「我的松山映像My Songshan Image」佳作 《松山映像》"
+    },
+    {
       "id": "oDnDQwXC_z8",
       "title": "2026清晨盃 精華廣告",
       "client": "",
@@ -767,7 +790,7 @@
         "thumbs/oDnDQwXC_z8-p3.webp"
       ],
       "published": true,
-      "order": 7,
+      "order": 8,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -792,7 +815,7 @@
         "thumbs/zjXRUc4RF3E-p3.webp"
       ],
       "published": true,
-      "order": 8,
+      "order": 9,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -817,7 +840,7 @@
         "thumbs/ygWgvjQujNM-p3.webp"
       ],
       "published": true,
-      "order": 9,
+      "order": 10,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -840,7 +863,7 @@
         "thumbs/-jbiFVcQYCw-p3.webp"
       ],
       "published": true,
-      "order": 10,
+      "order": 11,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -863,7 +886,7 @@
         "thumbs/YKfRs3_XBYU-p3.webp"
       ],
       "published": false,
-      "order": 11,
+      "order": 12,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -888,7 +911,7 @@
         "thumbs/Smrr_II2Q_Q-3.webp"
       ],
       "published": false,
-      "order": 12,
+      "order": 13,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -911,7 +934,7 @@
         "thumbs/3dWDIabzeQo-3.webp"
       ],
       "published": false,
-      "order": 13,
+      "order": 14,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -935,7 +958,7 @@
         "https://i.ytimg.com/vi/g3vIuZt7i4c/hq3.jpg"
       ],
       "published": false,
-      "order": 14,
+      "order": 15,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -960,7 +983,7 @@
         "https://i.ytimg.com/vi/XqAdPm83auM/hq3.jpg"
       ],
       "published": false,
-      "order": 15,
+      "order": 16,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -985,7 +1008,7 @@
         "https://i.ytimg.com/vi/f8SFLuNMQcI/hq3.jpg"
       ],
       "published": false,
-      "order": 16,
+      "order": 17,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1010,7 +1033,7 @@
         "https://i.ytimg.com/vi/gRpFI9yaJ2g/hq3.jpg"
       ],
       "published": false,
-      "order": 17,
+      "order": 18,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1035,7 +1058,7 @@
         "https://i.ytimg.com/vi/x0OVK0fzvU4/hq3.jpg"
       ],
       "published": false,
-      "order": 18,
+      "order": 19,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1217,29 +1240,6 @@
       "sourceTitle": "『一杯等待的鮮乳』 翻玩臺味好乳力 全國短影音創意大募集"
     },
     {
-      "id": "y9O7VPkMm4U",
-      "title": "在你身邊的我，靜靜延續的愛",
-      "client": "",
-      "category": "劇情類",
-      "youtubeId": "y9O7VPkMm4U",
-      "thumb": "thumbs/y9O7VPkMm4U.webp",
-      "stills": [
-        "thumbs/y9O7VPkMm4U-p1.webp",
-        "thumbs/y9O7VPkMm4U-p2.webp",
-        "thumbs/y9O7VPkMm4U-p3.webp"
-      ],
-      "published": true,
-      "order": 8,
-      "sourceUrl": "",
-      "sourcePlatform": "",
-      "views": null,
-      "viewsUpdatedAt": "",
-      "meta": "第二屆《大王盃》全國創意短影音競賽",
-      "dur": "2:01",
-      "vertical": false,
-      "biz": false
-    },
-    {
       "id": "Lrv7l38w0wk",
       "title": "防範詐騙 你我做起",
       "client": "",
@@ -1252,7 +1252,7 @@
         "thumbs/Lrv7l38w0wk-p3.webp"
       ],
       "published": true,
-      "order": 9,
+      "order": 8,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1275,7 +1275,7 @@
         "https://i.ytimg.com/vi/Bvs7rsofcGs/hq3.jpg"
       ],
       "published": false,
-      "order": 10,
+      "order": 9,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1300,7 +1300,7 @@
         "https://i.ytimg.com/vi/4Lwd301xfhI/hq3.jpg"
       ],
       "published": false,
-      "order": 11,
+      "order": 10,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1325,7 +1325,7 @@
         "https://i.ytimg.com/vi/V9PTy3sd3Sk/hq3.jpg"
       ],
       "published": false,
-      "order": 12,
+      "order": 11,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1350,7 +1350,7 @@
         "https://i.ytimg.com/vi/DJ4ICw-2jmY/hq3.jpg"
       ],
       "published": false,
-      "order": 13,
+      "order": 12,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
@@ -1375,7 +1375,7 @@
         "https://i.ytimg.com/vi/bWGaCkRndxY/hq3.jpg"
       ],
       "published": false,
-      "order": 14,
+      "order": 13,
       "sourceUrl": "",
       "sourcePlatform": "",
       "views": null,
