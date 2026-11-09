@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-01T10:42:12.793Z",
+  "updatedAt": "2026-11-09T14:44:42.617Z",
   "categories": [
     "短影音",
     "活動紀錄",
@@ -470,7 +470,7 @@
         "thumbs/fhnP1DerYaE-p2.webp",
         "thumbs/fhnP1DerYaE-p3.webp"
       ],
-      "published": true,
+      "published": false,
       "order": 9,
       "sourceUrl": "",
       "sourcePlatform": "",
@@ -862,7 +862,7 @@
         "thumbs/YKfRs3_XBYU-p2.webp",
         "thumbs/YKfRs3_XBYU-p3.webp"
       ],
-      "published": true,
+      "published": false,
       "order": 11,
       "sourceUrl": "",
       "sourcePlatform": "",
