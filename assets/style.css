@@ -869,3 +869,15 @@ p{text-wrap:pretty}
   .wother__name{font-size:17px}
   .wother__count{font-size:11.5px}
 }
+
+/* ===== YEAR 團隊列（2026-11）===== */
+.team-yes{max-width:680px}
+.team-yes .about__team{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.about__team li.is-brand .avatar{border-color:var(--wine-2);background:radial-gradient(circle at 30% 20%,#c23a4e,var(--wine-2) 45%,var(--wine-dark) 100%)}
+.about__team li.is-brand strong{color:var(--wine-text)}
+@media (max-width:760px){
+  .team-yes .about__team{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  .avatar span{font-size:clamp(40px,11vw,56px)}
+  .about__team strong{font-size:14px;letter-spacing:.03em}
+  .about__team .roles{font-size:12px}
+}
