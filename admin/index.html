@@ -166,6 +166,11 @@ dialog{overflow-x:hidden}
       <div><label for="f_youtubeId">YouTube 影片 ID 或連結（預覽／背景用）</label><input id="f_youtubeId" required></div>
       <div><label for="f_dur">片長（例 1:22）</label><input id="f_dur"></div>
       <div class="full"><label for="f_meta">說明文字（日期・類型・得獎等）</label><input id="f_meta"></div>
+      <div class="full vpick">
+        <label for="f_video">🎬 從影片檔自動產生縮圖與 3 張封面（選電腦裡的影片檔；影片只在這台電腦讀取，不會上傳）</label>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><input type="file" id="f_video" accept="video/*,.mov,.mp4,.m4v"><button type="button" id="btnRepick" hidden>換一組畫面</button></div>
+        <p class="note" id="f_vnote">會自動填好：片長、直式／橫式、主縮圖、3 張封面。按「套用變更」→「儲存並發布」時才會把截圖上傳到網站。</p>
+      </div>
       <div class="full prev" id="f_prev"></div>
       <div class="full"><label for="f_thumb">主縮圖（留空＝使用 YouTube 縮圖；thumbs/… 為網站內建圖）</label><input id="f_thumb"></div>
       <div class="full"><label for="f_stills">3 張封面截圖（首頁影片旁的 3 張畫面；每行一個：圖片網址或 thumbs/… 網站內建圖；留空＝YouTube 自動截圖。下方預覽會即時更新）</label><textarea id="f_stills" rows="3"></textarea></div>
@@ -251,7 +256,10 @@ function ytId(s){
 }
 const platOf=u=>{try{const h=new URL(u).hostname;return /instagram\.com$/.test(h)?'IG':/(facebook\.com|fb\.watch|fb\.com)$/.test(h)?'FB':/(youtube\.com|youtu\.be)$/.test(h)?'YT':'other';}catch(e){return '';}};
 const ytThumb=id=>`https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-const thumbSrc=w=>{const p=w.thumb||ytThumb(w.youtubeId);return /^https?:/.test(p)?p:'../assets/'+p;};
+// images captured from a local video file in this session, waiting to be uploaded on save: path -> {blob,url,done}
+const PENDING=new Map();
+const imgSrc=p=>PENDING.has(p)?PENDING.get(p).url:(/^(https?:|blob:)/.test(p)?p:'../assets/'+p);
+const thumbSrc=w=>imgSrc(w.thumb||ytThumb(w.youtubeId));
 const fmtViews=n=>{n=+n;if(!isFinite(n))return '';const t=(v,u)=>(Math.floor(v*10)/10).toFixed(1).replace(/\.0$/,'')+u;return n>=1e8?t(n/1e8,'億'):n>=1e4?t(n/1e4,'萬'):Math.round(n).toLocaleString('zh-TW');};
 const today=()=>{const d=new Date(),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;};
 
@@ -366,7 +374,7 @@ CATS.forEach(c=>{F('category').add(new Option(c,c));$('#addCat').add(new Option(
 function preview(){
   const id=ytId(F('youtubeId').value)||F('youtubeId').value.trim();
   const t=F('thumb').value.trim(), st=F('stills').value.split('\n').map(s=>s.trim()).filter(Boolean);
-  const src=p=>/^https?:/.test(p)?p:'../assets/'+p;
+  const src=imgSrc;
   F('prev').innerHTML=`<img src="${esc(t?src(t):ytThumb(id))}" alt="主縮圖">`+[0,1,2].map(n=>`<img class="s" src="${esc(st[n]?src(st[n]):`https://i.ytimg.com/vi/${id}/hq${n+1}.jpg`)}" alt="截圖 ${n+1}">`).join('');
 }
 function subVis(){ $('#f_subWrap').hidden=F('category').value!==SHORT; }
@@ -375,7 +383,7 @@ function openEdit(w,isNew){
   ['title','client','category','youtubeId','dur','meta','thumb','sourceUrl','sourcePlatform','viewsUpdatedAt'].forEach(k=>F(k).value=w[k]||'');
   F('stills').value=(w.stills||[]).join('\n'); F('views').value=w.views==null?'':w.views;
   F('subcategory').value=w.category===SHORT&&SUBS.includes(w.subcategory)?w.subcategory:''; subVis();
-  F('published').checked=w.published; F('vertical').checked=w.vertical; F('biz').checked=w.biz; F('err').textContent='';
+  F('published').checked=w.published; F('vertical').checked=w.vertical; F('biz').checked=w.biz; F('err').textContent=''; resetVideoPick();
   preview(); $('#dlg').showModal();
 }
 F('category').addEventListener('change',()=>{ const w=editing.w; F('subcategory').value=F('category').value===w.category&&SUBS.includes(w.subcategory)?w.subcategory:''; subVis(); });
@@ -391,6 +399,69 @@ $('#btnYtViews').addEventListener('click',async()=>{
   catch(e){F('err').textContent='無法自動取得，請手動輸入觀看數。';}
   b.disabled=false;b.textContent='從 YouTube 帶入觀看數（非官方）';
 });
+// ---- auto thumbnail + 3 stills from a local video file (the video itself never leaves this computer) ----
+let vidFile=null;
+const canvasBlob=(c,type,q)=>new Promise(r=>c.toBlob(r,type,q));
+async function encode(c){ // webp where the browser can encode it (Chrome/Edge/Firefox), else jpeg (older Safari)
+  let b=await canvasBlob(c,'image/webp',.82); if(b&&b.type==='image/webp') return {b,ext:'webp'};
+  b=await canvasBlob(c,'image/jpeg',.86); return {b,ext:'jpg'};
+}
+function frameCanvas(v,w,h,cover){ // cover=true: center-crop to w×h; else scale to fit w×h keeping ratio
+  const vw=v.videoWidth, vh=v.videoHeight, c=document.createElement('canvas');
+  if(cover){ c.width=w;c.height=h; const s=Math.max(w/vw,h/vh), dw=vw*s, dh=vh*s; c.getContext('2d').drawImage(v,(w-dw)/2,(h-dh)/2,dw,dh); }
+  else { const s=Math.min(1,w/vw,h/vh); c.width=Math.round(vw*s); c.height=Math.round(vh*s); c.getContext('2d').drawImage(v,0,0,c.width,c.height); }
+  return c;
+}
+async function grabFrames(file,jitter){
+  const v=document.createElement('video'); v.muted=true; v.playsInline=true; v.preload='auto';
+  const url=URL.createObjectURL(file); v.src=url;
+  try{
+    await new Promise((res,rej)=>{ v.onloadeddata=res; v.onerror=()=>rej(new Error('瀏覽器讀不了這個影片格式，請先匯出成 MP4（H.264）再選一次。')); setTimeout(()=>rej(new Error('讀取影片逾時，請改用較小的 MP4 檔再試。')),30000); });
+    if(!v.videoWidth||!isFinite(v.duration)) throw new Error('讀不到影片畫面，請改用 MP4（H.264）再試。');
+    const seek=t=>new Promise(res=>{ const ok=()=>{v.removeEventListener('seeked',ok);setTimeout(res,80);}; v.addEventListener('seeked',ok); v.currentTime=t; });
+    // a frame can come back empty if the decoder isn't ready yet: check a few pixels and retry
+    const blank=c=>{const x=c.getContext('2d'),W=c.width,H=c.height;return [[.5,.5],[.25,.25],[.75,.75],[.25,.75],[.75,.25]].every(([a,b])=>x.getImageData(Math.floor(W*a),Math.floor(H*b),1,1).data[3]===0);};
+    const shot=async(t,mk)=>{ let c; for(let i=0;i<6;i++){ await seek(t); c=mk(); if(!blank(c)) return encode(c); await new Promise(r=>setTimeout(r,200)); } throw new Error('擷取畫面失敗，請改用 MP4（H.264）再試。'); };
+    const D=v.duration, j=()=>jitter?(Math.random()-.5)*.14:0, at=f=>Math.min(D-.05,Math.max(.05,D*Math.min(.95,Math.max(.05,f+j()))));
+    const vert=v.videoHeight>v.videoWidth, out={dur:D,vert,stills:[]};
+    out.thumb=await shot(at(.35),()=>frameCanvas(v,960,540,true));
+    for(const f of [.2,.5,.8]) out.stills.push(await shot(at(f),()=>vert?frameCanvas(v,540,960,false):frameCanvas(v,960,540,false)));
+    return out;
+  } finally { URL.revokeObjectURL(url); v.removeAttribute('src'); v.load(); }
+}
+const fmtDur=s=>{s=Math.round(s);const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=String(s%60).padStart(2,'0');return h?`${h}:${String(m).padStart(2,'0')}:${x}`:`${m}:${x}`;};
+async function useVideo(jitter){
+  const id=ytId(F('youtubeId').value); const note=F('vnote');
+  if(!id){ note.textContent='請先在上面填好 YouTube 影片連結或 ID，再選影片檔。'; note.style.color='#ffb3bd'; return; }
+  if(!vidFile) return;
+  note.style.color=''; note.textContent='讀取影片並擷取畫面中…（大檔案可能要幾秒）'; $('#btnRepick').disabled=true;
+  try{
+    const r=await grabFrames(vidFile,jitter), stamp=Date.now().toString(36);
+    const put=(name,img)=>{ const p=`thumbs/${id}-${name}-${stamp}.${img.ext}`; PENDING.set(p,{blob:img.b,url:URL.createObjectURL(img.b),done:false}); return p; };
+    F('thumb').value=put('t',r.thumb);
+    F('stills').value=r.stills.map((s,k)=>put('p'+(k+1),s)).join('\n');
+    if(!F('dur').value.trim()||jitter===false) F('dur').value=fmtDur(r.dur);
+    F('vertical').checked=r.vert;
+    preview(); $('#btnRepick').hidden=false;
+    note.textContent=`✅ 已擷取 1 張縮圖＋3 張封面（${r.vert?'直式':'橫式'}、片長 ${fmtDur(r.dur)}）。不滿意可按「換一組畫面」。按「套用變更」→「儲存並發布」時才會上傳截圖；上傳前請不要重新整理這個頁面。`;
+  }catch(e){ note.textContent='⚠ '+e.message; note.style.color='#ffb3bd'; }
+  $('#btnRepick').disabled=false;
+}
+F('video').addEventListener('change',()=>{ vidFile=F('video').files[0]||null; useVideo(false); });
+$('#btnRepick').addEventListener('click',()=>useVideo(true));
+// upload captured images that the data actually uses (before works.json, so the site never points at a missing file)
+async function uploadPending(){
+  const used=new Set(); data.works.forEach(w=>{ if(w.thumb) used.add(w.thumb); (w.stills||[]).forEach(s=>used.add(s)); });
+  const todo=[...PENDING].filter(([p,v])=>!v.done&&used.has(p)); let n=0;
+  for(const [p,v] of todo){
+    $('#btnSave').textContent=`上傳截圖 ${++n}/${todo.length}…`;
+    const b64=await new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(String(fr.result).split(',')[1]);fr.onerror=rej;fr.readAsDataURL(v.blob);});
+    await gh(`/repos/${OWNER}/${REPO}/contents/assets/${p}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'後台上傳作品截圖 '+p.split('/').pop(),content:b64,branch})});
+    v.done=true;
+  }
+  if(n) $('#btnSave').textContent='儲存中…';
+}
+function resetVideoPick(){ vidFile=null; F('video').value=''; $('#btnRepick').hidden=true; F('vnote').style.color=''; F('vnote').textContent='會自動填好：片長、直式／橫式、主縮圖、3 張封面。按「套用變更」→「儲存並發布」時才會把截圖上傳到網站。'; }
 $('#form').addEventListener('submit',e=>{
   e.preventDefault(); const w=editing.w;
   const id=ytId(F('youtubeId').value); if(!id){F('err').textContent='YouTube 影片 ID 格式不正確（11 碼）';return;}
@@ -466,6 +537,7 @@ async function doSave(force){
   let merged=false;
   try{
     renumber(); validate(data);
+    await uploadPending();
     if(!sha){ const f=await fetchRemote(); sha=f.sha; }
     let r;
     try{ r=await putFile(); }
