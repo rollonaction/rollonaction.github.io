@@ -103,13 +103,17 @@
     const top=grid.getBoundingClientRect().top+scrollY-navH()-(bar?bar.offsetHeight:0)-16;
     scrollTo({top:Math.max(0,top),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
   }
-  function renderNext(){
+  function renderNext(){ // end-of-list menu: every other category, so visitors can keep browsing
     if(!nextEl||!CATS.length) return;
-    const i=CATS.findIndex(c=>c.k===cur), n=CATS[(i+1)%CATS.length];
-    nextEl.innerHTML=`<button class="wnext" data-filter="${n.k}" data-scroll="1">
-      <span class="wnext__media"><img src="${esc(posterOf(n.k))}" alt="" loading="lazy" decoding="async"></span>
-      <span class="wnext__txt"><span class="wnext__kicker">看完了 ${CATS[i].name}・繼續看</span><span class="wnext__name">下一類：${n.name} <i aria-hidden="true">→</i></span><span class="wnext__meta">${n.en}・${catTotal[n.k]} 支作品</span></span>
-    </button>`;
+    const i=CATS.findIndex(c=>c.k===cur), others=CATS.slice(i+1).concat(CATS.slice(0,i));
+    if(!others.length){ nextEl.innerHTML=''; return; }
+    nextEl.innerHTML=`<div class="wother">
+      <p class="wother__kicker">看完了 ${CATS[i].name}・繼續看其他分類</p>
+      <div class="wother__grid">${others.map((c,k)=>`<button class="wother__item${k===0?' is-next':''}" data-filter="${c.k}" data-scroll="1">
+        <span class="wother__media"><img src="${esc(posterOf(c.k))}" alt="" loading="lazy" decoding="async"></span>
+        <span class="wother__name">${c.name}</span><span class="wother__count">${catTotal[c.k]} 支作品${k===0?'・下一類':''} <i aria-hidden="true">→</i></span>
+      </button>`).join('')}</div>
+    </div>`;
   }
   function setCat(f,scroll){
     if(!catTotal[f]) return;
@@ -134,8 +138,8 @@
     requestAnimationFrame(barUpdate);
   }
   document.addEventListener('click',e=>{
-    const b=e.target.closest('.wcat,.wpill,.wnext,.filter'); if(!b) return;
-    setCat(b.dataset.filter, b.classList.contains('wpill')||b.classList.contains('wnext'));
+    const b=e.target.closest('.wcat,.wpill,.wnext,.wother__item,.filter'); if(!b) return;
+    setCat(b.dataset.filter, b.classList.contains('wpill')||b.classList.contains('wnext')||b.classList.contains('wother__item'));
   });
   renderNext();
 
@@ -145,7 +149,7 @@
   const subsEl=document.getElementById('worksSubs'), barSubs=document.getElementById('worksBarSubs');
   let curSub='all';
   const subHTML=cls=>SUBS.map(x=>`<button class="${cls}${x.k===curSub?' is-active':''}" data-sub="${x.k}" aria-pressed="${x.k===curSub}">${x.name}<b>${x.n}</b></button>`).join('');
-  if(subsEl && SUBS.length>1){ subsEl.innerHTML=`<span class="wsubs__label">短影音分類</span><div class="wsubs__tabs" role="group" aria-label="短影音分類">${subHTML('wsub')}</div>`; }
+  if(subsEl && SUBS.length>1){ subsEl.innerHTML=`<div class="wsubs__tabs" role="group" aria-label="短影音分類">${subHTML('wsub')}</div>`; }
   if(barSubs && SUBS.length>1){ barSubs.innerHTML=subHTML('wpill wpill--sub'); }
   function relayout(){ // renumber EP.xx / total and alternate sides over the visible rows
     const vis=[...grid.querySelectorAll('.ep')].filter(el=>!el.hidden);
